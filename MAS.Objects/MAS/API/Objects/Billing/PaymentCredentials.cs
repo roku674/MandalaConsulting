@@ -1,0 +1,28 @@
+﻿//Copyright © 2023 Perilous Games, Ltd. All rights reserved.
+
+namespace MAS.Objects.Billing
+{
+    public class PaymentCredentials
+    {
+        public PaymentCredentials()
+        {
+        }
+
+        public PaymentCredentials(PaymentType paymentType)
+        {
+            PaymentType = paymentType;
+        }
+
+        public CreditCard CreditCard {
+            get; set;
+        }
+
+        public PayeeInfo PayeeInfo {
+            get; set;
+        }
+
+        public PaymentType PaymentType {
+            get; set;
+        }
+    }
+}
