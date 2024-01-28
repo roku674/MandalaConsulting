@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Perilous Games, Ltd. All rights reserved.
+﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
 //Created by Alexander Fields
 
 namespace MAS.Objects.Billing

@@ -1,4 +1,6 @@
-﻿namespace APIBilling.Objects.MAS.API.Objects
+﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+//Created by Alexander Fields
+namespace APIBilling.Objects.MAS.API.Objects
 {
     public class BannedIP
     {

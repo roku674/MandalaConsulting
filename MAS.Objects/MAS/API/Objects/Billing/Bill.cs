@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Perilous Games, Ltd. All rights reserved.
+﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;

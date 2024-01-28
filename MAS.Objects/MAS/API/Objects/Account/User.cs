@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Perilous Games, Ltd. All rights reserved.
+﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
 
 using MAS.Objects.Billing;
 using MongoDB.Bson.Serialization.Attributes;
