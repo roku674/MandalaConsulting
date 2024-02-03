@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -65,7 +65,6 @@ namespace MAS.Objects.Billing
         public List<Subscription> Subscriptions {
             get; set;
         }
-
         public dynamic GetPrimaryPayment()
         {
             if (PaymentTypesOnFile.CreditCard != null)

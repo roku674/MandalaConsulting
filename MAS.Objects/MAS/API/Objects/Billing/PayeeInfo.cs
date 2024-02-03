@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 
 using System.Runtime.Serialization;
 
@@ -17,13 +17,13 @@ namespace MAS.Objects.Billing
             MerchantId = merchantId;
         }
 
-        [DataMember(Name = "client_id", EmitDefaultValue = false)]
+        [DataMember(Name = "client_id")]
         public string ClientId;
 
-        [DataMember(Name = "email_address", EmitDefaultValue = false)]
+        [DataMember(Name = "email_address")]
         public string Email;
 
-        [DataMember(Name = "merchant_id", EmitDefaultValue = false)]
+        [DataMember(Name = "merchant_id")]
         public string MerchantId;
 
     }

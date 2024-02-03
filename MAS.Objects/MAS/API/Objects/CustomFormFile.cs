@@ -1,13 +1,12 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 using Microsoft.AspNetCore.Http;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MAS.Objects
+namespace MAS.API.Objects
 {
     public class CustomFormFile : IFormFile
     {
@@ -17,7 +16,7 @@ namespace MAS.Objects
    
         public CustomFormFile(string fileName, byte[] content)
         {
-            FileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
+            FileName = fileName ?? throw new System.ArgumentNullException(nameof(fileName));
             Content = content ?? new byte[0];
         }
 

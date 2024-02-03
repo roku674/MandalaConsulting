@@ -1,6 +1,4 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
-//Created by Alexander Fields
-namespace APIBilling.Objects.MAS.API.Objects
+﻿namespace MAS.API.Objects
 {
     public class BannedIP
     {
@@ -8,11 +6,12 @@ namespace APIBilling.Objects.MAS.API.Objects
         {
         }
 
-        public BannedIP(string id, string ipv4, string ipv6)
+        public BannedIP(string id, string ipv4, string ipv6, string reason)
         {
             this._id = id;
             this.ipv4 = ipv4;
             this.ipv6 = ipv6;
+            this.reason = reason;
         }
 
         public BannedIP(string ipv4, string ipv6)
@@ -21,8 +20,9 @@ namespace APIBilling.Objects.MAS.API.Objects
             this.ipv6 = ipv6;
         }
 
-        public string _id { get; set; }
-        public string ipv4 { get; set; }
+        public string _id {  get; set; }
+        public string ipv4 {  get; set; }
         public string ipv6 { get; set; }
+        public string reason { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 
 using System.Runtime.Serialization;
 

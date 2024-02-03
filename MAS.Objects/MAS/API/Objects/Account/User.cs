@@ -1,7 +1,9 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 
 using MAS.Objects.Billing;
+using MAS.Objects.Google;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace MAS.Objects.Account
@@ -13,7 +15,7 @@ namespace MAS.Objects.Account
         {
         }
 
-        public User(System.DateTime banned, Bill bill, System.DateTime createdDate, string email, bool emailConfirmed, List<IPInfo> ipAddresses, System.DateTime lastActiveDate, string password, long perilousPoints, Profile profile, string role, System.TimeSpan timeOnline, string userId, string token, System.DateTime tokenExpiration)
+        public User(System.DateTime banned, Bill bill, System.DateTime createdDate, string email, bool emailConfirmed, List<IPInfo> ipAddresses, System.DateTime lastActiveDate, string password, ulong perilousPoints, Profile profile, string role, System.TimeSpan timeOnline, string userId, string token, System.DateTime tokenExpiration)
         {
             this.banned = banned != default ? banned : new System.DateTime(1900, 1, 1);
             this.Bill = bill;
@@ -87,7 +89,7 @@ namespace MAS.Objects.Account
         }
 
         [DataMember]
-        public long perilousPoints
+        public ulong perilousPoints
         {
             get; set;
         }
@@ -135,13 +137,7 @@ namespace MAS.Objects.Account
             get; set;
         }
 
-        /// <summary>
-        /// This is the google user
-        /// </summary>
         [DataMember]
-        public Google.Integrations.UserProfile UserProfile
-        {
-            get; set;
-        }
+        public GoogleObjects GoogleObjects { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 
 namespace MAS.Objects.Billing
 {
@@ -13,15 +13,18 @@ namespace MAS.Objects.Billing
             PaymentType = paymentType;
         }
 
-        public CreditCard CreditCard {
+        public CreditCard CreditCard
+        {
             get; set;
         }
 
-        public PayeeInfo PayeeInfo {
+        public PayeeInfo PayeeInfo
+        {
             get; set;
         }
 
-        public PaymentType PaymentType {
+        public PaymentType PaymentType
+        {
             get; set;
         }
     }

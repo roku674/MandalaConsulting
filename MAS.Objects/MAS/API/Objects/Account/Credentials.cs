@@ -1,4 +1,4 @@
-﻿//Copyright © 2023 Monotonous Automation Solutions All rights reserved.
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 
 namespace MAS.Objects.Account
 {
@@ -8,19 +8,17 @@ namespace MAS.Objects.Account
         {
         }
 
-        public Credentials(string email, string password, string token)
+        public Credentials(string email, string password, string token, string googleToken)
         {
-            this.email = email ?? throw new ArgumentNullException(nameof(email));
-            this.password = password ?? throw new ArgumentNullException(nameof(password));
+            this.email = email ?? throw new System.ArgumentNullException(nameof(email));
+            this.password = password ?? throw new System.ArgumentNullException(nameof(password));
             this.token = token;
+            this.googleToken = token;
         }
 
-        public string email {
-            get; set;
-        }
-        public string password {
-            get; set;
-        }
+        public string email { get; set; }
+        public string password { get; set; }
         public string token { get; set; }
+        public string googleToken { get; set; }
     }
 }
