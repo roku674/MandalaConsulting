@@ -1,4 +1,5 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+//Created by Alexander Fields
 
 using System.Runtime.Serialization;
 
@@ -18,7 +19,6 @@ namespace MAS.Objects.Billing
         /// <param name="lastName">!nullable</param>
         /// <param name="middleName"></param>
         /// <param name="number"></param>
-
         public Contact(System.DateTime dob, string firstName, string lastName, string middleName, ulong number)
         {
             this.dob = dob != default ? dob : new System.DateTime(1900, 1, 1);

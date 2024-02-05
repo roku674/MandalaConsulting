@@ -1,4 +1,5 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+//Created by Alexander Fields
 
 using MAS.Objects.Billing;
 using MAS.Objects.Google;

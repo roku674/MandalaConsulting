@@ -1,4 +1,6 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+//Created by Alexander Fields
+
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 

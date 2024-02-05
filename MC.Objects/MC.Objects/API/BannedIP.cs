@@ -1,4 +1,7 @@
-﻿namespace MAS.API.Objects
+﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+//Created by Alexander Fields
+
+namespace MAS.API.Objects
 {
     public class BannedIP
     {
