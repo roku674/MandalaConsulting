@@ -3,7 +3,7 @@
 
 using System.Runtime.Serialization;
 
-namespace MAS.Objects.Billing
+namespace MC.Objects.Billing
 {
     public class PayeeInfo
     {

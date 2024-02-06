@@ -1,9 +1,9 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
-using MAS.Objects.Billing;
+using MC.Objects.Billing;
 
-namespace MAS.Objects.Account
+namespace MC.Objects.Account
 {
     public class Profile : Contact
     {

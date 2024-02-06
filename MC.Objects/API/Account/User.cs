@@ -1,13 +1,13 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
-using MAS.Objects.Billing;
-using MAS.Objects.Google;
+using MC.Objects.Billing;
+using MC.Objects.Google;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace MAS.Objects.Account
+namespace MC.Objects.Account
 {
     [System.Serializable]
     public class User

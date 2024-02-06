@@ -3,7 +3,7 @@
 
 using System.Runtime.Serialization;
 
-namespace MAS.Objects.Account
+namespace MC.Objects.Account
 {
     public class IPInfo
     {

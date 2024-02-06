@@ -3,7 +3,7 @@
 
 using Google.Integrations;
 
-namespace MAS.Objects.Google
+namespace MC.Objects.Google
 {
     public class GoogleObjects
     {

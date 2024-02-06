@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace MAS.Objects.Billing
+namespace MC.Objects.Billing
 {
     [System.Serializable]
     public class Product
