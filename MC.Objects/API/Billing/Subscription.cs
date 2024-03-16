@@ -32,7 +32,7 @@ namespace MC.Objects.Billing
         /// <param name="tip"></param>
         /// <param name="total"></param>
         public Subscription(Address billing, Address shipping, bool billedMonthly, bool billedYearly, string company, decimal donation, bool isRefund, bool isActive, bool isRecurring, Product item,
-            PaymentType paymentType, Contact purchaser, string taxLocation, decimal taxPercentage, System.DateTime time, decimal tip, string typeOfSubscription)
+            PaymentType paymentType, Contact purchaser, System.DateTime renewalTime, string taxLocation, decimal taxPercentage, System.DateTime time, decimal tip, string typeOfSubscription)
         {
             AddressBilling = billing ?? throw new System.ArgumentNullException(nameof(billing));
             AddressShipping = shipping != null ? shipping : billing;
@@ -47,6 +47,7 @@ namespace MC.Objects.Billing
             this.Item = item ?? throw new System.ArgumentNullException(nameof(item));
             this.paymentType = paymentType;
             this.Purchaser = purchaser ?? throw new System.ArgumentNullException(nameof(purchaser));
+            this.renewalTime = renewalTime != default ? renewalTime : System.DateTime.Now;
             this.taxLocation = taxLocation;
             this.taxPercentage = taxPercentage <= 0 ? this.taxPercentage = 1 : this.taxPercentage = taxPercentage;
             decimal weightedPrice = (Item.Cost + (this.Item.Price * this.Item.QuantitySold));
@@ -83,6 +84,11 @@ namespace MC.Objects.Billing
 
         [DataMember]
         public string typeOfSubscription {
+            get; set;
+        }
+
+        [DataMember]
+        public System.DateTime renewalTime {
             get; set;
         }
     }
