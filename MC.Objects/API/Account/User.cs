@@ -81,7 +81,7 @@ namespace MC.Objects.Account
         public bool liscencingEndUser { get; set; }
 
         [DataMember]
-        public bool liscencingPrivacyPolicy { get; set; }
+        public bool licensingPrivacyPolicy { get; set; }
 
         [DataMember]
         public System.DateTime lastActiveDate { get; set; }
