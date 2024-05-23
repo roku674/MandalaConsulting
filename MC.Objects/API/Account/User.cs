@@ -21,8 +21,6 @@ namespace MC.Objects.Account
             string email,
             bool emailConfirmed,
             List<IPInfo> ipAddresses,
-            bool privacyPolicy,
-            bool endUser,
             System.DateTime lastActiveDate,
             string password,
             ulong perilousPoints,
@@ -40,8 +38,6 @@ namespace MC.Objects.Account
             this.email = email;
             this.emailConfirmed = emailConfirmed;
             this.IPAdresses = ipAddresses ?? new List<IPInfo>();
-            this.liscencingEndUser = endUser;
-            this.licensingPrivacyPolicy = privacyPolicy;
             this.lastActiveDate = lastActiveDate != default ? lastActiveDate : System.DateTime.Now;
             this.password = password ?? throw new System.ArgumentNullException(nameof(password));
             this.perilousPoints = perilousPoints;
@@ -76,12 +72,6 @@ namespace MC.Objects.Account
 
         [DataMember]
         public List<IPInfo> IPAdresses { get; set; }
-
-        [DataMember]
-        public bool liscencingEndUser { get; set; }
-
-        [DataMember]
-        public bool licensingPrivacyPolicy { get; set; }
 
         [DataMember]
         public System.DateTime lastActiveDate { get; set; }
