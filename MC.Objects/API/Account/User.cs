@@ -16,7 +16,7 @@ namespace MC.Objects.Account
         {
         }
 
-        public User(System.DateTime banned, Bill bill, System.DateTime createdDate, string email, bool emailConfirmed, List<IPInfo> ipAddresses, System.DateTime lastActiveDate, string password, ulong perilousPoints, Profile profile, string role, System.TimeSpan timeOnline, string userId, string token, System.DateTime tokenExpiration)
+        public User(System.DateTime banned, Bill bill, System.DateTime createdDate, string email, bool emailConfirmed, List<IPInfo> ipAddresses,bool privacyPolicy, bool endUser, System.DateTime lastActiveDate, string password, ulong perilousPoints, Profile profile, string role, System.TimeSpan timeOnline, string userId, string token, System.DateTime tokenExpiration)
         {
             this.banned = banned != default ? banned : new System.DateTime(1900, 1, 1);
             this.Bill = bill;
@@ -24,6 +24,8 @@ namespace MC.Objects.Account
             this.email = email;
             this.emailConfirmed = emailConfirmed;
             this.IPAdresses = ipAddresses ?? new List<IPInfo>();
+            this.licensingPrivacyPolicy = privacyPolicy;
+            this.liscencingEndUser = endUser;
             this.lastActiveDate = lastActiveDate != default ? lastActiveDate : System.DateTime.Now;
             this.password = password ?? throw new System.ArgumentNullException(nameof(password));
             this.perilousPoints = perilousPoints;
@@ -76,6 +78,11 @@ namespace MC.Objects.Account
         {
             get; set;
         }
+
+        [DataMember]
+        public bool liscencingEndUser {get;set;}
+        [DataMember]
+        public bool liscencingPrivacyPolicy {get;set;}
 
         [DataMember]
         public System.DateTime lastActiveDate
