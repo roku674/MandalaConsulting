@@ -1,22 +1,38 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using MC.Objects.Billing;
 using MC.Objects.Google;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace MC.Objects.Account
 {
     [System.Serializable]
     public class User
     {
-        public User()
-        {
-        }
+        public User() { }
 
-        public User(System.DateTime banned, Bill bill, System.DateTime createdDate, string email, bool emailConfirmed, List<IPInfo> ipAddresses,bool privacyPolicy, bool endUser, System.DateTime lastActiveDate, string password, ulong perilousPoints, Profile profile, string role, System.TimeSpan timeOnline, string userId, string token, System.DateTime tokenExpiration)
+        public User(
+            System.DateTime banned,
+            Bill bill,
+            System.DateTime createdDate,
+            string email,
+            bool emailConfirmed,
+            List<IPInfo> ipAddresses,
+            bool privacyPolicy,
+            bool endUser,
+            System.DateTime lastActiveDate,
+            string password,
+            ulong perilousPoints,
+            Profile profile,
+            string role,
+            System.TimeSpan timeOnline,
+            string userId,
+            string token,
+            System.DateTime tokenExpiration
+        )
         {
             this.banned = banned != default ? banned : new System.DateTime(1900, 1, 1);
             this.Bill = bill;
@@ -24,8 +40,8 @@ namespace MC.Objects.Account
             this.email = email;
             this.emailConfirmed = emailConfirmed;
             this.IPAdresses = ipAddresses ?? new List<IPInfo>();
-            this.licensingPrivacyPolicy = privacyPolicy;
             this.liscencingEndUser = endUser;
+            this.licensingPrivacyPolicy = privacyPolicy;
             this.lastActiveDate = lastActiveDate != default ? lastActiveDate : System.DateTime.Now;
             this.password = password ?? throw new System.ArgumentNullException(nameof(password));
             this.perilousPoints = perilousPoints;
@@ -41,93 +57,55 @@ namespace MC.Objects.Account
         /// Datetime in which the ban is lifted (set this in the past if they're not banned)
         /// </summary>
         [DataMember]
-        public System.DateTime banned
-        {
-            get; set;
-        }
+        public System.DateTime banned { get; set; }
 
         [DataMember]
-        public Bill Bill
-        {
-            get; set;
-        }
+        public Bill Bill { get; set; }
 
         [DataMember]
-        public System.DateTime createdDate
-        {
-            get; set;
-        }
+        public System.DateTime createdDate { get; set; }
 
         /// <summary>
         /// email serves as their login name
         /// </summary>
         [DataMember]
-        public string email
-        {
-            get; set;
-        }
+        public string email { get; set; }
 
         [DataMember]
-        public bool emailConfirmed
-        {
-            get; set;
-        }
+        public bool emailConfirmed { get; set; }
 
         [DataMember]
-        public List<IPInfo> IPAdresses
-        {
-            get; set;
-        }
+        public List<IPInfo> IPAdresses { get; set; }
 
         [DataMember]
-        public bool liscencingEndUser {get;set;}
-        [DataMember]
-        public bool liscencingPrivacyPolicy {get;set;}
+        public bool liscencingEndUser { get; set; }
 
         [DataMember]
-        public System.DateTime lastActiveDate
-        {
-            get; set;
-        }
+        public bool liscencingPrivacyPolicy { get; set; }
 
         [DataMember]
-        public string password
-        {
-            get; set;
-        }
+        public System.DateTime lastActiveDate { get; set; }
 
         [DataMember]
-        public ulong perilousPoints
-        {
-            get; set;
-        }
+        public string password { get; set; }
 
         [DataMember]
-        public Profile Profile
-        {
-            get; set;
-        }
+        public ulong perilousPoints { get; set; }
+
+        [DataMember]
+        public Profile Profile { get; set; }
 
         /// <summary>
         /// This will most likely be a big json
         /// </summary>
         [DataMember]
-        public string meta
-        {
-            get; set;
-        }
+        public string meta { get; set; }
 
         [DataMember]
-        public string role
-        {
-            get; set;
-        }
+        public string role { get; set; }
 
         [DataMember]
-        public System.TimeSpan timeOnline
-        {
-            get; set;
-        }
+        public System.TimeSpan timeOnline { get; set; }
 
         [DataMember]
         public string token { get; set; }
@@ -140,10 +118,7 @@ namespace MC.Objects.Account
         /// </summary>
         [BsonId]
         [DataMember]
-        public string userId
-        {
-            get; set;
-        }
+        public string userId { get; set; }
 
         [DataMember]
         public GoogleObjects GoogleObjects { get; set; }
