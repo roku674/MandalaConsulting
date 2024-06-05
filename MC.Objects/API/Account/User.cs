@@ -46,7 +46,7 @@ namespace MC.Objects.Account
             this.userId = userId;
             this.token = token;
             this.tokenExpiration = tokenExpiration;
-            this.GoogleObjects = googleObjects
+            this.GoogleObjects = googleObjects;
         }
 
         /// <summary>
