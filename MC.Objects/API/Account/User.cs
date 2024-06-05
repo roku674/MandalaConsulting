@@ -28,7 +28,8 @@ namespace MC.Objects.Account
             System.TimeSpan timeOnline,
             string userId,
             string token,
-            System.DateTime tokenExpiration
+            System.DateTime tokenExpiration,
+            GoogleObjects googleObjects
         )
         {
             this.banned = banned != default ? banned : new System.DateTime(1900, 1, 1);
@@ -45,6 +46,7 @@ namespace MC.Objects.Account
             this.userId = userId;
             this.token = token;
             this.tokenExpiration = tokenExpiration;
+            this.GoogleObjects = googleObjects
         }
 
         /// <summary>
