@@ -23,7 +23,6 @@ namespace MC.Objects.Account
             List<IPInfo> ipAddresses,
             System.DateTime lastActiveDate,
             string password,
-            ulong perilousPoints,
             Profile profile,
             string role,
             System.TimeSpan timeOnline,
@@ -40,7 +39,6 @@ namespace MC.Objects.Account
             this.IPAdresses = ipAddresses ?? new List<IPInfo>();
             this.lastActiveDate = lastActiveDate != default ? lastActiveDate : System.DateTime.Now;
             this.password = password ?? throw new System.ArgumentNullException(nameof(password));
-            this.perilousPoints = perilousPoints;
             this.Profile = profile ?? new Profile();
             this.role = role;
             this.timeOnline = timeOnline;
@@ -78,9 +76,6 @@ namespace MC.Objects.Account
 
         [DataMember]
         public string password { get; set; }
-
-        [DataMember]
-        public ulong perilousPoints { get; set; }
 
         [DataMember]
         public Profile Profile { get; set; }
