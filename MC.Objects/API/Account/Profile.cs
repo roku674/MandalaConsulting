@@ -14,7 +14,7 @@ namespace MC.Objects.Account
 
         public Profile(Dictionary<string, object> accountSetting, System.DateTime dob, string firstName, string lastName, string middleName, ulong number) : base(dob, firstName, lastName, middleName, number)
         {
-            this.accountSettings = accountSetting;
+            this.accountSettings = accountSettings;
         }
 
         /// <summary>
