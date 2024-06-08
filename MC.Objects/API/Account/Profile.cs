@@ -1,6 +1,7 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
+using System.Collections.Generic;
 using MC.Objects.Billing;
 
 namespace MC.Objects.Account
@@ -11,7 +12,7 @@ namespace MC.Objects.Account
         {
         }
 
-        public Profile(dynamic accountSetting, System.DateTime dob, string firstName, string lastName, string middleName, ulong number) : base(dob, firstName, lastName, middleName, number)
+        public Profile(Dictionary<string, object> accountSetting, System.DateTime dob, string firstName, string lastName, string middleName, ulong number) : base(dob, firstName, lastName, middleName, number)
         {
             this.accountSettings = accountSetting;
         }
@@ -19,7 +20,7 @@ namespace MC.Objects.Account
         /// <summary>
         /// This will be served as a json essnetially meta data
         /// </summary>
-        public dynamic accountSettings {
+        public Dictionary<string, object> accountSettings {
             get; set;
         }
       
