@@ -11,15 +11,15 @@ namespace MC.Objects.Account
         {
         }
 
-        public Profile(string accountSetting, System.DateTime dob, string firstName, string lastName, string middleName, ulong number) : base(dob, firstName, lastName, middleName, number)
+        public Profile(dynamic accountSetting, System.DateTime dob, string firstName, string lastName, string middleName, ulong number) : base(dob, firstName, lastName, middleName, number)
         {
-            this.accountSettings = accountSettings ?? string.Empty;
+            this.accountSettings = accountSettings;
         }
 
         /// <summary>
         /// This will be served as a json essnetially meta data
         /// </summary>
-        public string accountSettings {
+        public dynamic accountSettings {
             get; set;
         }
       
