@@ -1,7 +1,7 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
-namespace Optimization.Logging
+namespace MC.Optimization.Logging
 {
     public enum MessageType : int
     {
