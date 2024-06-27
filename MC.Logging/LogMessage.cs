@@ -42,9 +42,21 @@ namespace MC.Optimization.Logging
         {
             timeStamp = System.DateTime.Now;
             messageSource = MessageSourceSetter;
+
             StackTrace stackTrace = new StackTrace();
-            StackFrame stackFrame = stackTrace.GetFrame(1); // 1 refers to the previous method in the call stack
-            System.Reflection.MethodBase method = stackFrame.GetMethod();
+            StackFrame stackFrame = stackTrace.GetFrame(1);
+
+            if (stackFrame.GetMethod().DeclaringType.Name == "LogMessage")
+            {
+                stackFrame = stackTrace.GetFrame(2);
+            }
+
+            if (stackFrame == null)
+            {
+                stackFrame = stackTrace.GetFrame(1);
+            }
+
+            System.Reflection.MethodBase method = stackFrame?.GetMethod();
             localOperationName = $"{method.DeclaringType.FullName}.{method.Name}";
 
             this.messageType = messageType;
