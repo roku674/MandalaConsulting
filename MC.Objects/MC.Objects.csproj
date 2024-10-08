@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageProjectUrl>https://github.com/roku674/MC</PackageProjectUrl>
+		<Title>MC.Objects</Title>
+		<Company>Mandala Consulting LLC - Alexander Fields</Company>
+		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
+		<Description>Standardization for API Objects</Description>
+		<RepositoryUrl>https://github.com/roku674/MC</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+		<PackageReference Include="MongoDB.Driver.Core" Version="2.23.1" />
+		<PackageReference Include="MongoDB.Bson" Version="2.23.1" />
+		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.23.1" />
+		<PackageReference Include="MongoDB.Libmongocrypt" Version="1.8.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+</Project>

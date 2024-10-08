@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/roku674/MC</PackageProjectUrl>
+    <Title>MC.Logging</Title>
+    <Company>Mandala Consulting LLC - Alexander Fields</Company>
+    <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
+    <Description>Basic Structure for logging </Description>
+    <RepositoryUrl>https://github.com/roku674/MC</RepositoryUrl>
+    <Version>0.0.1</Version>
+  </PropertyGroup>
+
+</Project>
