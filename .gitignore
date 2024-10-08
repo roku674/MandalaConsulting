@@ -1,0 +1,7 @@
+
+/.vs
+/MC.Logging/bin
+/MC.Logging/obj
+MC.Logging/nuget.config
+/MC.Objects/obj
+/MC.Objects/bin

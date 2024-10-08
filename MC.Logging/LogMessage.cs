@@ -46,7 +46,7 @@ namespace MC.Optimization.Logging
             StackTrace stackTrace = new StackTrace();
             StackFrame stackFrame = stackTrace.GetFrame(1);
 
-            if (stackFrame.GetMethod().DeclaringType.Name == "LogMessage")
+            if (stackFrame.GetMethod()?.DeclaringType?.Name == "LogMessage")
             {
                 stackFrame = stackTrace.GetFrame(2);
             }
@@ -57,7 +57,7 @@ namespace MC.Optimization.Logging
             }
 
             System.Reflection.MethodBase method = stackFrame?.GetMethod();
-            localOperationName = $"{method.DeclaringType.FullName}.{method.Name}";
+            localOperationName = $"{method.DeclaringType?.FullName}.{method.Name}";
 
             this.messageType = messageType;
             this.message = message;
@@ -81,7 +81,7 @@ namespace MC.Optimization.Logging
             StackTrace stackTrace = new StackTrace();
             StackFrame stackFrame = stackTrace.GetFrame(1);
 
-            if (stackFrame.GetMethod().DeclaringType.Name == "LogMessage")
+            if (stackFrame.GetMethod()?.DeclaringType?.Name == "LogMessage")
             {
                 stackFrame = stackTrace.GetFrame(2);
             }
@@ -92,7 +92,7 @@ namespace MC.Optimization.Logging
             }
 
             System.Reflection.MethodBase method = stackFrame?.GetMethod();
-            localOperationName = $"{method.DeclaringType.FullName}.{method.Name}";
+            localOperationName = $"{method.DeclaringType?.FullName}.{method.Name}";
 
             this.messageType = messageType;
             this.message = message;
