@@ -1,8 +1,15 @@
-
-/.vs
+# Ignore Visual Studio folder
+/.vs/
+# Ignore build folders
+/bin/
+/obj/
+# Ignore config files
+*.config
+/MC.APIMiddlewares/bin
+/MC.APIMiddlewares/obj
 /MC.Logging/bin
 /MC.Logging/obj
-MC.Logging/nuget.config
-/MC.Objects/obj
 /MC.Objects/bin
-MC.Objects/nuget.config
+/MC.Objects/obj
+/MC.Repository.Mongo/Repository.Mongo/obj
+/MC.Repository.Mongo/Repository.Mongo/bin
