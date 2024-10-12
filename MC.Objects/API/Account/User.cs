@@ -3,8 +3,6 @@
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using MandalaConsulting.Objects.Billing;
-using MandalaConsulting.Objects.Google;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace MandalaConsulting.Objects.Account
@@ -16,7 +14,6 @@ namespace MandalaConsulting.Objects.Account
 
         public User(
             System.DateTime banned,
-            Bill bill,
             System.DateTime createdDate,
             string email,
             bool emailConfirmed,
@@ -32,7 +29,6 @@ namespace MandalaConsulting.Objects.Account
         )
         {
             this.banned = banned != default ? banned : new System.DateTime(1900, 1, 1);
-            this.Bill = bill;
             this.createdDate = createdDate != default ? createdDate : System.DateTime.Now;
             this.email = email;
             this.emailConfirmed = emailConfirmed;
@@ -53,9 +49,6 @@ namespace MandalaConsulting.Objects.Account
         /// </summary>
         [DataMember]
         public System.DateTime banned { get; set; }
-
-        [DataMember]
-        public Bill Bill { get; set; }
 
         [DataMember]
         public System.DateTime createdDate { get; set; }
