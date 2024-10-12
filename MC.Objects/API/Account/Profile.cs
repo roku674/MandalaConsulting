@@ -1,10 +1,10 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
-using MC.Objects.Billing;
+using MandalaConsulting.Objects.Billing;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json.Linq;
 
-namespace MC.Objects.Account
+namespace MandalaConsulting.Objects.Account
 {
     [BsonIgnoreExtraElements]
     public class Profile : Contact

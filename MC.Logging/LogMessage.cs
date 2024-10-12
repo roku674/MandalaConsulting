@@ -3,7 +3,7 @@
 //Created by Alexander Fields
 using System.Diagnostics;
 
-namespace MC.Optimization.Logging
+namespace MandalaConsulting.Optimization.Logging
 {
     /// <summary>
     /// Log Message Object for easier logging

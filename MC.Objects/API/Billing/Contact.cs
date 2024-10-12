@@ -3,7 +3,7 @@
 
 using System.Runtime.Serialization;
 
-namespace MC.Objects.Billing
+namespace MandalaConsulting.Objects.Billing
 {
     [System.Serializable]
     public class Contact

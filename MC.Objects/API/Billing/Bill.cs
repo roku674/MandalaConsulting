@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace MC.Objects.Billing
+namespace MandalaConsulting.Objects.Billing
 {
     public class Bill
     {

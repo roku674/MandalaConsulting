@@ -3,11 +3,11 @@
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using MC.Objects.Billing;
-using MC.Objects.Google;
+using MandalaConsulting.Objects.Billing;
+using MandalaConsulting.Objects.Google;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace MC.Objects.Account
+namespace MandalaConsulting.Objects.Account
 {
     [System.Serializable]
     public class User

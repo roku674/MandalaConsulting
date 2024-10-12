@@ -3,7 +3,7 @@
 
 using System.Runtime.Serialization;
 
-namespace MC.Objects.Account
+namespace MandalaConsulting.Objects.Account
 {
     public class IPInfo
     {
