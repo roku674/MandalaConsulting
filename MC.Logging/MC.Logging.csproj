@@ -14,4 +14,12 @@
     <Version>0.0.1</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="nuget.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="nuget.config" />
+  </ItemGroup>
+
 </Project>
