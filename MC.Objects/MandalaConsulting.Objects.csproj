@@ -11,7 +11,7 @@
 		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
 		<Description>Standardization for API Objects</Description>
 		<RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-		<Version>0.0.1</Version>
+		<Version>0.0.2</Version>
 		<PackageTags>objects</PackageTags>
 		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Objects</PackageReleaseNotes>
 	</PropertyGroup>
