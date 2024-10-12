@@ -5,13 +5,15 @@
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageProjectUrl>https://github.com/roku674/MC</PackageProjectUrl>
-		<Title>MC.Objects</Title>
+		<PackageProjectUrl>https://github.com/roku674/MandalaConsulting</PackageProjectUrl>
+		<Title>MandalaConsulting.Objects</Title>
 		<Company>Mandala Consulting LLC - Alexander Fields</Company>
 		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
 		<Description>Standardization for API Objects</Description>
-		<RepositoryUrl>https://github.com/roku674/MC</RepositoryUrl>
+		<RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
 		<Version>0.0.1</Version>
+		<PackageTags>objects</PackageTags>
+		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Objects</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

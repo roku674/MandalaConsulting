@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC.Logging", "MC.Logging\MC.Logging.csproj", "{BFFB6932-6B65-4749-B0DE-B196AB7278F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MandalaConsulting.Logging", "MC.Logging\MandalaConsulting.Logging.csproj", "{BFFB6932-6B65-4749-B0DE-B196AB7278F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC.Objects", "MC.Objects\MC.Objects.csproj", "{F1DAB400-172F-4263-AD98-E3F24F7E9E15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MandalaConsulting.Objects", "MC.Objects\MandalaConsulting.Objects.csproj", "{F1DAB400-172F-4263-AD98-E3F24F7E9E15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
-namespace MC.API.Objects
+namespace MandalaConsulting.API.Objects
 {
     public class BannedIP
     {

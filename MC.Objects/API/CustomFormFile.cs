@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MC.API.Objects
+namespace MandalaConsulting.API.Objects
 {
     public class CustomFormFile : IFormFile
     {

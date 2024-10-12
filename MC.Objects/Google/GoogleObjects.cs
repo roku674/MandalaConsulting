@@ -3,7 +3,7 @@
 
 using Google.Integrations;
 
-namespace MC.Objects.Google
+namespace MandalaConsulting.Objects.Google
 {
     public class GoogleObjects
     {
