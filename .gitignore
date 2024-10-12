@@ -5,3 +5,4 @@
 MC.Logging/nuget.config
 /MC.Objects/obj
 /MC.Objects/bin
+MC.Objects/nuget.config
