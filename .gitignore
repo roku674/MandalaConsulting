@@ -11,5 +11,5 @@
 /MC.Logging/obj
 /MC.Objects/bin
 /MC.Objects/obj
-/MC.Repository.Mongo/Repository.Mongo/obj
-/MC.Repository.Mongo/Repository.Mongo/bin
+/MC.Repository.Mongo/obj
+/MC.Repository.Mongo/bin
