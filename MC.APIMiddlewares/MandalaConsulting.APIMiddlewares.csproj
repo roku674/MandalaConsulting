@@ -5,15 +5,15 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	  <PackageProjectUrl>https://github.com/roku674/Repository.Mongo</PackageProjectUrl>
-	  <Title>Repository.Mongo</Title>
-	  <Company>Mandala Consulting LLC - Alexander Fields</Company>
-	  <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
-	  <Description>Middleware for APIs</Description>
-	  <RepositoryUrl>https://github.com/roku674/Repository.Mongo</RepositoryUrl>
-	  <Version>0.0.1</Version>
-	  <PackageTags>middleware</PackageTags>
-	  <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Repository.Mongo</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/roku674/MandalaConsulting</PackageProjectUrl>
+    <Title>MandalaConsulting.APIMiddlewares</Title>
+    <Company>Mandala Consulting LLC - Alexander Fields</Company>
+    <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
+    <Description>Middlewares for APIs</Description>
+    <RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
+    <Version>0.0.1</Version>
+    <PackageTags>middleware</PackageTags>
+    <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.APIMiddlewares</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
