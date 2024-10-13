@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <PackageProjectUrl>https://github.com/roku674/Repository.Mongo</PackageProjectUrl>
+	  <Title>Repository.Mongo</Title>
+	  <Company>Mandala Consulting LLC - Alexander Fields</Company>
+	  <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
+	  <Description>Middleware for APIs</Description>
+	  <RepositoryUrl>https://github.com/roku674/Repository.Mongo</RepositoryUrl>
+	  <Version>0.0.1</Version>
+	  <PackageTags>middleware</PackageTags>
+	  <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Repository.Mongo</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MandalaConsulting.Logging" Version="0.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+  </ItemGroup>
+
+</Project>
