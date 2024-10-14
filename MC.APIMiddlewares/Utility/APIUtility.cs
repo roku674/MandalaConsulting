@@ -25,10 +25,10 @@ namespace MandalaConsulting.APIMiddleware.Utility
                 {
                     IPBlacklistMiddleware.AddLog(
                         LogMessage.Critical(
-                            $" There was a problem getting the IP Address from {context.ToString()}. It was assigned it an arbitrary 10.0.0.1"
+                            $" There was a problem getting the IP Address from {context.ToString()}. It was assigned it an arbitrary 198.51.100.255"
                         )
                     );
-                    return "10.0.0.1";
+                    return "198.51.100.255";
                 }
 
                 return ipAddress;
@@ -37,10 +37,10 @@ namespace MandalaConsulting.APIMiddleware.Utility
             {
                 IPBlacklistMiddleware.AddLog(
                     LogMessage.Critical(
-                        $" There was a problem getting the IP Address from {context.ToString()}. It was assigned it an arbitrary 10.0.0.1 {ex.ToString()}"
+                        $" There was a problem getting the IP Address from {context.ToString()}. It was assigned it an arbitrary 198.51.100.255 {ex.ToString()}"
                     )
                 );
-                return "10.0.0.1";
+                return "198.51.100.255";
             }
         }
 
@@ -64,10 +64,10 @@ namespace MandalaConsulting.APIMiddleware.Utility
             {
                 IPBlacklistMiddleware.AddLog(
                     LogMessage.Critical(
-                        $" There was a problem getting the IP Address from {context.ToString()}. It was assigned it an arbitrary 10.0.0.1"
+                        $" There was a problem getting the IP Address from {context.ToString()}. It was assigned it an arbitrary 198.51.100.255"
                     )
                 );
-                return "10.0.0.1";
+                return "198.51.100.255";
             }
 
             return ipAddress;
