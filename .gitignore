@@ -9,8 +9,7 @@
 /MC.APIMiddlewares/obj
 /MC.Logging/bin
 /MC.Logging/obj
-/MC.Objects/bin
-/MC.Objects/obj
 /MC.Repository.Mongo/obj
 /MC.Repository.Mongo/bin
 /MC.Objects.API/obj
+/MC.Objects.API/bin
