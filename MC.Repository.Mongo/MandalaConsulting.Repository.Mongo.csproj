@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MandalaConsulting.Logging" Version="0.0.1" />
+		<PackageReference Include="MandalaConsulting.Logging" Version="*" />
 		<PackageReference Include="MongoDB.Bson" Version="2.29.0" />
 	  <PackageReference Include="MongoDB.Driver" Version="2.29.0" />
 	  <PackageReference Include="MongoDB.Driver.Core" Version="2.29.0" />
