@@ -6,6 +6,7 @@ using MandalaConsulting.APIMiddleware.Objects;
 using MandalaConsulting.APIMiddleware.Utility;
 using Microsoft.AspNetCore.Http;
 using MandalaConsulting.Optimization.Logging;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace MandalaConsulting.APIMiddleware
 {
@@ -39,11 +40,14 @@ namespace MandalaConsulting.APIMiddleware
 
             await _next(context);
 
+            // Check if a route matched
+            Endpoint endpoint = context.Features.Get<IEndpointFeature>()?.Endpoint;
+
             // Check if response is 404 Not Found
             if (context.Response.StatusCode == StatusCodes.Status404NotFound)
             {
-                //Not sure if there should even be a consequence for not found
-                if (requestedPath.EndsWith(".env"))
+                // Determine if the 404 is due to a non-existent endpoint
+                if (endpoint == null)
                 {
                     RecordFailedAttempt(clientIP, requestedPath);
                 }
@@ -57,7 +61,7 @@ namespace MandalaConsulting.APIMiddleware
                 );
                 RecordFailedAttempt(clientIP, requestedPath);
             }
-            else if(context.Response.StatusCode == StatusCodes.Status403Forbidden)
+            else if (context.Response.StatusCode == StatusCodes.Status403Forbidden)
             {
                 IPBlacklistMiddleware.AddLog(
                     LogMessage.Informational(
@@ -87,7 +91,7 @@ namespace MandalaConsulting.APIMiddleware
                 IPBlacklistMiddleware.AddLog(LogMessage.Informational($"{ipAddress} tried to access {requestedPath} which ended in '.env'. IP has been banned."));
                 return;
             }
-            
+
             if (!_failedAttempts.ContainsKey(ipAddress))
             {
                 _failedAttempts[ipAddress] = new AttemptInfo();
