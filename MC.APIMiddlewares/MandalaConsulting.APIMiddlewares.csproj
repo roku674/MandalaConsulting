@@ -11,7 +11,7 @@
     <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
     <Description>Middlewares for APIs</Description>
     <RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
     <PackageTags>middleware</PackageTags>
     <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.APIMiddlewares</PackageReleaseNotes>
   </PropertyGroup>
