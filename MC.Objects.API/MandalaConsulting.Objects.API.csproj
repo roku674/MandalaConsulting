@@ -9,11 +9,13 @@
 		<Title>MandalaConsulting.Objects.API</Title>
 		<Company>Mandala Consulting LLC - Alexander Fields</Company>
 		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
-		<Description>Standardization for API Objects</Description>
+		<Description>Standardization for API Objects - MandalaConsulting.Objects.API</Description>
 		<RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-		<Version>0.0.1</Version>
+		<Version>0.0.3</Version>
 		<PackageTags>objects</PackageTags>
 		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Objects.API</PackageReleaseNotes>
+		<Authors>Mandala Consulting LLC, Alexander Fields</Authors>
+
 	</PropertyGroup>
 
 	<ItemGroup>

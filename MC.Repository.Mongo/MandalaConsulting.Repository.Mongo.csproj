@@ -9,11 +9,13 @@
 		<Title>MandalaConsulting.Repository.Mongo</Title>
 		<Company>Mandala Consulting LLC - Alexander Fields</Company>
 		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
-		<Description>Repository for Generic Mongo Usage</Description>
+		<Description>Repository for Generic Mongo Usage - MandalaConsulting.Repository.Mongo</Description>
 		<RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-		<Version>0.0.1</Version>
+		<Version>0.0.3</Version>
 		<PackageTags>Mongo</PackageTags>
 		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Repository.Logging</PackageReleaseNotes>
+		<Authors>Mandala Consulting LLC, Alexander Fields</Authors>
+
 	</PropertyGroup>
 
 	<ItemGroup>
