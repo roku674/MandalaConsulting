@@ -9,15 +9,17 @@
     <Title>MandalaConsulting.APIMiddlewares</Title>
     <Company>Mandala Consulting LLC - Alexander Fields</Company>
     <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
-    <Description>Middlewares for APIs</Description>
+    <Description>Middlewares for APIs - MandalaConsulting.APIMiddlewares</Description>
     <RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-    <Version>0.0.4</Version>
+    <Version>0.0.7</Version>
     <PackageTags>middleware</PackageTags>
     <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.APIMiddlewares</PackageReleaseNotes>
+    <Authors>Mandala Consulting LLC, Alexander Fields</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MandalaConsulting.Logging" Version="*" />
+	<PackageReference Include="MandalaConsulting.Memory" Version="*" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>

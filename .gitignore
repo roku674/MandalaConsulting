@@ -13,3 +13,8 @@
 /MC.Repository.Mongo/bin
 /MC.Objects.API/obj
 /MC.Objects.API/bin
+/Memory/obj
+/MC.Memory/bin
+/MC.Memory/obj
+/Memory/bin
+deploy_nugets.py
