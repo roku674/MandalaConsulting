@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MandalaConsulting.Repository.Mongo
 {
     /// <summary>
-    /// Make sure you set the MongoDB Instance before calling the classes in this 
+    /// Make sure you set the MongoDB Instance before calling the classes in this
     /// </summary>
 
     public interface IMongoHelper
@@ -31,7 +31,7 @@ namespace MandalaConsulting.Repository.Mongo
         /// <param name="document"></param>
         /// <returns></returns>
         Task CreateDocumentAsync<T>(string collectionName, T document);
-        
+
         /// <summary>
         /// Create Instance of the Database
         /// </summary>
@@ -39,7 +39,7 @@ namespace MandalaConsulting.Repository.Mongo
         /// <param name="connectionString"></param>
         /// <returns></returns>
         IMongoDatabase CreateMongoDbInstance(string dbName, string connectionString);
-        
+
         /// <summary>
         /// Be Careful
         /// </summary>
@@ -48,7 +48,7 @@ namespace MandalaConsulting.Repository.Mongo
         /// <param name="filter"></param>
         /// <returns></returns>
         Task<DeleteResult> DeleteDocumentAsync<T>(string collectionName, FilterDefinition<T> filter);
-        
+
         /// <summary>
         /// Get All documents in collection
         /// </summary>
@@ -56,7 +56,7 @@ namespace MandalaConsulting.Repository.Mongo
         /// <param name="collectionName"></param>
         /// <returns></returns>
         Task<List<T>> GetAllDocumentsAsync<T>(string collectionName);
-        
+
         /// <summary>
         /// Get a Mongo Document
         /// </summary>
@@ -65,13 +65,7 @@ namespace MandalaConsulting.Repository.Mongo
         /// <param name="filter"></param>
         /// <returns></returns>
         Task<List<T>> GetFilteredDocumentsAsync<T>(string collectionName, FilterDefinition<T> filter);
-        
-        /// <summary>
-        /// Tests the connection to the database
-        /// </summary>
-        /// <returns>Will return a List of Collection Names if it worked otherwise returns null</returns>
-        List<string> TestConnection();
-        
+
         /// <summary>
         /// Replaces a document
         /// </summary>
@@ -81,6 +75,13 @@ namespace MandalaConsulting.Repository.Mongo
         /// <param name="document"></param>
         /// <returns></returns>
         Task<ReplaceOneResult> ReplaceDocumentAsync<T>(string collectionName, FilterDefinition<T> filter, T document);
+
+        /// <summary>
+        /// Tests the connection to the database
+        /// </summary>
+        /// <returns>Will return a List of Collection Names if it worked otherwise returns null</returns>
+        List<string> TestConnection();
+
         /// <summary>
         /// Updates a document
         /// </summary>

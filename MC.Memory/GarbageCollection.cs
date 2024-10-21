@@ -9,13 +9,13 @@ namespace MandalaConsulting.Optimization.Memory
     {
         private bool _disposed;
 
+        public GarbageCollection()
+        {
+        }
+
         ~GarbageCollection()
         {
             GC.SuppressFinalize(this);
-        }
-
-        public GarbageCollection()
-        {
         }
 
         public void PerformGarbageCollection(object state)

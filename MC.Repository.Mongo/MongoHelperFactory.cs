@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+
 //Copyright © 2023 Mandala Consulting, LLC MIT License
 //Created by Alexander Fields
 namespace MandalaConsulting.Repository.Mongo
@@ -26,7 +27,7 @@ namespace MandalaConsulting.Repository.Mongo
 
                 mongoHelper.database = mongoHelper.CreateMongoDbInstance(dbName, connectionString);
                 mongoHelper.dbName = dbName;
-               
+
                 // Cache the newly created MongoHelper
                 _cache.TryAdd(cacheKey, mongoHelper);
 

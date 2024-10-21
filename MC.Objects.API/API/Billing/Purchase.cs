@@ -60,7 +60,8 @@ namespace MandalaConsulting.Objects.API.Billing
         }
 
         [DataMember]
-        public Address AddressBilling {
+        public Address AddressBilling
+        {
             get; set;
         }
 
@@ -68,12 +69,14 @@ namespace MandalaConsulting.Objects.API.Billing
         /// For all intents and purposes this is the recipient
         /// </summary>
         [DataMember]
-        public Address AddressShipping {
+        public Address AddressShipping
+        {
             get; set;
         }
 
         [DataMember]
-        public string company {
+        public string company
+        {
             get; set;
         }
 
@@ -81,7 +84,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Flat discount rate
         /// </summary>
         [DataMember]
-        public decimal discount {
+        public decimal discount
+        {
             get; set;
         }
 
@@ -89,22 +93,26 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Percentage of a discount
         /// </summary>
         [DataMember]
-        public decimal discountPerc {
+        public decimal discountPerc
+        {
             get; set;
         }
 
         [DataMember]
-        public decimal donation {
+        public decimal donation
+        {
             get; set;
         }
 
         [DataMember]
-        public bool isGift {
+        public bool isGift
+        {
             get; set;
         }
 
         [DataMember]
-        public bool isRefund {
+        public bool isRefund
+        {
             get; set;
         }
 
@@ -112,17 +120,20 @@ namespace MandalaConsulting.Objects.API.Billing
         /// This is the name of the object(s) or service(s) they just purchased
         /// </summary>
         [DataMember]
-        public Product Item {
+        public Product Item
+        {
             get; set;
         }
 
         [DataMember]
-        public PaymentType paymentType {
+        public PaymentType paymentType
+        {
             get; set;
         }
 
         [DataMember]
-        public Contact Purchaser {
+        public Contact Purchaser
+        {
             get; set;
         }
 
@@ -130,7 +141,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Amount of money that went to taxes
         /// </summary>
         [DataMember]
-        public decimal taxAmount {
+        public decimal taxAmount
+        {
             get; set;
         }
 
@@ -138,7 +150,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// State/Province for tax purposes
         /// </summary>
         [DataMember]
-        public string taxLocation {
+        public string taxLocation
+        {
             get; set;
         }
 
@@ -146,7 +159,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Sale's tax percentage
         /// </summary>
         [DataMember]
-        public decimal taxPercentage {
+        public decimal taxPercentage
+        {
             get; set;
         }
 
@@ -154,12 +168,14 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Time of purchase
         /// </summary>
         [DataMember]
-        public System.DateTime time {
+        public System.DateTime time
+        {
             get; set;
         }
 
         [DataMember]
-        public decimal tip {
+        public decimal tip
+        {
             get; set;
         }
 
@@ -167,12 +183,14 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Total amount after cost, taxes and possibly tip?, donation?
         /// </summary>
         [DataMember]
-        public decimal total {
+        public decimal total
+        {
             get; set;
         }
 
         [DataMember]
-        public string transactionId {
+        public string transactionId
+        {
             get; set;
         }
     }

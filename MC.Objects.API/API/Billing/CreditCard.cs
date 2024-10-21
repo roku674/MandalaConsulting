@@ -5,22 +5,6 @@ namespace MandalaConsulting.Objects.API.Billing
 {
     public class CreditCard
     {
-        public string CardNumber {
-            get; set;
-        }
-
-        public string CardHolderName {
-            get; set;
-        }
-
-        public System.DateTime ExpirationDate {
-            get; set;
-        }
-
-        public int CVV {
-            get; set;
-        }
-
         public CreditCard(string cardNumber, string cardHolderName, System.DateTime expirationDate, int cvv)
         {
             CardNumber = cardNumber;
@@ -31,6 +15,26 @@ namespace MandalaConsulting.Objects.API.Billing
 
         public CreditCard()
         {
+        }
+
+        public string CardHolderName
+        {
+            get; set;
+        }
+
+        public string CardNumber
+        {
+            get; set;
+        }
+
+        public int CVV
+        {
+            get; set;
+        }
+
+        public System.DateTime ExpirationDate
+        {
+            get; set;
         }
 
         public bool IsValid()

@@ -1,24 +1,34 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using MandalaConsulting.APIMiddleware.Objects;
 using MandalaConsulting.APIMiddleware.Utility;
-using Microsoft.AspNetCore.Http;
 using MandalaConsulting.Optimization.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MandalaConsulting.APIMiddleware
 {
+    public class AttemptInfo
+    {
+        public int Count { get; set; }
+        public HashSet<string> Paths { get; set; } = new HashSet<string>();
+    }
+
     public class InvalidEndpointTrackerMiddleware
     {
-        private readonly RequestDelegate _next;
+        private const int MaxAttempts = 10;
 
         //Something needs to be done about clearing these out
         private static readonly Dictionary<string, AttemptInfo> _failedAttempts = new Dictionary<string, AttemptInfo>();
-        private const int MaxAttempts = 10; // Set your threshold here
-        private static System.DateTime _lastCleanup = System.DateTime.UtcNow;
+
         private static readonly System.TimeSpan cleanupInterval = System.TimeSpan.FromHours(24);
+
+        // Set your threshold here
+        private static System.DateTime _lastCleanup = System.DateTime.UtcNow;
+
+        private readonly RequestDelegate _next;
 
         public InvalidEndpointTrackerMiddleware(RequestDelegate next)
         {
@@ -119,11 +129,5 @@ namespace MandalaConsulting.APIMiddleware
                 );
             }
         }
-    }
-
-    public class AttemptInfo
-    {
-        public int Count { get; set; }
-        public HashSet<string> Paths { get; set; } = new HashSet<string>();
     }
 }

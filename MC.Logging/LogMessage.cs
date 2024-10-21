@@ -1,4 +1,3 @@
-
 //Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 using System.Diagnostics;
@@ -10,21 +9,6 @@ namespace MandalaConsulting.Optimization.Logging
     /// </summary>
     public class LogMessage
     {
-        // Define the delegate and event
-        public delegate void LogAddedEventHandler(object sender, LogMessageEventArgs e);
-        public static event LogAddedEventHandler LogAdded;
-
-        public long id { get; set; }
-        public System.DateTime timeStamp { get; set; }
-        /// <summary>
-        /// This is the program that is running
-        /// </summary>
-        public static string MessageSourceSetter { get; set; } = "You didn't set the name of your program!";
-        public string messageSource { get; set; }
-        public string localOperationName { get; set; }
-        public MessageType messageType { get; set; }
-        public string message { get; set; }
-
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -97,6 +81,44 @@ namespace MandalaConsulting.Optimization.Logging
             this.messageType = messageType;
             this.message = message;
             LogAdded?.Invoke(this, new LogMessageEventArgs(this));
+        }
+
+        // Define the delegate and event
+        public delegate void LogAddedEventHandler(object sender, LogMessageEventArgs e);
+
+        public static event LogAddedEventHandler LogAdded;
+
+        /// <summary>
+        /// This is the program that is running
+        /// </summary>
+        public static string MessageSourceSetter { get; set; } = "You didn't set the name of your program!";
+
+        public long id { get; set; }
+        public string localOperationName { get; set; }
+        public string message { get; set; }
+        public string messageSource { get; set; }
+        public MessageType messageType { get; set; }
+        public System.DateTime timeStamp { get; set; }
+
+        /// <summary>
+        /// Static method to create a celebrate log message
+        /// </summary>
+        /// <param name="message">The celebrate message</param>
+        /// <returns>A LogMessage instance with MessageType.Celebrate</returns>
+        public static LogMessage Celebrate(string message)
+        {
+            return new LogMessage(MessageType.Celebrate, message);
+        }
+
+        /// <summary>
+        /// Static method to create a celebrate log message
+        /// </summary>
+        /// <param name="id">ID of the log message</param>
+        /// <param name="message">The celebrate message</param>
+        /// <returns>A LogMessage instance with MessageType.Celebrate</returns>
+        public static LogMessage Celebrate(int id, string message)
+        {
+            return new LogMessage(id, MessageType.Celebrate, message);
         }
 
         /// <summary>
@@ -208,7 +230,7 @@ namespace MandalaConsulting.Optimization.Logging
         /// Static method to create a warning log message
         /// </summary>
         /// <param name="message">The warning message</param>
-        /// <returns>A LogMessage instance with MessageType.Warning</returns>    
+        /// <returns>A LogMessage instance with MessageType.Warning</returns>
         public static LogMessage Warning(string message)
         {
             return new LogMessage(MessageType.Warning, message);
@@ -219,41 +241,20 @@ namespace MandalaConsulting.Optimization.Logging
         /// </summary>
         /// <param name="id">ID of the log message</param>
         /// <param name="message">The warning message</param>
-        /// <returns>A LogMessage instance with MessageType.Warning</returns>    
+        /// <returns>A LogMessage instance with MessageType.Warning</returns>
         public static LogMessage Warning(int id, string message)
         {
             return new LogMessage(id, MessageType.Warning, message);
-        }
-
-        /// <summary>
-        /// Static method to create a celebrate log message
-        /// </summary>
-        /// <param name="message">The celebrate message</param>
-        /// <returns>A LogMessage instance with MessageType.Celebrate</returns>
-        public static LogMessage Celebrate(string message)
-        {
-            return new LogMessage(MessageType.Celebrate, message);
-        }
-
-        /// <summary>
-        /// Static method to create a celebrate log message
-        /// </summary>
-        /// <param name="id">ID of the log message</param>
-        /// <param name="message">The celebrate message</param>
-        /// <returns>A LogMessage instance with MessageType.Celebrate</returns>
-        public static LogMessage Celebrate(int id, string message)
-        {
-            return new LogMessage(id, MessageType.Celebrate, message);
         }
     }
 
     public class LogMessageEventArgs : System.EventArgs
     {
-        public LogMessage log { get; }
-
         public LogMessageEventArgs(LogMessage logMessage)
         {
             log = logMessage;
         }
+
+        public LogMessage log { get; }
     }
 }

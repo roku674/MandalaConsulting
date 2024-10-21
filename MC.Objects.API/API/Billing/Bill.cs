@@ -21,8 +21,10 @@ namespace MandalaConsulting.Objects.API.Billing
             this.Refunds = refunds ?? new List<Purchase>();
             this.Subscriptions = subscriptions ?? new List<Subscription>();
         }
+
         [DataMember]
         public string _id { get; set; }
+
         /// <summary>
         /// Keep a billign address on file
         /// </summary>
@@ -73,6 +75,7 @@ namespace MandalaConsulting.Objects.API.Billing
         {
             get; set;
         }
+
         public dynamic GetPrimaryPayment()
         {
             if (PaymentTypesOnFile.CreditCard != null)

@@ -29,22 +29,26 @@ namespace MandalaConsulting.Objects.API.Billing
         }
 
         [DataMember]
-        public System.DateTime dob {
+        public System.DateTime dob
+        {
             get; set;
         }
 
         [DataMember]
-        public string firstName {
+        public string firstName
+        {
             get; set;
         }
 
         [DataMember]
-        public string lastName {
+        public string lastName
+        {
             get; set;
         }
 
         [DataMember]
-        public string middleName {
+        public string middleName
+        {
             get; set;
         }
 
@@ -52,7 +56,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// This is their phone number if they have one
         /// </summary>
         [DataMember]
-        public ulong number {
+        public ulong number
+        {
             get; set;
         }
     }

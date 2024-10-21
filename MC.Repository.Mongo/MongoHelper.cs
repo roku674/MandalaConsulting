@@ -1,11 +1,12 @@
+using MandalaConsulting.Optimization.Logging;
+
+//Copyright © 2023 Mandala Consulting, LLC MIT License
+//Created by Alexander Fields
+using MongoDB.Driver;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-//Copyright © 2023 Mandala Consulting, LLC MIT License
-//Created by Alexander Fields
-using MongoDB.Driver;
-using MandalaConsulting.Optimization.Logging;
 
 namespace MandalaConsulting.Repository.Mongo
 {
@@ -15,22 +16,12 @@ namespace MandalaConsulting.Repository.Mongo
     public class MongoHelper : IMongoHelper
     {
         private static readonly ConcurrentQueue<LogMessage> mongoLogs = new ConcurrentQueue<LogMessage>();
-        public static event System.EventHandler<LogMessageEventArgs> LogAdded;
-        public static event System.EventHandler LogCleared;
-
-        public IMongoDatabase database { get; set; }
-
-        public string dbName { get; set; }
 
         /// <summary>
         /// default Constrcutor
         /// </summary>
-        public MongoHelper() { }
-        
-        ~MongoHelper()
-        {
-            ClearLogs();
-        }
+        public MongoHelper()
+        { }
 
         /// <summary>
         /// Constructor that will get Database
@@ -44,40 +35,23 @@ namespace MandalaConsulting.Repository.Mongo
             database = db;
         }
 
-        /// <summary>
-        /// Helper for connecting to database
-        /// </summary>
-        /// <param name="mongoHelper">instance of the mongo helper that will connect</param>
-        /// <param name="dbName"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="cluster"></param>
-        /// <param name="region">I have no idea if it's actually the region its just an assumption but its different on like all my databases</param>
-        /// <returns>mongo helper</returns>
-        public static IMongoHelper MongoHelperConnector(
-            IMongoHelper mongoHelper,
-            string dbName,
-            string username,
-            string password,
-            string cluster,
-            string region
-        )
+        ~MongoHelper()
         {
-            string connectionString = ConnectionStringBuilder(username, password, cluster, region);
+            ClearLogs();
+        }
 
-            mongoHelper.database = mongoHelper.CreateMongoDbInstance(dbName, connectionString);
-            try
-            {
-                List<string> collections = mongoHelper.TestConnection();
-            }
-            catch (System.Exception theseHands)
-            {
-                AddLog(LogMessage.Error(theseHands.Message));
-            }
+        public static event System.EventHandler<LogMessageEventArgs> LogAdded;
 
-            mongoHelper.dbName = dbName;
+        public static event System.EventHandler LogCleared;
 
-            return mongoHelper;
+        public IMongoDatabase database { get; set; }
+
+        public string dbName { get; set; }
+
+        public static void ClearLogs()
+        {
+            mongoLogs?.Clear();
+            LogCleared?.Invoke(null, System.EventArgs.Empty);
         }
 
         /// <summary>
@@ -101,100 +75,6 @@ namespace MandalaConsulting.Repository.Mongo
             string connectionString =
                 $"mongodb+srv://{username}:{encodedPassword}@{cluster}.{region}.mongodb.net/?retryWrites=true&w=majority";
             return connectionString;
-        }
-
-        /// <summary>
-        /// For if already constructed to get Database
-        /// </summary>
-        /// <param name="dbName"></param>
-        /// <param name="connectionString"></param>
-        /// <returns></returns>
-        public IMongoDatabase CreateMongoDbInstance(string dbName, string connectionString)
-        {
-            MongoClient client = new MongoClient(connectionString);
-            IMongoDatabase db = client.GetDatabase(dbName);
-            return db;
-        }
-
-        /// <summary>
-        /// Tests the connection to the database
-        /// </summary>
-        /// <returns>Will return a List of Collection Names if it worked otherwise returns null</returns>
-        public List<string> TestConnection()
-        {
-            try
-            {
-                List<string> collectionNames = database.ListCollectionNames().ToList();
-                return collectionNames;
-            }
-            catch (System.Exception e)
-            {
-                AddLog(
-                    LogMessage.Error(
-                        "Was unable to properly connect to the database!" + e.ToString()
-                    )
-                );
-                return null;
-            }
-        }
-
-        public async Task<List<T>> GetAllDocumentsAsync<T>(string collectionName)
-        {
-            IMongoCollection<T> collection = GetCollection<T>(collectionName);
-            return await collection.Find(x => true).ToListAsync();
-        }
-
-        public async Task<List<T>> GetFilteredDocumentsAsync<T>(
-            string collectionName,
-            FilterDefinition<T> filter
-        )
-        {
-            return await GetCollection<T>(collectionName).Find(filter).ToListAsync();
-        }
-
-        public async Task<ReplaceOneResult> ReplaceDocumentAsync<T>(
-            string collectionName,
-            FilterDefinition<T> filter,
-            T document
-        )
-        {
-            return await GetCollection<T>(collectionName).ReplaceOneAsync(filter, document);
-        }
-
-        public async Task<UpdateResult> UpdateDocumentAsync<T>(
-            string collectionName,
-            FilterDefinition<T> filter,
-            UpdateDefinition<T> document
-        )
-        {
-            return await GetCollection<T>(collectionName).UpdateOneAsync(filter, document);
-        }
-
-        public async Task CreateDocumentAsync<T>(string collectionName, T document)
-        {
-            await GetCollection<T>(collectionName).InsertOneAsync(document);
-        }
-
-        public async Task<DeleteResult> DeleteDocumentAsync<T>(string collectionName, FilterDefinition<T> filter)
-        {
-            return await GetCollection<T>(collectionName).DeleteOneAsync(filter);
-        }
-
-        private IMongoCollection<T> GetCollection<T>(string collectionName)
-        {
-            return database.GetCollection<T>(collectionName);
-        }
-
-        protected static void AddLog(LogMessage logMessage)
-        {
-            mongoLogs.Enqueue(logMessage);
-            LogAdded?.Invoke(null, new LogMessageEventArgs(logMessage));
-        }
-
-        public static void ClearLogs()
-        {
-            mongoLogs?.Clear();
-            LogCleared?.Invoke(null, System.EventArgs.Empty);
         }
 
         /// <summary>
@@ -239,6 +119,130 @@ namespace MandalaConsulting.Repository.Mongo
         public static IList<LogMessage> GetLogs()
         {
             return mongoLogs.ToArray();
+        }
+
+        /// <summary>
+        /// Helper for connecting to database
+        /// </summary>
+        /// <param name="mongoHelper">instance of the mongo helper that will connect</param>
+        /// <param name="dbName"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="cluster"></param>
+        /// <param name="region">I have no idea if it's actually the region its just an assumption but its different on like all my databases</param>
+        /// <returns>mongo helper</returns>
+        public static IMongoHelper MongoHelperConnector(
+            IMongoHelper mongoHelper,
+            string dbName,
+            string username,
+            string password,
+            string cluster,
+            string region
+        )
+        {
+            string connectionString = ConnectionStringBuilder(username, password, cluster, region);
+
+            mongoHelper.database = mongoHelper.CreateMongoDbInstance(dbName, connectionString);
+            try
+            {
+                List<string> collections = mongoHelper.TestConnection();
+            }
+            catch (System.Exception theseHands)
+            {
+                AddLog(LogMessage.Error(theseHands.Message));
+            }
+
+            mongoHelper.dbName = dbName;
+
+            return mongoHelper;
+        }
+
+        public async Task CreateDocumentAsync<T>(string collectionName, T document)
+        {
+            await GetCollection<T>(collectionName).InsertOneAsync(document);
+        }
+
+        /// <summary>
+        /// For if already constructed to get Database
+        /// </summary>
+        /// <param name="dbName"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public IMongoDatabase CreateMongoDbInstance(string dbName, string connectionString)
+        {
+            MongoClient client = new MongoClient(connectionString);
+            IMongoDatabase db = client.GetDatabase(dbName);
+            return db;
+        }
+
+        public async Task<DeleteResult> DeleteDocumentAsync<T>(string collectionName, FilterDefinition<T> filter)
+        {
+            return await GetCollection<T>(collectionName).DeleteOneAsync(filter);
+        }
+
+        public async Task<List<T>> GetAllDocumentsAsync<T>(string collectionName)
+        {
+            IMongoCollection<T> collection = GetCollection<T>(collectionName);
+            return await collection.Find(x => true).ToListAsync();
+        }
+
+        public async Task<List<T>> GetFilteredDocumentsAsync<T>(
+                    string collectionName,
+                    FilterDefinition<T> filter
+                )
+        {
+            return await GetCollection<T>(collectionName).Find(filter).ToListAsync();
+        }
+
+        public async Task<ReplaceOneResult> ReplaceDocumentAsync<T>(
+                    string collectionName,
+                    FilterDefinition<T> filter,
+                    T document
+                )
+        {
+            return await GetCollection<T>(collectionName).ReplaceOneAsync(filter, document);
+        }
+
+        /// <summary>
+        /// Tests the connection to the database
+        /// </summary>
+        /// <returns>Will return a List of Collection Names if it worked otherwise returns null</returns>
+        public List<string> TestConnection()
+        {
+            try
+            {
+                List<string> collectionNames = database.ListCollectionNames().ToList();
+                return collectionNames;
+            }
+            catch (System.Exception e)
+            {
+                AddLog(
+                    LogMessage.Error(
+                        "Was unable to properly connect to the database!" + e.ToString()
+                    )
+                );
+                return null;
+            }
+        }
+
+        public async Task<UpdateResult> UpdateDocumentAsync<T>(
+            string collectionName,
+            FilterDefinition<T> filter,
+            UpdateDefinition<T> document
+        )
+        {
+            return await GetCollection<T>(collectionName).UpdateOneAsync(filter, document);
+        }
+
+        protected static void AddLog(LogMessage logMessage)
+        {
+            mongoLogs.Enqueue(logMessage);
+            LogAdded?.Invoke(null, new LogMessageEventArgs(logMessage));
+        }
+
+        private IMongoCollection<T> GetCollection<T>(string collectionName)
+        {
+            return database.GetCollection<T>(collectionName);
         }
     }
 }

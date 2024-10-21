@@ -7,6 +7,15 @@ namespace MandalaConsulting.Objects.API.Billing
 {
     public class PayeeInfo
     {
+        [DataMember(Name = "client_id")]
+        public string ClientId;
+
+        [DataMember(Name = "email_address")]
+        public string Email;
+
+        [DataMember(Name = "merchant_id")]
+        public string MerchantId;
+
         public PayeeInfo()
         {
         }
@@ -17,15 +26,5 @@ namespace MandalaConsulting.Objects.API.Billing
             Email = email;
             MerchantId = merchantId;
         }
-
-        [DataMember(Name = "client_id")]
-        public string ClientId;
-
-        [DataMember(Name = "email_address")]
-        public string Email;
-
-        [DataMember(Name = "merchant_id")]
-        public string MerchantId;
-
     }
 }
