@@ -16,9 +16,8 @@ namespace MandalaConsulting.Objects.API
             Error = error;
         }
 
-        public string message { get; set; }
         public object Data { get; set; }
         public object Error { get; set; }
-
+        public string message { get; set; }
     }
 }

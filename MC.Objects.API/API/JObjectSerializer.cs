@@ -9,18 +9,6 @@ namespace MandalaConsulting.Objects.API
 {
     public class JObjectSerializer : SerializerBase<JObject>
     {
-        public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, JObject value)
-        {
-            if (value == null)
-            {
-                context.Writer.WriteNull();
-                return;
-            }
-
-            BsonDocument bsonDocument = BsonDocument.Parse(value.ToString());
-            BsonDocumentSerializer.Instance.Serialize(context, args, bsonDocument);
-        }
-
         public override JObject Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
             BsonType bsonType = context.Reader.GetCurrentBsonType();
@@ -32,6 +20,18 @@ namespace MandalaConsulting.Objects.API
 
             BsonDocument bsonDocument = BsonDocumentSerializer.Instance.Deserialize(context, args);
             return JObject.Parse(bsonDocument.ToJson());
+        }
+
+        public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, JObject value)
+        {
+            if (value == null)
+            {
+                context.Writer.WriteNull();
+                return;
+            }
+
+            BsonDocument bsonDocument = BsonDocument.Parse(value.ToString());
+            BsonDocumentSerializer.Instance.Serialize(context, args, bsonDocument);
         }
     }
 }

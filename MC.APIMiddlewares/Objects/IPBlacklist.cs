@@ -1,8 +1,8 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
+using MandalaConsulting.Optimization.Logging;
 using System;
 using System.Collections.Generic;
-using MandalaConsulting.Optimization.Logging;
 
 namespace MandalaConsulting.APIMiddleware.Objects
 {
@@ -23,6 +23,16 @@ namespace MandalaConsulting.APIMiddleware.Objects
             }
         }
 
+        // Optionally, provide a method to get the block reason for a specific IP
+        public static string GetBlockReason(string ipAddress)
+        {
+            if (blacklistedIPs.TryGetValue(ipAddress, out string reason))
+            {
+                return reason;
+            }
+            return null; // Or "Not blocked" or any other indicator that the IP is not in the blacklist
+        }
+
         // Check if an IP is blocked and log the reason
         public static bool IsIPBlocked(string ipAddress)
         {
@@ -33,16 +43,6 @@ namespace MandalaConsulting.APIMiddleware.Objects
                 return true;
             }
             return false;
-        }
-
-        // Optionally, provide a method to get the block reason for a specific IP
-        public static string GetBlockReason(string ipAddress)
-        {
-            if (blacklistedIPs.TryGetValue(ipAddress, out string reason))
-            {
-                return reason;
-            }
-            return null; // Or "Not blocked" or any other indicator that the IP is not in the blacklist
         }
     }
 }

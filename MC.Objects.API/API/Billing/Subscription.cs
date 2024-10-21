@@ -58,37 +58,43 @@ namespace MandalaConsulting.Objects.API.Billing
             this.typeOfSubscription = typeOfSubscription;
         }
 
-        /// <summary>
-        /// </summary>
         [DataMember]
-        public bool isBilledMonthly {
+        public bool isActive
+        {
             get; set;
         }
 
         /// <summary>
         /// </summary>
         [DataMember]
-        public bool isBilledYearly {
+        public bool isBilledMonthly
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// </summary>
+        [DataMember]
+        public bool isBilledYearly
+        {
             get; set;
         }
 
         [DataMember]
-        public bool isActive {
+        public bool isRecurring
+        {
             get; set;
         }
 
         [DataMember]
-        public bool isRecurring {
+        public System.DateTime renewalTime
+        {
             get; set;
         }
 
         [DataMember]
-        public string typeOfSubscription {
-            get; set;
-        }
-
-        [DataMember]
-        public System.DateTime renewalTime {
+        public string typeOfSubscription
+        {
             get; set;
         }
     }

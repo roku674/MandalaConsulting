@@ -14,32 +14,35 @@ namespace MandalaConsulting.Objects.API
         public CustomFormFile()
         {
         }
-   
+
         public CustomFormFile(string fileName, byte[] content)
         {
             FileName = fileName ?? throw new System.ArgumentNullException(nameof(fileName));
             Content = content ?? new byte[0];
         }
 
-        public string ContentType => "application/octet-stream";
+        public byte[] Content
+        {
+            get; set;
+        }
 
         public string ContentDisposition => $"form-data; name=\"file\"; filename=\"{FileName}\"";
+        public string ContentType => "application/octet-stream";
+
+        [BsonId]
+        public string FileName
+        {
+            get; set;
+        }
 
         public IHeaderDictionary Headers => new HeaderDictionary();
 
-        public long Length {
+        public long Length
+        {
             get => Content.Length;
         }
 
         public string Name => "file";
-
-        [BsonId]
-        public string FileName {
-            get;set;
-        }
-        public byte[] Content {
-            get;set;
-        }
 
         public void CopyTo(Stream target)
         {
@@ -56,5 +59,4 @@ namespace MandalaConsulting.Objects.API
             return new MemoryStream(Content);
         }
     }
-
 }

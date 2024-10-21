@@ -1,10 +1,12 @@
 //Copyright © 2024 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
-using System.Linq;
+using MandalaConsulting.Optimization.Logging;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
-using MandalaConsulting.Optimization.Logging;
+
+using System.Linq;
 
 namespace MandalaConsulting.APIMiddleware.Utility
 {

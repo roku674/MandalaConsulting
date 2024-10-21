@@ -37,31 +37,15 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Cost to produce/acquire
         /// </summary>
         [DataMember]
-        public decimal Cost {
+        public decimal Cost
+        {
             get; set;
         }
 
         // </summary>
         [DataMember]
-        public string Currency {
-            get; set;
-        }
-
-        /// <summary>
-        /// Amount of money the purchase costs to customers
-        /// </summary>
-        [DataMember]
-        public decimal Price {
-            get; set;
-        }
-
-        [DataMember]
-        public string ProductId {
-            get; set;
-        }
-
-        [DataMember]
-        public int QuantitySold {
+        public string Currency
+        {
             get; set;
         }
 
@@ -69,7 +53,29 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Amount of money the purchase costs
         /// </summary>
         [DataMember]
-        public string Name {
+        public string Name
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Amount of money the purchase costs to customers
+        /// </summary>
+        [DataMember]
+        public decimal Price
+        {
+            get; set;
+        }
+
+        [DataMember]
+        public string ProductId
+        {
+            get; set;
+        }
+
+        [DataMember]
+        public int QuantitySold
+        {
             get; set;
         }
 

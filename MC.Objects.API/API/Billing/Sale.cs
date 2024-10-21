@@ -5,9 +5,17 @@ namespace MandalaConsulting.Objects.API.Billing
 {
     public class Sale
     {
-        public string UID
+        public Sale(string UID, System.DateTime date, string menuItem, int soldQuantity, decimal totalSale)
         {
-            get; set;
+            this.UID = UID;
+            Date = date;
+            MenuItem = menuItem;
+            SoldQuantity = soldQuantity;
+            TotalSale = totalSale;
+        }
+
+        public Sale()
+        {
         }
 
         public System.DateTime Date
@@ -30,17 +38,9 @@ namespace MandalaConsulting.Objects.API.Billing
             get; set;
         }
 
-        public Sale(string UID, System.DateTime date, string menuItem, int soldQuantity, decimal totalSale)
+        public string UID
         {
-            this.UID = UID;
-            Date = date;
-            MenuItem = menuItem;
-            SoldQuantity = soldQuantity;
-            TotalSale = totalSale;
-        }
-
-        public Sale()
-        {
+            get; set;
         }
     }
 }

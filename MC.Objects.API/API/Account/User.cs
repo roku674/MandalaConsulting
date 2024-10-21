@@ -1,16 +1,17 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
+using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace MandalaConsulting.Objects.API.Account
 {
     [System.Serializable]
     public class User
     {
-        public User() { }
+        public User()
+        { }
 
         public User(
             System.DateTime banned,
@@ -68,17 +69,17 @@ namespace MandalaConsulting.Objects.API.Account
         [DataMember]
         public System.DateTime lastActiveDate { get; set; }
 
-        [DataMember]
-        public string password { get; set; }
-
-        [DataMember]
-        public Profile Profile { get; set; }
-
         /// <summary>
         /// This will most likely be a big json
         /// </summary>
         [DataMember]
         public string meta { get; set; }
+
+        [DataMember]
+        public string password { get; set; }
+
+        [DataMember]
+        public Profile Profile { get; set; }
 
         [DataMember]
         public string role { get; set; }

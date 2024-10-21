@@ -9,7 +9,8 @@ namespace MandalaConsulting.Objects.API.Account
     [BsonIgnoreExtraElements]
     public class Profile : Contact
     {
-        public Profile() { }
+        public Profile()
+        { }
 
         public Profile(
             JObject accountSetting,
@@ -23,12 +24,8 @@ namespace MandalaConsulting.Objects.API.Account
         {
             this.accountSettings = accountSetting;
         }
-        
-        [BsonSerializer(typeof(JObjectSerializer))]
 
-        /// <summary>
-        /// This will be served as a json essnetially meta data
-        /// </summary>
+        [BsonSerializer(typeof(JObjectSerializer))]
         public JObject accountSettings { get; set; }
     }
 }

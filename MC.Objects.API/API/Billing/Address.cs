@@ -36,7 +36,14 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Do they put on for their...
         /// </summary>
         [DataMember]
-        public string city {
+        public string city
+        {
+            get; set;
+        }
+
+        [DataMember]
+        public Contact contact
+        {
             get; set;
         }
 
@@ -44,7 +51,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// Their Country/State (not to be confused with individual states in U.S.)
         /// </summary>
         [DataMember]
-        public string country {
+        public string country
+        {
             get; set;
         }
 
@@ -52,12 +60,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// This isn't required if sending to a person
         /// </summary>
         [DataMember]
-        public string name {
-            get; set;
-        }
-
-        [DataMember]
-        public Contact contact {
+        public string name
+        {
             get; set;
         }
 
@@ -65,7 +69,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// State/Province
         /// </summary>
         [DataMember]
-        public string state {
+        public string state
+        {
             get; set;
         }
 
@@ -73,7 +78,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// street address
         /// </summary>
         [DataMember]
-        public string street {
+        public string street
+        {
             get; set;
         }
 
@@ -81,7 +87,8 @@ namespace MandalaConsulting.Objects.API.Billing
         /// zip code
         /// </summary>
         [DataMember]
-        public int zip {
+        public int zip
+        {
             get;
         }
     }

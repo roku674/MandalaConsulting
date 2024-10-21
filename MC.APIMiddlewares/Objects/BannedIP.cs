@@ -23,8 +23,8 @@ namespace MandalaConsulting.APIMiddleware.Objects
             this.ipv6 = ipv6;
         }
 
-        public string _id {  get; set; }
-        public string ipv4 {  get; set; }
+        public string _id { get; set; }
+        public string ipv4 { get; set; }
         public string ipv6 { get; set; }
         public string reason { get; set; }
     }

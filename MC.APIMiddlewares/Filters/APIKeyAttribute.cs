@@ -1,10 +1,10 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
+using MandalaConsulting.APIMiddleware.Utility;
+using MandalaConsulting.Optimization.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Threading.Tasks;
-using MandalaConsulting.Optimization.Logging;
-using MandalaConsulting.APIMiddleware.Utility;
 
 namespace MandalaConsulting.APIMiddleware.Filters
 {
@@ -13,7 +13,7 @@ namespace MandalaConsulting.APIMiddleware.Filters
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            string apiKeyHeaderName = GetKeyName(); 
+            string apiKeyHeaderName = GetKeyName();
 
             Microsoft.Extensions.Primitives.StringValues potentialKey = "";
             string clientIP = APIUtility.GetClientPublicIPAddress(context);
@@ -30,12 +30,12 @@ namespace MandalaConsulting.APIMiddleware.Filters
 
             // Check if the provided key matches the correct key
             if (!correctApiKey.Equals(potentialKey))
-            {                
+            {
                 IPBlacklistMiddleware.AddLog(LogMessage.Warning($"IP {clientIP} provided incorrect key '{potentialKey}' in header '{apiKeyHeaderName}'!")); // Log warning with IP, the attempted key, and the header name if key is incorrect
                 context.Result = new UnauthorizedResult();
                 return;
             }
-            
+
             await next();
         }
 
@@ -44,6 +44,7 @@ namespace MandalaConsulting.APIMiddleware.Filters
             string apikey = System.Environment.GetEnvironmentVariable("API_KEY");
             return apikey;
         }
+
         internal string GetKeyName()
         {
             string keyName = System.Environment.GetEnvironmentVariable("API_KEY_NAME");

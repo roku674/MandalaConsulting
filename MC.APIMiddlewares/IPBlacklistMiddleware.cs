@@ -2,8 +2,8 @@
 //Created by Alexander Fields
 using MandalaConsulting.APIMiddleware.Objects;
 using MandalaConsulting.APIMiddleware.Utility;
-using Microsoft.AspNetCore.Http;
 using MandalaConsulting.Optimization.Logging;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -17,27 +17,14 @@ namespace MandalaConsulting.APIMiddleware
         private static readonly ConcurrentQueue<LogMessage> middlewareLogs = new ConcurrentQueue<LogMessage>();
         private readonly RequestDelegate _next;
 
-        public static event EventHandler<LogMessageEventArgs> LogAdded;
-        public static event EventHandler LogCleared;
-
         public IPBlacklistMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context)
-        {
-            string clientIP = APIUtility.GetClientPublicIPAddress(context);
+        public static event EventHandler<LogMessageEventArgs> LogAdded;
 
-            if (IPBlacklist.IsIPBlocked(clientIP))
-            {
-                context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                AddLog(LogMessage.Message($"{clientIP} is blocked.")); // Example log addition
-                return;
-            }
-
-            await _next(context);
-        }
+        public static event EventHandler LogCleared;
 
         public static void AddLog(LogMessage logMessage)
         {
@@ -55,7 +42,19 @@ namespace MandalaConsulting.APIMiddleware
         {
             return middlewareLogs.ToList();
         }
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            string clientIP = APIUtility.GetClientPublicIPAddress(context);
+
+            if (IPBlacklist.IsIPBlocked(clientIP))
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                AddLog(LogMessage.Message($"{clientIP} is blocked.")); // Example log addition
+                return;
+            }
+
+            await _next(context);
+        }
     }
 }
-
-

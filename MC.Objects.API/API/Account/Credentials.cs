@@ -18,8 +18,8 @@ namespace MandalaConsulting.Objects.API.Account
         }
 
         public string email { get; set; }
+        public string googleToken { get; set; }
         public string password { get; set; }
         public string token { get; set; }
-        public string googleToken { get; set; }
     }
 }
