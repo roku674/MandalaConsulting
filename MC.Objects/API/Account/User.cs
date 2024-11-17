@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace MandalaConsulting.Objects.API.Account
+namespace MandalaConsulting.Objects.Account
 {
     [System.Serializable]
     public class User
