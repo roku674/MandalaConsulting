@@ -3,7 +3,7 @@
 
 using System.Runtime.Serialization;
 
-namespace MandalaConsulting.Objects.API.Billing
+namespace MandalaConsulting.Objects.Billing
 {
     [System.Serializable]
     public class Address

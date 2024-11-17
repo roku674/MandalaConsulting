@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using Newtonsoft.Json.Linq;
 
-namespace MandalaConsulting.Objects.API
+namespace MandalaConsulting.Objects
 {
     public class JObjectSerializer : SerializerBase<JObject>
     {

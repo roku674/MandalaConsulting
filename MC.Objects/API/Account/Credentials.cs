@@ -1,7 +1,7 @@
 ﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
-namespace MandalaConsulting.Objects.API.Account
+namespace MandalaConsulting.Objects.Account
 {
     public class Credentials
     {
