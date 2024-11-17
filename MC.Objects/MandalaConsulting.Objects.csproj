@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageProjectUrl>https://github.com/roku674/MandalaConsulting</PackageProjectUrl>
+		<Title>MandalaConsulting.Objects</Title>
+		<Company>Mandala Consulting LLC - Alexander Fields</Company>
+		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
+		<Description>Standardization for Objects - MandalaConsulting.Objects</Description>
+		<RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
+		<Version>0.0.7</Version>
+		<PackageTags>objects</PackageTags>
+		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Objects</PackageReleaseNotes>
+		<Authors>Mandala Consulting LLC, Alexander Fields</Authors>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="nuget.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.29.0" />
+		<PackageReference Include="MongoDB.Driver.Core" Version="2.29.0" />
+		<PackageReference Include="MongoDB.Bson" Version="2.29.0" />
+		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.29.0" />
+		<PackageReference Include="MongoDB.Libmongocrypt" Version="1.12.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Include="nuget.config" />
+	</ItemGroup>
+
+</Project>
