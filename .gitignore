@@ -18,3 +18,5 @@
 /MC.Memory/obj
 /Memory/bin
 deploy_nugets.py
+/MC.Objects/obj
+/MC.Objects/bin
