@@ -14,6 +14,12 @@ namespace MandalaConsulting.Repository.Mongo
         // Cache to store MongoHelper instances with their respective database and connection strings
         private readonly ConcurrentDictionary<string, IMongoHelper> _cache = new ConcurrentDictionary<string, IMongoHelper>();
 
+        /// <summary>
+        /// This will create a IMongoHelper instance for the given dbName and connectionString. If it already exists it will return the existing one
+        /// </summary>
+        /// <param name="dbName"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public IMongoHelper Create(string dbName, string connectionString)
         {
             // Combine dbName and connectionString as a cache key
