@@ -76,11 +76,14 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Utility
                 new ActionDescriptor()
             );
             
+            // Create a mockable controller context
+            var controllerMock = new Mock<ControllerBase>();
+            
             var actionExecutingContext = new ActionExecutingContext(
                 actionContext,
                 new List<IFilterMetadata>(),
                 new Dictionary<string, object>(),
-                new Mock<Controller>().Object
+                controllerMock.Object
             );
             
             // Act
@@ -105,11 +108,14 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Utility
                 new ActionDescriptor()
             );
             
+            // Create a mockable controller context
+            var controllerMock = new Mock<ControllerBase>();
+            
             var actionExecutingContext = new ActionExecutingContext(
                 actionContext,
                 new List<IFilterMetadata>(),
                 new Dictionary<string, object>(),
-                new Mock<Controller>().Object
+                controllerMock.Object
             );
             
             // Act
@@ -132,11 +138,14 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Utility
                 new ActionDescriptor()
             );
             
+            // Create a mockable controller context
+            var controllerMock = new Mock<ControllerBase>();
+            
             var actionExecutingContext = new ActionExecutingContext(
                 actionContext,
                 new List<IFilterMetadata>(),
                 new Dictionary<string, object>(),
-                new Mock<Controller>().Object
+                controllerMock.Object
             );
             
             // Act

@@ -111,18 +111,37 @@ namespace MandalaConsulting.APIMiddlewares.Tests
                 return;
             }
             
-            // Mock the endpoint feature to return null endpoint (indicating no route matched)
+            // Create a mock HttpContext that can have Features set
+            var mockContext = new Mock<HttpContext>();
+            var request = new Mock<HttpRequest>();
+            var response = new Mock<HttpResponse>();
+            var connection = new Mock<ConnectionInfo>();
+            
+            // Setup request
+            request.Setup(r => r.Path).Returns(context.Request.Path);
+            mockContext.Setup(c => c.Request).Returns(request.Object);
+            
+            // Setup response
+            response.SetupProperty(r => r.StatusCode);
+            response.Object.StatusCode = StatusCodes.Status200OK; // Will be changed to 404 by delegate
+            mockContext.Setup(c => c.Response).Returns(response.Object);
+            
+            // Setup connection/IP
+            connection.Setup(c => c.RemoteIpAddress).Returns(context.Connection.RemoteIpAddress);
+            mockContext.Setup(c => c.Connection).Returns(connection.Object);
+            
+            // Setup features
             var featureCollection = new FeatureCollection();
             var mockEndpointFeature = new Mock<IEndpointFeature>();
             mockEndpointFeature.Setup(m => m.Endpoint).Returns((Endpoint)null);
             featureCollection.Set(mockEndpointFeature.Object);
-            context.Features = featureCollection;
+            mockContext.Setup(c => c.Features).Returns(featureCollection);
             
             // Get initial log count to compare after
             int initialLogCount = IPBlacklistMiddleware.GetLogs().Count;
             
             // Act
-            await middleware.InvokeAsync(context);
+            await middleware.InvokeAsync(mockContext.Object);
             
             // Assert
             // Check that a log was added
@@ -214,10 +233,33 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             
             var middleware = new InvalidEndpointTrackerMiddleware(next);
             
-            var context = new DefaultHttpContext();
+            // Create a mock HttpContext that can have Features set
+            var mockContext = new Mock<HttpContext>();
+            var request = new Mock<HttpRequest>();
+            var response = new Mock<HttpResponse>();
+            var connection = new Mock<ConnectionInfo>();
+            
             string testIP = "192.168.1.55";
-            context.Connection.RemoteIpAddress = IPAddress.Parse(testIP);
-            context.Request.Path = "/test/.env";
+            
+            // Setup request
+            request.Setup(r => r.Path).Returns("/test/.env");
+            mockContext.Setup(c => c.Request).Returns(request.Object);
+            
+            // Setup response
+            response.SetupProperty(r => r.StatusCode);
+            response.Object.StatusCode = StatusCodes.Status200OK; 
+            mockContext.Setup(c => c.Response).Returns(response.Object);
+            
+            // Setup connection/IP
+            connection.Setup(c => c.RemoteIpAddress).Returns(IPAddress.Parse(testIP));
+            mockContext.Setup(c => c.Connection).Returns(connection.Object);
+            
+            // Setup features
+            var featureCollection = new FeatureCollection();
+            var mockEndpointFeature = new Mock<IEndpointFeature>();
+            mockEndpointFeature.Setup(m => m.Endpoint).Returns((Endpoint)null);
+            featureCollection.Set(mockEndpointFeature.Object);
+            mockContext.Setup(c => c.Features).Returns(featureCollection);
             
             // Ensure IP is not blocked
             if (IPBlacklist.GetBlockReason(testIP) != null)
@@ -226,15 +268,8 @@ namespace MandalaConsulting.APIMiddlewares.Tests
                 return;
             }
             
-            // Mock the endpoint feature to return null endpoint (indicating no route matched)
-            var featureCollection = new FeatureCollection();
-            var mockEndpointFeature = new Mock<IEndpointFeature>();
-            mockEndpointFeature.Setup(m => m.Endpoint).Returns((Endpoint)null);
-            featureCollection.Set(mockEndpointFeature.Object);
-            context.Features = featureCollection;
-            
             // Act
-            await middleware.InvokeAsync(context);
+            await middleware.InvokeAsync(mockContext.Object);
             
             // Assert
             // Check that the IP was banned
