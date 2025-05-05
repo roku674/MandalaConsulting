@@ -42,20 +42,13 @@ Our libraries are available as NuGet packages. Here are the packages currently a
 - **MandalaConsulting.Objects.API** - API-specific object models
 - **MandalaConsulting.Repository.Mongo** - MongoDB repository pattern implementation
 
-### Package Publishing
+### Automatic Package Publishing
 
-We use a dual-track deployment strategy:
+Our packages are automatically published to NuGet.org when version numbers are updated and pushed to the repository. The publishing workflow:
 
-- **Stable Releases**: Published from `master` branch with standard versions (e.g., `1.0.0`)
-- **Pre-releases**: Published from `develop` branch with `-develop.BUILD` suffix (e.g., `1.0.0-develop.123`)
+1. Automatically detects changes in .csproj files
+2. Extracts the version number from each modified project file
+3. Builds the projects in Release mode
+4. Publishes updated packages to NuGet.org
 
-See [Deployment Strategy](.github/DEPLOYMENT.md) for details.
-
-#### Manual Publishing
-
-For manual package publishing, use one of the provided scripts:
-- `publish-packages.ps1` (PowerShell - recommended)
-- `publish-packages.sh` (Linux/Mac)
-- `publish-packages.bat` (Windows)
-
-See [PUBLISHING.md](PUBLISHING.md) for detailed instructions.
+Manual publishing is also available using the script in `scripts/publish-nuget-packages.sh`.

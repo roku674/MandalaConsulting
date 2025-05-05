@@ -2,9 +2,9 @@ name: Publish NuGet Packages
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master ]
     types: [ closed ]
   workflow_dispatch:
 
@@ -28,7 +28,7 @@ jobs:
       
     - name: Find changed project files
       id: changed-projects
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v41
       with:
         files: |
           **/*.csproj
@@ -56,11 +56,8 @@ jobs:
             
             echo "Processing $PROJECT_NAME (Version: $VERSION)"
             
-            # Pack the project to ensure package exists
-            dotnet pack "$file" --configuration Release --no-build --output nupkgs
-            
-            # Find NuGet package
-            NUPKG_PATH=$(find "nupkgs" -name "$PROJECT_NAME.$VERSION.nupkg" -type f)
+            # Find NuGet package in project output
+            NUPKG_PATH=$(find "$PROJECT_DIR/bin/Release" -name "$PROJECT_NAME.$VERSION.nupkg" -type f)
             
             if [ -n "$NUPKG_PATH" ]; then
               echo "Publishing $NUPKG_PATH to NuGet.org"
