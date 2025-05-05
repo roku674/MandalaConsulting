@@ -2,9 +2,9 @@ name: "CodeQL Analysis"
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: ["master", "develop"]
   pull_request:
-    branches: [ master, develop ]
+    branches: ["master", "develop"]
   schedule:
     - cron: '0 8 * * 1'  # Run every Monday at 8:00 UTC
 
@@ -20,11 +20,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp' ]
+        language: ['csharp']
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
@@ -32,9 +32,9 @@ jobs:
         languages: ${{ matrix.language }}
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: '8.x'
 
     - name: Restore dependencies
       run: dotnet restore

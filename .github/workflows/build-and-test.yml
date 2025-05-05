@@ -1,36 +1,45 @@
-name: Build and Test
+name: .NET Test
 
 on:
   push:
-    branches: [ master, develop, feature/*, release/*, hotfix/* ]
+    branches: ["master", "develop"]
   pull_request:
-    branches: [ master, develop ]
-
+    branches: ["master", "develop"]
+    
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-    
-    - name: Restore dependencies
+        dotnet-version: '8.x'
+
+    - name: Install dependencies
       run: dotnet restore
-    
+
     - name: Build
       run: dotnet build --no-restore --configuration Release
-    
-    - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal
-    
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+
+    - name: Run Logging Tests
+      run: dotnet test MC.Logging.Tests/MandalaConsulting.Logging.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+    - name: Run Memory Tests
+      run: dotnet test MC.Memory.Tests/MandalaConsulting.Memory.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+    - name: Run APIMiddlewares Tests
+      run: dotnet test MC.APIMiddlewares.Tests/MandalaConsulting.APIMiddlewares.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+    - name: Run Repository.Mongo Tests
+      run: dotnet test MC.Repository.Mongo.Tests/MandalaConsulting.Repository.Mongo.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+    - name: Publish Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: build-artifacts
-        path: |
-          **/bin/Release/net8.0/*.dll
-          **/bin/Release/net8.0/*.pdb
+        name: test-results
+        path: '**/TestResults/*'

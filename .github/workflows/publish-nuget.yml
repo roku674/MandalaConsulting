@@ -6,24 +6,25 @@ on:
     types: [published]
 
 jobs:
-  build-and-publish:
+  build_and_publish:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: '8.x'
     
-    - name: Restore dependencies
+    - name: Install dependencies
       run: dotnet restore
     
     - name: Build
       run: dotnet build --no-restore --configuration Release
     
-    - name: Test
+    - name: Run all tests
       run: dotnet test --no-build --configuration Release --verbosity normal
     
     - name: Pack MandalaConsulting.Logging
