@@ -1,0 +1,71 @@
+name: Publish NuGet Packages
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+    types: [ closed ]
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+      
+    - name: Find changed project files
+      id: changed-projects
+      uses: tj-actions/changed-files@v41
+      with:
+        files: |
+          **/*.csproj
+        files_ignore: |
+          **/*.Tests.csproj
+          **/*Test*.csproj
+    
+    - name: Extract version and publish packages
+      if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: |
+        for file in ${{ steps.changed-projects.outputs.all_changed_files }}; do
+          if [[ $file == *Test* ]] || [[ $file == *.Tests.* ]]; then
+            echo "Skipping test project: $file"
+            continue
+          fi
+          
+          # Extract version from .csproj file
+          VERSION=$(grep -o '<Version>[^<]*</Version>' "$file" | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          
+          if [ -n "$VERSION" ]; then
+            PROJECT_DIR=$(dirname "$file")
+            PROJECT_NAME=$(basename "$file" .csproj)
+            
+            echo "Processing $PROJECT_NAME (Version: $VERSION)"
+            
+            # Find NuGet package in project output
+            NUPKG_PATH=$(find "$PROJECT_DIR/bin/Release" -name "$PROJECT_NAME.$VERSION.nupkg" -type f)
+            
+            if [ -n "$NUPKG_PATH" ]; then
+              echo "Publishing $NUPKG_PATH to NuGet.org"
+              dotnet nuget push "$NUPKG_PATH" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+            else
+              echo "No NuGet package found for $PROJECT_NAME v$VERSION"
+            fi
+          else
+            echo "No version found in $file"
+          fi
+        done
