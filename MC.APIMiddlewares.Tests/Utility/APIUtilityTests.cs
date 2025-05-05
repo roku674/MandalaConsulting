@@ -8,6 +8,7 @@ using System.Net;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Routing;
 
 namespace MandalaConsulting.APIMiddlewares.Tests.Utility

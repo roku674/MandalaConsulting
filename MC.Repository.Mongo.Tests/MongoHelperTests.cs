@@ -143,7 +143,7 @@ namespace MandalaConsulting.Repository.Mongo.Tests
             // Use reflection to call the protected method
             var mongoHelper = new MongoHelper();
             var methodInfo = typeof(MongoHelper).GetMethod("AddLog", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            var parameters = new object[] { LogMessage.Information("Test log message") };
+            var parameters = new object[] { LogMessage.Informational("Test log message") };
             
             // Act
             methodInfo.Invoke(null, parameters);
@@ -163,8 +163,8 @@ namespace MandalaConsulting.Repository.Mongo.Tests
             // Arrange
             // Add some logs (using reflection to call the protected method)
             var methodInfo = typeof(MongoHelper).GetMethod("AddLog", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            methodInfo.Invoke(null, new object[] { LogMessage.Information("Test log message 1") });
-            methodInfo.Invoke(null, new object[] { LogMessage.Information("Test log message 2") });
+            methodInfo.Invoke(null, new object[] { LogMessage.Informational("Test log message 1") });
+            methodInfo.Invoke(null, new object[] { LogMessage.Informational("Test log message 2") });
             
             bool eventRaised = false;
             EventHandler handler = (sender, e) => eventRaised = true;
@@ -192,9 +192,9 @@ namespace MandalaConsulting.Repository.Mongo.Tests
             // Add some logs (using reflection to call the protected method)
             var methodInfo = typeof(MongoHelper).GetMethod("AddLog", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             
-            var log1 = LogMessage.Information("Test log message 1");
-            var log2 = LogMessage.Information("Test log message 2");
-            var log3 = LogMessage.Information("Test log message 3");
+            var log1 = LogMessage.Informational("Test log message 1");
+            var log2 = LogMessage.Informational("Test log message 2");
+            var log3 = LogMessage.Informational("Test log message 3");
             
             methodInfo.Invoke(null, new object[] { log1 });
             methodInfo.Invoke(null, new object[] { log2 });

@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MC.Repository.Mongo\MandalaConsulting.Repository.Mongo.csproj" />
+    <ProjectReference Include="..\MC.Logging\MandalaConsulting.Logging.csproj" />
   </ItemGroup>
 
 </Project>
