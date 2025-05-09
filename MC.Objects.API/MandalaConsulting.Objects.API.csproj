@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -23,12 +23,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MongoDB.Driver" Version="2.29.0" />
-		<PackageReference Include="MongoDB.Driver.Core" Version="2.29.0" />
-		<PackageReference Include="MongoDB.Bson" Version="2.29.0" />
-		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.29.0" />
+		<PackageReference Include="MongoDB.Driver" Version="3.4.0" />
+		<PackageReference Include="MongoDB.Driver.Core" Version="2.30.0" />
+		<PackageReference Include="MongoDB.Bson" Version="3.4.0" />
+		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.30.0" />
 		<PackageReference Include="MongoDB.Libmongocrypt" Version="1.12.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.15" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
