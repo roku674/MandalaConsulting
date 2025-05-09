@@ -22,33 +22,23 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             }
             
             bool eventRaised = false;
-            string capturedIP = null;
-            string capturedReason = null;
-            
-            EventHandler<BannedIP> handler = (sender, e) => 
+            IPBlacklist.IPBanned += (sender, e) => 
             {
-                if (e.ipv4 == ip) // Only capture if it's our IP
-                {
-                    eventRaised = true;
-                    capturedIP = e.ipv4;
-                    capturedReason = e.reason;
-                }
+                eventRaised = true;
+                Assert.Equal(ip, e.ipv4);
+                Assert.Equal(reason, e.reason);
             };
-            
-            IPBlacklist.IPBanned += handler;
             
             // Act
             IPBlacklist.AddBannedIP(ip, reason);
             
             // Assert
             Assert.True(eventRaised, "IPBanned event should be raised");
-            Assert.Equal(ip, capturedIP);
-            Assert.Equal(reason, capturedReason);
             Assert.Equal(reason, IPBlacklist.GetBlockReason(ip));
             Assert.True(IPBlacklist.IsIPBlocked(ip));
             
             // Cleanup
-            IPBlacklist.IPBanned -= handler;
+            IPBlacklist.IPBanned -= (sender, e) => eventRaised = true;
         }
         
         [Fact]
@@ -70,15 +60,7 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             IPBlacklist.AddBannedIP(ip, reason1);
             
             bool eventRaised = false;
-            EventHandler<BannedIP> handler = (sender, e) => 
-            {
-                if (e.ipv4 == ip) // Only capture if it's our IP
-                {
-                    eventRaised = true;
-                }
-            };
-            
-            IPBlacklist.IPBanned += handler;
+            IPBlacklist.IPBanned += (sender, e) => eventRaised = true;
             
             // Act - try to add again
             IPBlacklist.AddBannedIP(ip, reason2);
@@ -89,7 +71,7 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             Assert.Equal(reason1, IPBlacklist.GetBlockReason(ip));
             
             // Cleanup
-            IPBlacklist.IPBanned -= handler;
+            IPBlacklist.IPBanned -= (sender, e) => eventRaised = true;
         }
         
         [Fact]

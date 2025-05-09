@@ -28,7 +28,7 @@ jobs:
       
     - name: Find changed project files
       id: changed-projects
-      uses: tj-actions/changed-files@v46
+      uses: tj-actions/changed-files@v41
       with:
         files: |
           **/*.csproj
