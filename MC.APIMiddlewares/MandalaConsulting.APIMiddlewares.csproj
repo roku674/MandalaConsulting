@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -20,8 +20,8 @@
   <ItemGroup>
     <PackageReference Include="MandalaConsulting.Logging" Version="*" />
 	<PackageReference Include="MandalaConsulting.Memory" Version="*" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
   </ItemGroup>
 
 </Project>
