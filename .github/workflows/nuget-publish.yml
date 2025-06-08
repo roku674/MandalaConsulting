@@ -1,70 +1,74 @@
-name: Publish NuGet Packages (Legacy)
-
-# This workflow is being replaced by:
-# - nuget-publish-release.yml (for master/releases)
-# - nuget-publish-prerelease.yml (for develop)
-# TODO: Remove this workflow once new workflows are tested
+name: Publish NuGet Packages
 
 on:
-  workflow_dispatch:  # Only manual trigger for now
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+    types: [ closed ]
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build --no-restore --configuration Release
-
-      - name: Find changed project files
-        id: changed-projects
-        uses: tj-actions/changed-files@v46
-        with:
-          files: |
-            **/*.csproj
-          files_ignore: |
-            **/*.Tests.csproj
-            **/*Test*.csproj
-
-      - name: Pack and push changed projects
-        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: |
-          for file in ${{ steps.changed-projects.outputs.all_changed_files }}; do
-            if [[ $file == *Test* ]] || [[ $file == *.Tests.* ]]; then
-              echo "Skipping test project: $file"
-              continue
-            fi
-
-            VERSION=$(grep -o '<Version>[^<]*</Version>' "$file" | sed 's/<Version>\(.*\)<\/Version>/\1/')
-            if [ -z "$VERSION" ]; then
-              echo "No <Version> tag found in $file — skipping"
-              continue
-            fi
-
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+      
+    - name: Find changed project files
+      id: changed-projects
+      uses: tj-actions/changed-files@v44
+      with:
+        files: |
+          **/*.csproj
+        files_ignore: |
+          **/*.Tests.csproj
+          **/*Test*.csproj
+    
+    - name: Extract version and publish packages
+      if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: |
+        for file in ${{ steps.changed-projects.outputs.all_changed_files }}; do
+          if [[ $file == *Test* ]] || [[ $file == *.Tests.* ]]; then
+            echo "Skipping test project: $file"
+            continue
+          fi
+          
+          # Extract version from .csproj file
+          VERSION=$(grep -o '<Version>[^<]*</Version>' "$file" | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          
+          if [ -n "$VERSION" ]; then
             PROJECT_DIR=$(dirname "$file")
             PROJECT_NAME=$(basename "$file" .csproj)
-            echo "Packing $PROJECT_NAME v$VERSION"
-
+            
+            echo "Processing $PROJECT_NAME (Version: $VERSION)"
+            
+            # Pack the project to ensure package exists
             dotnet pack "$file" --configuration Release --no-build --output nupkgs
-
+            
+            # Find NuGet package
             NUPKG_PATH=$(find "nupkgs" -name "$PROJECT_NAME.$VERSION.nupkg" -type f)
+            
             if [ -n "$NUPKG_PATH" ]; then
-              echo "Pushing $NUPKG_PATH to NuGet.org"
+              echo "Publishing $NUPKG_PATH to NuGet.org"
               dotnet nuget push "$NUPKG_PATH" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
             else
-              echo "Package not found for $PROJECT_NAME v$VERSION"
+              echo "No NuGet package found for $PROJECT_NAME v$VERSION"
             fi
-          done
+          else
+            echo "No version found in $file"
+          fi
+        done

@@ -5,7 +5,6 @@
 /obj/
 # Ignore config files
 *.config
-!NuGet.config
 /MC.APIMiddlewares/bin
 /MC.APIMiddlewares/obj
 /MC.Logging/bin
@@ -29,7 +28,5 @@ deploy_nugets.py
 /MC.Logging.Tests/bin
 /MC.APIMiddlewares.Tests/bin
 /MC.Repository.Mongo.Tests/bin
-/MC.APIMiddlewares/Properties
 
 **/.claude/settings.local.json
-CLAUDE.md
