@@ -166,16 +166,18 @@ namespace MandalaConsulting.APIMiddlewares.Tests
                 return;
             }
             
-            // Get initial log count to compare after
-            int initialLogCount = IPBlacklistMiddleware.GetLogs().Count;
+            // Clear logs before test to ensure clean state
+            IPBlacklistMiddleware.ClearLogs();
             
             // Act
             await middleware.InvokeAsync(context);
             
             // Assert
             // Check that a log was added
-            int newLogCount = IPBlacklistMiddleware.GetLogs().Count;
-            Assert.True(newLogCount > initialLogCount, "A log entry should be added for the unauthorized attempt");
+            var logs = IPBlacklistMiddleware.GetLogs();
+            Assert.NotEmpty(logs);
+            var lastLog = logs[logs.Count - 1];
+            Assert.Contains("unauthorized", lastLog.message.ToLower());
         }
 
         [Fact]
@@ -202,16 +204,18 @@ namespace MandalaConsulting.APIMiddlewares.Tests
                 return;
             }
             
-            // Get initial log count to compare after
-            int initialLogCount = IPBlacklistMiddleware.GetLogs().Count;
+            // Clear logs before test to ensure clean state
+            IPBlacklistMiddleware.ClearLogs();
             
             // Act
             await middleware.InvokeAsync(context);
             
             // Assert
             // Check that a log was added
-            int newLogCount = IPBlacklistMiddleware.GetLogs().Count;
-            Assert.True(newLogCount > initialLogCount, "A log entry should be added for the forbidden attempt");
+            var logs = IPBlacklistMiddleware.GetLogs();
+            Assert.NotEmpty(logs);
+            var lastLog = logs[logs.Count - 1];
+            Assert.Contains("forbidden", lastLog.message.ToLower());
         }
 
         [Fact]
