@@ -28,3 +28,5 @@ deploy_nugets.py
 /MC.Logging.Tests/bin
 /MC.APIMiddlewares.Tests/bin
 /MC.Repository.Mongo.Tests/bin
+
+**/.claude/settings.local.json
