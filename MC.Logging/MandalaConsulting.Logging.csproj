@@ -16,6 +16,7 @@
     <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Logging</PackageReleaseNotes>
 	  <Authors>Mandala Consulting LLC, Alexander Fields</Authors>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
   </PropertyGroup>
 
