@@ -10,8 +10,24 @@ using System.Net;
 
 namespace MandalaConsulting.APIMiddlewares.Tests
 {
-    public class InvalidEndpointTrackerMiddlewareTests
+    [Collection("Sequential")]
+    public class InvalidEndpointTrackerMiddlewareTests : IDisposable
     {
+        public InvalidEndpointTrackerMiddlewareTests()
+        {
+            // Clear state before each test
+            IPBlacklist.ClearBlacklist();
+            IPBlacklistMiddleware.ClearLogs();
+            InvalidEndpointTrackerMiddleware.ClearFailedAttempts();
+        }
+
+        public void Dispose()
+        {
+            // Clear state after each test
+            IPBlacklist.ClearBlacklist();
+            IPBlacklistMiddleware.ClearLogs();
+            InvalidEndpointTrackerMiddleware.ClearFailedAttempts();
+        }
         [Fact]
         public void Constructor_CreatesInstance()
         {
@@ -42,11 +58,8 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             string testIP = "192.168.1.50";
             context.Connection.RemoteIpAddress = IPAddress.Parse(testIP);
             
-            // Ensure IP is blocked
-            if (IPBlacklist.GetBlockReason(testIP) == null)
-            {
-                IPBlacklist.AddBannedIP(testIP, "Test blocking for InvalidEndpointTrackerMiddleware test");
-            }
+            // Add IP to blacklist
+            IPBlacklist.AddBannedIP(testIP, "Test blocking for InvalidEndpointTrackerMiddleware test");
             
             // Act
             await middleware.InvokeAsync(context);
@@ -239,6 +252,8 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             string testIP = "192.168.1.55";
             
             // Setup request
+            var headers = new HeaderDictionary();
+            request.Setup(r => r.Headers).Returns(headers);
             request.Setup(r => r.Path).Returns("/test/.env");
             mockContext.Setup(c => c.Request).Returns(request.Object);
             

@@ -121,5 +121,11 @@ namespace MandalaConsulting.APIMiddleware
                 );
             }
         }
+
+        // Method to clear failed attempts (for testing purposes)
+        public static void ClearFailedAttempts()
+        {
+            _failedAttempts.Clear();
+        }
     }
 }

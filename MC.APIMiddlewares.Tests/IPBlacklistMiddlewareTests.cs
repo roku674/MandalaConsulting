@@ -10,8 +10,22 @@ using Moq;
 
 namespace MandalaConsulting.APIMiddlewares.Tests
 {
-    public class IPBlacklistMiddlewareTests
+    [Collection("Sequential")]
+    public class IPBlacklistMiddlewareTests : IDisposable
     {
+        public IPBlacklistMiddlewareTests()
+        {
+            // Clear state before each test
+            IPBlacklist.ClearBlacklist();
+            IPBlacklistMiddleware.ClearLogs();
+        }
+
+        public void Dispose()
+        {
+            // Clear state after each test
+            IPBlacklist.ClearBlacklist();
+            IPBlacklistMiddleware.ClearLogs();
+        }
         [Fact]
         public void Constructor_CreatesInstance()
         {
@@ -41,12 +55,8 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             var context = new DefaultHttpContext();
             context.Connection.RemoteIpAddress = System.Net.IPAddress.Parse("192.168.1.20");
             
-            // Make sure IP is not already blacklisted
-            if (IPBlacklist.GetBlockReason("192.168.1.20") == null)
-            {
-                // Add IP to blacklist
-                IPBlacklist.AddBannedIP("192.168.1.20", "Test blocking for middleware test");
-            }
+            // Add IP to blacklist
+            IPBlacklist.AddBannedIP("192.168.1.20", "Test blocking for middleware test");
             
             // Clear any existing logs
             IPBlacklistMiddleware.ClearLogs();
@@ -79,13 +89,7 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             var context = new DefaultHttpContext();
             context.Connection.RemoteIpAddress = System.Net.IPAddress.Parse("192.168.1.21");
             
-            // Make sure IP is not blacklisted
-            if (IPBlacklist.GetBlockReason("192.168.1.21") != null)
-            {
-                // Skip this test if IP is already blacklisted
-                // (We can't easily remove IPs from the blacklist)
-                return;
-            }
+            // IP should not be blacklisted due to test setup
             
             // Act
             await middleware.InvokeAsync(context);

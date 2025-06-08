@@ -1,11 +1,27 @@
 using Xunit;
 using MandalaConsulting.APIMiddleware.Objects;
+using MandalaConsulting.APIMiddleware;
 using System;
 
 namespace MandalaConsulting.APIMiddlewares.Tests.Objects
 {
-    public class IPBlacklistTests
+    [Collection("Sequential")]
+    public class IPBlacklistTests : IDisposable
     {
+        public IPBlacklistTests()
+        {
+            // Clear state before each test
+            IPBlacklist.ClearBlacklist();
+            IPBlacklistMiddleware.ClearLogs();
+        }
+
+        public void Dispose()
+        {
+            // Clear state after each test
+            IPBlacklist.ClearBlacklist();
+            IPBlacklistMiddleware.ClearLogs();
+        }
+
         [Fact]
         public void AddBannedIP_AddsIPToBlacklist()
         {
@@ -13,21 +29,14 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             string ip = "192.168.1.1";
             string reason = "Test reason";
             
-            // Make sure IP is not already blacklisted
-            // We can't directly access the dictionary, so we check the GetBlockReason method
-            if (IPBlacklist.GetBlockReason(ip) != null)
-            {
-                // Skip this test if IP is already blacklisted
-                return;
-            }
-            
             bool eventRaised = false;
-            IPBlacklist.IPBanned += (sender, e) => 
+            EventHandler<BannedIP> handler = (sender, e) => 
             {
                 eventRaised = true;
                 Assert.Equal(ip, e.ipv4);
                 Assert.Equal(reason, e.reason);
             };
+            IPBlacklist.IPBanned += handler;
             
             // Act
             IPBlacklist.AddBannedIP(ip, reason);
@@ -38,7 +47,7 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             Assert.True(IPBlacklist.IsIPBlocked(ip));
             
             // Cleanup
-            IPBlacklist.IPBanned -= (sender, e) => eventRaised = true;
+            IPBlacklist.IPBanned -= handler;
         }
         
         [Fact]
@@ -49,18 +58,12 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             string reason1 = "Test reason 1";
             string reason2 = "Test reason 2";
             
-            // Make sure IP is not already blacklisted
-            if (IPBlacklist.GetBlockReason(ip) != null)
-            {
-                // Skip this test if IP is already blacklisted
-                return;
-            }
-            
             // Add IP first time
             IPBlacklist.AddBannedIP(ip, reason1);
             
             bool eventRaised = false;
-            IPBlacklist.IPBanned += (sender, e) => eventRaised = true;
+            EventHandler<BannedIP> handler = (sender, e) => eventRaised = true;
+            IPBlacklist.IPBanned += handler;
             
             // Act - try to add again
             IPBlacklist.AddBannedIP(ip, reason2);
@@ -71,7 +74,7 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             Assert.Equal(reason1, IPBlacklist.GetBlockReason(ip));
             
             // Cleanup
-            IPBlacklist.IPBanned -= (sender, e) => eventRaised = true;
+            IPBlacklist.IPBanned -= handler;
         }
         
         [Fact]
@@ -109,13 +112,6 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Objects
             
             string ip2 = "192.168.1.12";
             string reason2 = "Test reason 2";
-            
-            // Make sure IPs are not already blacklisted
-            if (IPBlacklist.GetBlockReason(ip1) != null || IPBlacklist.GetBlockReason(ip2) != null)
-            {
-                // Skip this test if either IP is already blacklisted
-                return;
-            }
             
             // Act
             IPBlacklist.AddBannedIP(ip1, reason1);
