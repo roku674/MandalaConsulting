@@ -1,12 +1,12 @@
-name: Publish NuGet Packages
+name: Publish NuGet Packages (Legacy)
+
+# This workflow is being replaced by:
+# - nuget-publish-release.yml (for master/releases)
+# - nuget-publish-prerelease.yml (for develop)
+# TODO: Remove this workflow once new workflows are tested
 
 on:
-  push:
-    branches: [ master, develop ]
-  pull_request:
-    branches: [ master, develop ]
-    types: [ closed ]
-  workflow_dispatch:
+  workflow_dispatch:  # Only manual trigger for now
 
 jobs:
   build-and-publish:
