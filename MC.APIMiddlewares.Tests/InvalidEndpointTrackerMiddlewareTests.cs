@@ -130,13 +130,6 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             connection.Setup(c => c.RemoteIpAddress).Returns(context.Connection.RemoteIpAddress);
             mockContext.Setup(c => c.Connection).Returns(connection.Object);
             
-            // Setup features
-            var featureCollection = new FeatureCollection();
-            var mockEndpointFeature = new Mock<IEndpointFeature>();
-            mockEndpointFeature.Setup(m => m.Endpoint).Returns((Endpoint)null);
-            featureCollection.Set(mockEndpointFeature.Object);
-            mockContext.Setup(c => c.Features).Returns(featureCollection);
-            
             // Get initial log count to compare after
             int initialLogCount = IPBlacklistMiddleware.GetLogs().Count;
             
@@ -253,13 +246,6 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             // Setup connection/IP
             connection.Setup(c => c.RemoteIpAddress).Returns(IPAddress.Parse(testIP));
             mockContext.Setup(c => c.Connection).Returns(connection.Object);
-            
-            // Setup features
-            var featureCollection = new FeatureCollection();
-            var mockEndpointFeature = new Mock<IEndpointFeature>();
-            mockEndpointFeature.Setup(m => m.Endpoint).Returns((Endpoint)null);
-            featureCollection.Set(mockEndpointFeature.Object);
-            mockContext.Setup(c => c.Features).Returns(featureCollection);
             
             // Ensure IP is not blocked
             if (IPBlacklist.GetBlockReason(testIP) != null)

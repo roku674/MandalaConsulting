@@ -49,22 +49,10 @@ namespace MandalaConsulting.APIMiddleware
 
             await _next(context);
 
-            // Check if a route matched
-            Endpoint endpoint = context.GetEndpoint();
-
-            // Only track 404s where no routing match occurred (true 404s)
-            if (context.Response.StatusCode == StatusCodes.Status404NotFound && endpoint == null)
-            {
-                RecordFailedAttempt(clientIP, requestedPath);
-            }
             // Check if response is 404 Not Found
             if (context.Response.StatusCode == StatusCodes.Status404NotFound)
             {
-                // Determine if the 404 is due to a non-existent endpoint
-                if (endpoint == null)
-                {
-                    RecordFailedAttempt(clientIP, requestedPath);
-                }
+                RecordFailedAttempt(clientIP, requestedPath);
             }
             else if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
             {
