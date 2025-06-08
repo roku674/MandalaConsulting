@@ -15,6 +15,7 @@
 		<PackageTags>objects</PackageTags>
 		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Objects</PackageReleaseNotes>
 		<Authors>Mandala Consulting LLC, Alexander Fields</Authors>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 
 	</PropertyGroup>
 
@@ -33,6 +34,10 @@
 
 	<ItemGroup>
 	  <Page Include="nuget.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 </Project>
