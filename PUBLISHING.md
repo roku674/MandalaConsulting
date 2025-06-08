@@ -9,84 +9,59 @@ This repository contains several NuGet packages that can be published to NuGet.o
 - [MandalaConsulting.Objects.API](https://www.nuget.org/packages/MandalaConsulting.Objects.API/)
 - [MandalaConsulting.Repository.Mongo](https://www.nuget.org/packages/MandalaConsulting.Repository.Mongo/)
 
-## Prerequisites
+## Automatic Publishing via GitHub Actions
+
+**Packages are automatically published when:**
+- Code is merged to the `master` branch
+- The package version in the `.csproj` file has been incremented
+
+The GitHub Actions workflow will:
+1. Build and test the solution
+2. Compare each package's version with the version on NuGet.org
+3. Only publish packages that have version changes
+4. Skip packages with unchanged versions
+
+## Prerequisites for Manual Publishing
 
 1. .NET 8.0 SDK installed
 2. NuGet API key from nuget.org
 3. All tests passing
 
-## Publishing Scripts
+## Manual Publishing Script
 
-Three scripts are provided for different platforms:
+A single script is provided for manual publishing when needed:
 
-### Windows (Batch)
-```batch
-publish-packages.bat YOUR_NUGET_API_KEY [version-increment]
-```
-
-### Windows (PowerShell)
-```powershell
-.\publish-packages.ps1 -NuGetApiKey YOUR_NUGET_API_KEY [-VersionIncrement patch|minor|major] [-SkipTests] [-DryRun]
-```
-
-### Linux/Mac (Bash)
+### Linux/Mac/WSL (Bash)
 ```bash
-./publish-packages.sh YOUR_NUGET_API_KEY [version-increment]
+export NUGET_API_KEY=your_api_key
+./publish-packages.sh
 ```
 
-## Version Increment Options
+This script will:
+1. Check the current git branch (warns if not on master)
+2. Restore all dependencies
+3. Build the solution in Release mode
+4. Run all tests
+5. Compare local versions with NuGet.org versions
+6. Only publish packages with version changes
 
-- `patch` (default): 1.0.0 → 1.0.1
-- `minor`: 1.0.0 → 1.1.0
-- `major`: 1.0.0 → 2.0.0
+## Version Management
 
-## What the Scripts Do
+To publish a new version:
 
-1. **Clean** previous builds
-2. **Restore** all dependencies
-3. **Build** the solution in Release mode
-4. **Run** all tests (can be skipped with PowerShell -SkipTests flag)
-5. **Update** version numbers (if version increment specified)
-6. **Pack** each project into a NuGet package
-7. **Push** packages to NuGet.org
+1. Update the `<Version>` tag in the relevant `.csproj` file
+2. Commit the change
+3. Create a pull request to master
+4. When merged, the package will automatically be published
 
-## PowerShell Script Features
+Example version increments:
+- Patch: 1.0.0 → 1.0.1
+- Minor: 1.0.0 → 1.1.0
+- Major: 1.0.0 → 2.0.0
 
-The PowerShell script has additional features:
+## Manual Publishing Steps
 
-- **DryRun mode**: Test the process without actually publishing
-- **Skip tests**: Skip test execution (not recommended for production)
-- **Detailed output**: Color-coded success/failure messages
-- **Automatic version management**: Updates .csproj files with new versions
-
-## Examples
-
-### Publish with patch version increment:
-```powershell
-# PowerShell
-.\publish-packages.ps1 -NuGetApiKey YOUR_NUGET_API_KEY
-
-# Bash
-./publish-packages.sh YOUR_NUGET_API_KEY
-```
-
-### Publish with minor version increment:
-```powershell
-# PowerShell
-.\publish-packages.ps1 -NuGetApiKey YOUR_NUGET_API_KEY -VersionIncrement minor
-
-# Bash
-./publish-packages.sh YOUR_NUGET_API_KEY minor
-```
-
-### Dry run to see what would happen:
-```powershell
-.\publish-packages.ps1 -NuGetApiKey YOUR_NUGET_API_KEY -DryRun
-```
-
-## Manual Publishing
-
-If you prefer to publish packages manually:
+If you need to publish manually without the script:
 
 ```bash
 # Build
@@ -102,10 +77,15 @@ dotnet pack MC.Logging/MandalaConsulting.Logging.csproj --configuration Release
 dotnet nuget push MC.Logging/bin/Release/MandalaConsulting.Logging.*.nupkg --api-key YOUR_API_KEY --source https://api.nuget.org/v3/index.json
 ```
 
-## GitHub Actions
+## GitHub Actions Configuration
 
-The repository also has GitHub Actions that automatically publish packages when:
-- Pushing to master or develop branches
-- Merging pull requests
+The repository uses GitHub Actions for automatic publishing:
 
-Make sure the `NUGET_API_KEY` secret is set in your repository settings.
+- **Workflow**: `.github/workflows/nuget-publish.yml`
+- **Trigger**: Push to master branch
+- **Secret Required**: `NUGET_API_KEY` must be set in repository secrets
+
+The workflow ensures that:
+- Only packages with version changes are published
+- All tests pass before publishing
+- Publishing only happens from the master branch
