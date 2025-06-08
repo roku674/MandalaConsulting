@@ -31,7 +31,7 @@ Add the library to your ASP.NET Core project and reference the necessary namespa
 using MandalaConsulting.APIMiddleware;
 using MandalaConsulting.APIMiddleware.Filters;
 using MandalaConsulting.APIMiddleware.Utility;
-using MandalaConsulting.Optimization.Logging;
+using MandalaConsulting.Logging;
 ```
 
 ---
@@ -138,7 +138,7 @@ IPBlacklist.AddBannedIP("192.168.1.1", "Repeated unauthorized attempts.");
 
 ## Logging
 
-All middleware components use the logging system provided by `MandalaConsulting.Optimization.Logging`.
+All middleware components use the logging system provided by `MandalaConsulting.Logging`.
 
 ### Add Logs
 

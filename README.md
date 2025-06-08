@@ -49,7 +49,7 @@ We use a dual-track deployment strategy:
 - **Stable Releases**: Published from `master` branch with standard versions (e.g., `1.0.0`)
 - **Pre-releases**: Published from `develop` branch with `-develop.BUILD` suffix (e.g., `1.0.0-develop.123`)
 
-See [Deployment Strategy](.github/DEPLOYMENT.md) for details.
+Packages are automatically published via GitHub Actions on merges to master (stable) or develop (pre-release) branches.
 
 #### Manual Publishing
 

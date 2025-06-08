@@ -44,5 +44,13 @@ namespace MandalaConsulting.APIMiddleware.Objects
             }
             return false;
         }
+
+        // Method to clear all blacklisted IPs (for testing purposes)
+        public static void ClearBlacklist()
+        {
+            blacklistedIPs.Clear();
+            // Clear all event handlers
+            IPBanned = null;
+        }
     }
 }

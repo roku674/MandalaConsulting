@@ -36,6 +36,9 @@ namespace MandalaConsulting.APIMiddleware
         {
             LogCleared?.Invoke(null, EventArgs.Empty);
             middlewareLogs.Clear();
+            // Clear all event handlers for test isolation
+            LogAdded = null;
+            LogCleared = null;
         }
 
         public static IList<LogMessage> GetLogs()
