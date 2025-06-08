@@ -1,8 +1,8 @@
-# MandalaConsulting.Optimization.Logging
+# MandalaConsulting.Logging
 
 ## Overview
 
-The **MandalaConsulting.Optimization.Logging** library provides a robust and flexible logging framework for .NET applications. It features a standardized `LogMessage` class that allows developers to create and manage detailed log entries efficiently. With support for various log message types and event-driven logging, this library is designed to streamline application monitoring and debugging.
+The **MandalaConsulting.Logging** library provides a robust and flexible logging framework for .NET applications. It features a standardized `LogMessage` class that allows developers to create and manage detailed log entries efficiently. With support for various log message types and event-driven logging, this library is designed to streamline application monitoring and debugging.
 
 ---
 
@@ -18,7 +18,7 @@ The **MandalaConsulting.Optimization.Logging** library provides a robust and fle
 
 ## Installation
 
-Include the library in your .NET project and reference the `MandalaConsulting.Optimization.Logging` namespace.
+Include the library in your .NET project and reference the `MandalaConsulting.Logging` namespace.
 
 ---
 
@@ -27,7 +27,7 @@ Include the library in your .NET project and reference the `MandalaConsulting.Op
 ### Import the Namespace
 
 ```csharp
-using MandalaConsulting.Optimization.Logging;
+using MandalaConsulting.Logging;
 ```
 
 ---

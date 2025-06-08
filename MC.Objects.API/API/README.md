@@ -1,156 +1,245 @@
-# MandalaConsulting.Objects.API
+# MandalaConsulting.Objects.API - API Models
 
 ## Overview
 
-The **MandalaConsulting.Objects.API** library extends the functionality of **MandalaConsulting.Objects** by providing additional object models and utilities tailored for ASP.NET Core applications. It is designed to standardize and simplify the management of HTTP responses and interactions within ASP.NET Core APIs.
+This directory contains the data models and utilities specifically designed for ASP.NET Core API applications. These models provide standardized structures for account management, billing operations, and API interactions.
 
----
+## Core Components
 
-## Features
+### ResponseData
 
-- **ASP.NET Core Integration**: Optimized for use with ASP.NET Core's HTTP request/response pipeline.
-- **Standardized API Responses**: Includes enhanced models like `ApiResponse` for consistent communication.
-- **Flexible Data Structures**: Easily adaptable to a wide variety of API use cases.
-- **Lightweight and Reusable**: Minimal overhead, designed for plug-and-play integration.
+A generic response wrapper for API endpoints.
 
----
+**Properties:**
+- `Data` (object) - The response payload
+- `Error` (object) - Error information if applicable
+- `message` (string) - Response message
 
-## Installation
-
-To use **MandalaConsulting.Objects.API**, include it in your .NET project and ensure the following packages are available:
-
-- `Microsoft.AspNetCore.Http`
-- `MandalaConsulting.Objects`
-
----
-
-## Usage
-
-### Import the Namespace
-
+**Usage:**
 ```csharp
-using MandalaConsulting.Objects.API;
-```
-
----
-
-### Core Classes
-
-#### **ApiResponse**
-
-The `ApiResponse` class provides a structured format for HTTP API responses, encapsulating data, metadata, and error information.
-
-##### Properties
-
-- **`StatusCode`**: The HTTP status code associated with the response.
-- **`Message`**: A descriptive message about the response.
-- **`Data`**: The main payload of the response.
-- **`Error`**: Details about any errors encountered.
-
-##### Constructors
-
-1. **Default Constructor**
-   ```csharp
-   ApiResponse response = new ApiResponse();
-   ```
-
-2. **Parameterized Constructor**
-   ```csharp
-   ApiResponse response = new ApiResponse(200, "Success", new { Id = 1, Name = "John Doe" }, null);
-   ```
-
-##### Example Usage
-
-```csharp
-var response = new ApiResponse
+var response = new ResponseData
 {
-    StatusCode = StatusCodes.Status200OK,
-    Message = "Data retrieved successfully",
-    Data = new { Id = 1, Name = "John Doe" },
+    message = "Operation successful",
+    Data = new { id = 123, name = "John" },
     Error = null
 };
-
-// Serialize to JSON for API output
-string jsonResponse = JsonSerializer.Serialize(response);
 ```
 
----
+### CustomFormFile
 
-#### **ErrorResponse**
+Implementation of `IFormFile` for handling file uploads with MongoDB integration.
 
-The `ErrorResponse` class is designed to encapsulate detailed error information in API responses.
+**Properties:**
+- `FileName` - Name of the file (MongoDB BsonId)
+- `Content` - Byte array containing file data
+- `ContentType` - MIME type (defaults to "application/octet-stream")
+- `Length` - File size in bytes
 
-##### Properties
-
-- **`StatusCode`**: The HTTP status code indicating the type of error.
-- **`Error`**: A descriptive error message or object.
-- **`Details`**: Additional details about the error, such as stack trace or validation errors.
-
-##### Example Usage
-
+**Usage:**
 ```csharp
-var errorResponse = new ErrorResponse
-{
-    StatusCode = StatusCodes.Status400BadRequest,
-    Error = "Invalid input data",
-    Details = new { MissingFields = new[] { "Name", "Email" } }
-};
-
-// Serialize to JSON for API output
-string errorJson = JsonSerializer.Serialize(errorResponse);
+var file = new CustomFormFile("document.pdf", fileBytes);
+await file.CopyToAsync(stream);
 ```
 
----
+### JObjectSerializer
 
-### Middleware Integration
+Custom JSON serializer for MongoDB integration, handling BSON/JSON conversions.
 
-You can use **MandalaConsulting.Objects.API** to standardize error handling and responses in your ASP.NET Core middleware.
+## Account Models
 
-#### Example: Global Exception Handling
+### User
+Core user account information with authentication details.
 
+**Key Properties:**
+- `_id` - MongoDB ObjectId
+- `Email` - User's email address
+- `Username` - Unique username
+- `Password` - Hashed password
+- `CreatedDate` - Account creation timestamp
+- `LastLoginDate` - Last login timestamp
+- `IsActive` - Account status
+
+### Profile
+Extended user profile information.
+
+**Key Properties:**
+- `FirstName`, `LastName` - User's name
+- `DisplayName` - Public display name
+- `Bio` - User biography
+- `ProfilePictureUrl` - Avatar URL
+- `DateOfBirth` - User's birthdate
+- `PhoneNumber` - Contact number
+
+### Credentials
+Authentication credentials for API access.
+
+**Key Properties:**
+- `ApiKey` - API authentication key
+- `SecretKey` - Secret key for signing
+- `ExpiresAt` - Credential expiration
+- `Scopes` - Authorized access scopes
+
+### IPInfo
+IP address tracking and geolocation data.
+
+**Key Properties:**
+- `IPAddress` - IP address string
+- `Country`, `City`, `Region` - Location data
+- `Latitude`, `Longitude` - Coordinates
+- `ISP` - Internet service provider
+- `LastSeen` - Last activity timestamp
+
+## Billing Models
+
+### Product
+Product catalog entries.
+
+**Key Properties:**
+- `Name` - Product name
+- `Description` - Product details
+- `Price` - Unit price
+- `SKU` - Stock keeping unit
+- `Category` - Product category
+- `IsActive` - Availability status
+
+### Purchase
+Individual purchase transactions.
+
+**Key Properties:**
+- `PurchaseId` - Unique transaction ID
+- `UserId` - Buyer's user ID
+- `ProductId` - Purchased product
+- `Amount` - Transaction amount
+- `PurchaseDate` - Transaction timestamp
+- `Status` - Transaction status
+
+### Subscription
+Recurring billing subscriptions.
+
+**Key Properties:**
+- `SubscriptionId` - Unique subscription ID
+- `PlanName` - Subscription plan
+- `Price` - Recurring price
+- `BillingCycle` - Payment frequency
+- `StartDate`, `EndDate` - Subscription period
+- `IsActive` - Subscription status
+- `AutoRenew` - Auto-renewal flag
+
+### Bill
+Invoice/billing records.
+
+**Key Properties:**
+- `BillId` - Unique bill ID
+- `UserId` - Customer ID
+- `Amount` - Total amount
+- `DueDate` - Payment due date
+- `Status` - Payment status
+- `Items` - Line items
+
+### CreditCard
+Payment card information (PCI compliance required).
+
+**Key Properties:**
+- `CardNumber` - Masked card number
+- `CardholderName` - Name on card
+- `ExpiryMonth`, `ExpiryYear` - Expiration
+- `Last4Digits` - Last 4 digits
+- `CardType` - Card brand
+
+### Address
+Billing/shipping addresses.
+
+**Key Properties:**
+- `Street1`, `Street2` - Address lines
+- `City`, `State`, `PostalCode` - Location
+- `Country` - Country code
+- `Type` - Address type (billing/shipping)
+
+### Other Billing Models
+- `PaymentCredentials` - Payment gateway credentials
+- `PaymentType` - Payment method types
+- `PayeeInfo` - Payee/merchant information
+- `Contact` - Contact information
+- `Inventory` - Stock tracking
+- `Sale` - Sales records
+
+## Usage Examples
+
+### Creating an API Response
 ```csharp
-app.Use(async (context, next) =>
+public IActionResult GetUser(int id)
 {
-    try
+    var user = _userService.GetById(id);
+    
+    return Ok(new ResponseData
     {
-        await next();
-    }
-    catch (Exception ex)
+        message = "User retrieved successfully",
+        Data = user,
+        Error = null
+    });
+}
+```
+
+### Handling File Uploads
+```csharp
+[HttpPost("upload")]
+public async Task<IActionResult> Upload(CustomFormFile file)
+{
+    if (file?.Length > 0)
     {
-        var errorResponse = new ErrorResponse
+        // Process file
+        var fileName = file.FileName;
+        var content = file.Content;
+        
+        // Save to storage
+        await _fileService.SaveAsync(fileName, content);
+        
+        return Ok(new ResponseData
         {
-            StatusCode = StatusCodes.Status500InternalServerError,
-            Error = "An unexpected error occurred",
-            Details = ex.Message
-        };
-
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+            message = "File uploaded successfully",
+            Data = new { fileName, size = file.Length }
+        });
     }
-});
+    
+    return BadRequest(new ResponseData
+    {
+        message = "No file provided",
+        Error = "File is required"
+    });
+}
 ```
 
----
+### Working with Subscriptions
+```csharp
+var subscription = new Subscription
+{
+    UserId = user.Id,
+    PlanName = "Premium",
+    Price = 9.99m,
+    BillingCycle = "monthly",
+    StartDate = DateTime.UtcNow,
+    IsActive = true,
+    AutoRenew = true
+};
+```
 
-## Requirements
+## Dependencies
 
-- .NET Core 3.1 or later
-- ASP.NET Core
-- Dependencies:
-  - `Microsoft.AspNetCore.Http`
-  - `System.Text.Json` (or any JSON serialization library)
+- ASP.NET Core HTTP abstractions
+- MongoDB.Driver
+- Newtonsoft.Json
 
----
+## Notes
+
+- All models use MongoDB BSON attributes for proper serialization
+- DateTime fields should use UTC
+- Sensitive data (passwords, credit cards) must be properly encrypted
+- Follow PCI compliance guidelines for payment data
 
 ## License
 
-This project is copyrighted © 2023 Mandala Consulting, LLC.  
-**All Rights Reserved**.
-
----
+Copyright © 2023 Mandala Consulting, LLC. All rights reserved.
 
 ## Author
 
-Created by **Alexander Fields**  
-For inquiries, please contact [Mandala Consulting](https://mandalaconsulting.com).
+Created by Alexander Fields
