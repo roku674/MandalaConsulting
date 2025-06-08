@@ -2,8 +2,8 @@
 
 ## NuGet Publishing
 - **NuGet API Key**: Stored as GitHub secret `NUGET_API_KEY`
-- See PUBLISHING.md for manual publishing instructions
-- Scripts available: publish-packages.bat/.ps1/.sh
+- This key is used in GitHub Actions for automated package publishing
+- Key value: [REDACTED - stored securely in GitHub secrets]
 
 ## Project Structure
 - Internal dependencies use project references, not package references
