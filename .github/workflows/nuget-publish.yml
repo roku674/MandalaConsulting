@@ -1,20 +1,19 @@
-name: Publish NuGet Packages (Legacy)
-
-# This workflow is being replaced by:
-# - nuget-publish-release.yml (for master/releases)
-# - nuget-publish-prerelease.yml (for develop)
-# TODO: Remove this workflow once new workflows are tested
+name: Publish NuGet Packages
 
 on:
-  workflow_dispatch:  # Only manual trigger for now
+  push:
+    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
-  build-and-publish:
+  publish-release:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for version tags
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -27,44 +26,85 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration Release
 
-      - name: Find changed project files
-        id: changed-projects
-        uses: tj-actions/changed-files@v46
-        with:
-          files: |
-            **/*.csproj
-          files_ignore: |
-            **/*.Tests.csproj
-            **/*Test*.csproj
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
 
-      - name: Pack and push changed projects
-        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+      - name: Check and pack changed packages
+        id: check-pack
+        run: |
+          echo "Checking for version changes..."
+          PACKAGES_TO_PUBLISH=""
+          
+          # Define packages to check
+          declare -A PACKAGES=(
+            ["MC.Logging/MandalaConsulting.Logging.csproj"]="mandalaconsulting.logging"
+            ["MC.Memory/MandalaConsulting.Memory.csproj"]="mandalaconsulting.memory"
+            ["MC.APIMiddlewares/MandalaConsulting.APIMiddlewares.csproj"]="mandalaconsulting.apimiddlewares"
+            ["MC.Repository.Mongo/MandalaConsulting.Repository.Mongo.csproj"]="mandalaconsulting.repository.mongo"
+            ["MC.Objects/MandalaConsulting.Objects.csproj"]="mandalaconsulting.objects"
+            ["MC.Objects.API/MandalaConsulting.Objects.API.csproj"]="mandalaconsulting.objects.api"
+          )
+          
+          for PROJECT_PATH in "${!PACKAGES[@]}"; do
+            PACKAGE_NAME="${PACKAGES[$PROJECT_PATH]}"
+            
+            # Extract version from project file
+            LOCAL_VERSION=$(grep -o '<Version>[^<]*</Version>' "$PROJECT_PATH" | sed 's/<Version>\(.*\)<\/Version>/\1/')
+            
+            if [ -z "$LOCAL_VERSION" ]; then
+              echo "No <Version> tag found in $PROJECT_PATH - skipping"
+              continue
+            fi
+            
+            # Get the latest version from NuGet.org
+            echo "Checking NuGet.org for $PACKAGE_NAME..."
+            NUGET_VERSION=$(curl -s "https://api.nuget.org/v3-flatcontainer/$PACKAGE_NAME/index.json" | grep -o '"[^"]*"' | sed 's/"//g' | sort -V | tail -n 1)
+            
+            echo "  Local version: $LOCAL_VERSION"
+            echo "  NuGet version: $NUGET_VERSION"
+            
+            # Compare versions
+            if [ "$LOCAL_VERSION" != "$NUGET_VERSION" ]; then
+              echo "  Version changed - will pack and publish"
+              dotnet pack "$PROJECT_PATH" --configuration Release --no-build --output ./nupkgs
+              PACKAGES_TO_PUBLISH="$PACKAGES_TO_PUBLISH $PROJECT_PATH"
+            else
+              echo "  Version unchanged - skipping"
+            fi
+            echo ""
+          done
+          
+          # Set output for next step
+          if [ -z "$PACKAGES_TO_PUBLISH" ]; then
+            echo "has_packages=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_packages=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push to NuGet.org
+        if: steps.check-pack.outputs.has_packages == 'true'
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
-          for file in ${{ steps.changed-projects.outputs.all_changed_files }}; do
-            if [[ $file == *Test* ]] || [[ $file == *.Tests.* ]]; then
-              echo "Skipping test project: $file"
-              continue
-            fi
-
-            VERSION=$(grep -o '<Version>[^<]*</Version>' "$file" | sed 's/<Version>\(.*\)<\/Version>/\1/')
-            if [ -z "$VERSION" ]; then
-              echo "No <Version> tag found in $file — skipping"
-              continue
-            fi
-
-            PROJECT_DIR=$(dirname "$file")
-            PROJECT_NAME=$(basename "$file" .csproj)
-            echo "Packing $PROJECT_NAME v$VERSION"
-
-            dotnet pack "$file" --configuration Release --no-build --output nupkgs
-
-            NUPKG_PATH=$(find "nupkgs" -name "$PROJECT_NAME.$VERSION.nupkg" -type f)
-            if [ -n "$NUPKG_PATH" ]; then
-              echo "Pushing $NUPKG_PATH to NuGet.org"
-              dotnet nuget push "$NUPKG_PATH" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
-            else
-              echo "Package not found for $PROJECT_NAME v$VERSION"
+          echo "Publishing changed packages to NuGet.org..."
+          for package in ./nupkgs/*.nupkg; do
+            if [ -f "$package" ]; then
+              echo "Publishing $package..."
+              dotnet nuget push "$package" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate || {
+                echo "Failed to publish $package"
+                exit 1
+              }
             fi
           done
+
+      - name: Upload packages as artifacts
+        if: steps.check-pack.outputs.has_packages == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: ./nupkgs/*.nupkg
+          retention-days: 7
+
+      - name: No packages to publish
+        if: steps.check-pack.outputs.has_packages == 'false'
+        run: echo "No packages have version changes - nothing to publish"

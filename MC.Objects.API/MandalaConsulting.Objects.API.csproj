@@ -11,10 +11,11 @@
 		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
 		<Description>Standardization for API Objects - MandalaConsulting.Objects.API</Description>
 		<RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-		<Version>0.0.3</Version>
+		<Version>0.0.4</Version>
 		<PackageTags>objects</PackageTags>
 		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Objects.API</PackageReleaseNotes>
 		<Authors>Mandala Consulting LLC, Alexander Fields</Authors>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 
 	</PropertyGroup>
 
@@ -34,6 +35,10 @@
 
 	<ItemGroup>
 	  <Page Include="nuget.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 </Project>

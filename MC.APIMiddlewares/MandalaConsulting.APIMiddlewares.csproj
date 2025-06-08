@@ -11,10 +11,11 @@
     <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
     <Description>Middlewares for APIs - MandalaConsulting.APIMiddlewares</Description>
     <RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-    <Version>0.0.9</Version>
+    <Version>0.0.10</Version>
     <PackageTags>middleware</PackageTags>
     <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.APIMiddlewares</PackageReleaseNotes>
     <Authors>Mandala Consulting LLC, Alexander Fields</Authors>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,10 @@
     <ProjectReference Include="..\MC.Memory\MandalaConsulting.Memory.csproj" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>
