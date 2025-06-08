@@ -1,12 +1,12 @@
-name: Publish NuGet Packages
+name: Publish NuGet Packages (Legacy)
+
+# This workflow is being replaced by:
+# - nuget-publish-release.yml (for master/releases)
+# - nuget-publish-prerelease.yml (for develop)
+# TODO: Remove this workflow once new workflows are tested
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-    types: [ closed ]
-  workflow_dispatch:
+  workflow_dispatch:  # Only manual trigger for now
 
 jobs:
   build-and-publish:
@@ -58,9 +58,9 @@ jobs:
             PROJECT_NAME=$(basename "$file" .csproj)
             echo "Packing $PROJECT_NAME v$VERSION"
 
-            dotnet pack "$file" --configuration Release --no-build --output "$PROJECT_DIR/bin/Release"
+            dotnet pack "$file" --configuration Release --no-build --output nupkgs
 
-            NUPKG_PATH=$(find "$PROJECT_DIR/bin/Release" -name "$PROJECT_NAME.$VERSION.nupkg" -type f)
+            NUPKG_PATH=$(find "nupkgs" -name "$PROJECT_NAME.$VERSION.nupkg" -type f)
             if [ -n "$NUPKG_PATH" ]; then
               echo "Pushing $NUPKG_PATH to NuGet.org"
               dotnet nuget push "$NUPKG_PATH" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
