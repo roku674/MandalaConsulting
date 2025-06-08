@@ -5,6 +5,7 @@
 /obj/
 # Ignore config files
 *.config
+!NuGet.config
 /MC.APIMiddlewares/bin
 /MC.APIMiddlewares/obj
 /MC.Logging/bin
