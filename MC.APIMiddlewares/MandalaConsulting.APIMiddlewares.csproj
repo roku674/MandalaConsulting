@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,17 +11,17 @@
     <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
     <Description>Middlewares for APIs - MandalaConsulting.APIMiddlewares</Description>
     <RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-    <Version>0.0.8</Version>
+    <Version>0.0.9</Version>
     <PackageTags>middleware</PackageTags>
     <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.APIMiddlewares</PackageReleaseNotes>
     <Authors>Mandala Consulting LLC, Alexander Fields</Authors>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MandalaConsulting.Logging" Version="*" />
-	<PackageReference Include="MandalaConsulting.Memory" Version="*" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <ProjectReference Include="..\MC.Logging\MandalaConsulting.Logging.csproj" />
+    <ProjectReference Include="..\MC.Memory\MandalaConsulting.Memory.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
   </ItemGroup>
 
 </Project>
