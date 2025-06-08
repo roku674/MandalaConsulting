@@ -8,6 +8,7 @@ Welcome to the Mandala Consulting repository! This repository contains our open-
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [NuGet Packages](#nuget-packages)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -28,3 +29,26 @@ To get started with our libraries, you can add them to your .NET project using N
 
 ```bash
 dotnet add package <PackageName>
+```
+
+## NuGet Packages
+
+Our libraries are available as NuGet packages. Here are the packages currently available:
+
+- **MandalaConsulting.APIMiddlewares** - Middleware components for ASP.NET Core APIs
+- **MandalaConsulting.Logging** - Standardized logging utilities
+- **MandalaConsulting.Memory** - Memory management utilities
+- **MandalaConsulting.Objects** - Common object models
+- **MandalaConsulting.Objects.API** - API-specific object models
+- **MandalaConsulting.Repository.Mongo** - MongoDB repository pattern implementation
+
+### Automatic Package Publishing
+
+Our packages are automatically published to NuGet.org when version numbers are updated and pushed to the repository. The publishing workflow:
+
+1. Automatically detects changes in .csproj files
+2. Extracts the version number from each modified project file
+3. Builds the projects in Release mode
+4. Publishes updated packages to NuGet.org
+
+Manual publishing is also available using the script in `scripts/publish-nuget-packages.sh`.

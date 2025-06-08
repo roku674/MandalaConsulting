@@ -4,7 +4,6 @@ using MandalaConsulting.APIMiddleware.Objects;
 using MandalaConsulting.APIMiddleware.Utility;
 using MandalaConsulting.Optimization.Logging;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -51,8 +50,13 @@ namespace MandalaConsulting.APIMiddleware
             await _next(context);
 
             // Check if a route matched
-            Endpoint endpoint = context.Features.Get<IEndpointFeature>()?.Endpoint;
+            Endpoint endpoint = context.GetEndpoint();
 
+            // Only track 404s where no routing match occurred (true 404s)
+            if (context.Response.StatusCode == StatusCodes.Status404NotFound && endpoint == null)
+            {
+                RecordFailedAttempt(clientIP, requestedPath);
+            }
             // Check if response is 404 Not Found
             if (context.Response.StatusCode == StatusCodes.Status404NotFound)
             {
