@@ -50,13 +50,13 @@ namespace MandalaConsulting.APIMiddleware
 
             // In ASP.NET Core 2.x, we need to track the original response body
             // to detect if the next middleware wrote anything
-            var originalBodyStream = context.Response.Body;
+            Stream originalBodyStream = context.Response.Body;
             long originalResponseLength = 0;
             
             try
             {
                 // Create a temporary stream to capture response
-                using (var responseBody = new System.IO.MemoryStream())
+                using (MemoryStream responseBody = new System.IO.MemoryStream())
                 {
                     context.Response.Body = responseBody;
                     
