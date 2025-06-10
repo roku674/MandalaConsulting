@@ -101,18 +101,20 @@ namespace MandalaConsulting.APIMiddlewares.Tests
         }
 
         [Fact]
-        public async Task InvokeAsync_With404Response_RecordsFailedAttempt()
+        public async Task InvokeAsync_WithNonExistentEndpoint_RecordsFailedAttempt()
         {
             // Arrange
             RequestDelegate next = (context) => 
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
+                // Don't write any content - simulating a truly non-existent endpoint
                 return Task.CompletedTask;
             };
             
             var middleware = new InvalidEndpointTrackerMiddleware(next);
             
             var context = new DefaultHttpContext();
+            context.Response.Body = new System.IO.MemoryStream(); // Need a writable stream
             string testIP = "192.168.1.52";
             context.Connection.RemoteIpAddress = IPAddress.Parse(testIP);
             context.Request.Path = "/nonexistent-endpoint";
@@ -124,35 +126,54 @@ namespace MandalaConsulting.APIMiddlewares.Tests
                 return;
             }
             
-            // Create a mock HttpContext that can have Features set
-            var mockContext = new Mock<HttpContext>();
-            var request = new Mock<HttpRequest>();
-            var response = new Mock<HttpResponse>();
-            var connection = new Mock<ConnectionInfo>();
+            // Get initial log count to compare after
+            int initialLogCount = IPBlacklistMiddleware.GetLogs().Count;
             
-            // Setup request
-            request.Setup(r => r.Path).Returns(context.Request.Path);
-            mockContext.Setup(c => c.Request).Returns(request.Object);
+            // Act
+            await middleware.InvokeAsync(context);
             
-            // Setup response
-            response.SetupProperty(r => r.StatusCode);
-            response.Object.StatusCode = StatusCodes.Status200OK; // Will be changed to 404 by delegate
-            mockContext.Setup(c => c.Response).Returns(response.Object);
+            // Assert
+            // Check that a log was added
+            int newLogCount = IPBlacklistMiddleware.GetLogs().Count;
+            Assert.True(newLogCount > initialLogCount, "A log entry should be added for the failed attempt on non-existent endpoint");
+        }
+
+        [Fact]
+        public async Task InvokeAsync_WithExistingEndpointReturning404_DoesNotRecordFailedAttempt()
+        {
+            // Arrange
+            RequestDelegate next = async (context) => 
+            {
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                // Write some content to simulate an endpoint that executed but returned 404
+                await context.Response.WriteAsync("{\"error\": \"User not found\"}");
+            };
             
-            // Setup connection/IP
-            connection.Setup(c => c.RemoteIpAddress).Returns(context.Connection.RemoteIpAddress);
-            mockContext.Setup(c => c.Connection).Returns(connection.Object);
+            var middleware = new InvalidEndpointTrackerMiddleware(next);
+            
+            var context = new DefaultHttpContext();
+            context.Response.Body = new System.IO.MemoryStream(); // Need a writable stream
+            string testIP = "192.168.1.56";
+            context.Connection.RemoteIpAddress = IPAddress.Parse(testIP);
+            context.Request.Path = "/api/users/999"; // Existing endpoint but user not found
+            
+            // Ensure IP is not blocked
+            if (IPBlacklist.GetBlockReason(testIP) != null)
+            {
+                // Skip test if we can't unblock the IP
+                return;
+            }
             
             // Get initial log count to compare after
             int initialLogCount = IPBlacklistMiddleware.GetLogs().Count;
             
             // Act
-            await middleware.InvokeAsync(mockContext.Object);
+            await middleware.InvokeAsync(context);
             
             // Assert
-            // Check that a log was added
+            // Check that NO log was added (legitimate 404 from existing endpoint that wrote content)
             int newLogCount = IPBlacklistMiddleware.GetLogs().Count;
-            Assert.True(newLogCount > initialLogCount, "A log entry should be added for the failed attempt");
+            Assert.Equal(initialLogCount, newLogCount);
         }
 
         [Fact]
@@ -243,28 +264,11 @@ namespace MandalaConsulting.APIMiddlewares.Tests
             
             var middleware = new InvalidEndpointTrackerMiddleware(next);
             
-            // Create a mock HttpContext that can have Features set
-            var mockContext = new Mock<HttpContext>();
-            var request = new Mock<HttpRequest>();
-            var response = new Mock<HttpResponse>();
-            var connection = new Mock<ConnectionInfo>();
-            
+            var context = new DefaultHttpContext();
+            context.Response.Body = new System.IO.MemoryStream(); // Need a writable stream
             string testIP = "192.168.1.55";
-            
-            // Setup request
-            var headers = new HeaderDictionary();
-            request.Setup(r => r.Headers).Returns(headers);
-            request.Setup(r => r.Path).Returns("/test/.env");
-            mockContext.Setup(c => c.Request).Returns(request.Object);
-            
-            // Setup response
-            response.SetupProperty(r => r.StatusCode);
-            response.Object.StatusCode = StatusCodes.Status200OK; 
-            mockContext.Setup(c => c.Response).Returns(response.Object);
-            
-            // Setup connection/IP
-            connection.Setup(c => c.RemoteIpAddress).Returns(IPAddress.Parse(testIP));
-            mockContext.Setup(c => c.Connection).Returns(connection.Object);
+            context.Connection.RemoteIpAddress = IPAddress.Parse(testIP);
+            context.Request.Path = "/test/.env";
             
             // Ensure IP is not blocked
             if (IPBlacklist.GetBlockReason(testIP) != null)
@@ -273,13 +277,17 @@ namespace MandalaConsulting.APIMiddlewares.Tests
                 return;
             }
             
+            // Important: Don't write any content - simulating a truly non-existent route
+            // which is typically the case for .env files
+            
             // Act
-            await middleware.InvokeAsync(mockContext.Object);
+            await middleware.InvokeAsync(context);
             
             // Assert
             // Check that the IP was banned
             string blockReason = IPBlacklist.GetBlockReason(testIP);
             Assert.NotNull(blockReason);
+            Assert.Contains(".env", blockReason);
         }
     }
 }
