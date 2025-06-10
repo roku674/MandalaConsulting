@@ -177,6 +177,44 @@ namespace MandalaConsulting.APIMiddlewares.Tests
         }
 
         [Fact]
+        public async Task InvokeAsync_WithRootPath404_DoesNotRecordFailedAttempt()
+        {
+            // Arrange
+            RequestDelegate next = (context) => 
+            {
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                // Don't write any content - simulating no endpoint at root
+                return Task.CompletedTask;
+            };
+            
+            var middleware = new InvalidEndpointTrackerMiddleware(next);
+            
+            var context = new DefaultHttpContext();
+            context.Response.Body = new System.IO.MemoryStream(); // Need a writable stream
+            string testIP = "192.168.1.57";
+            context.Connection.RemoteIpAddress = IPAddress.Parse(testIP);
+            context.Request.Path = "/"; // Root path
+            
+            // Ensure IP is not blocked
+            if (IPBlacklist.GetBlockReason(testIP) != null)
+            {
+                // Skip test if we can't unblock the IP
+                return;
+            }
+            
+            // Get initial log count to compare after
+            int initialLogCount = IPBlacklistMiddleware.GetLogs().Count;
+            
+            // Act
+            await middleware.InvokeAsync(context);
+            
+            // Assert
+            // Check that NO log was added (root path is excluded from tracking)
+            int newLogCount = IPBlacklistMiddleware.GetLogs().Count;
+            Assert.Equal(initialLogCount, newLogCount);
+        }
+
+        [Fact]
         public async Task InvokeAsync_With401Response_RecordsFailedAttempt()
         {
             // Arrange

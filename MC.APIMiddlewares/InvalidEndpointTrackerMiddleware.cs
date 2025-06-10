@@ -79,8 +79,10 @@ namespace MandalaConsulting.APIMiddleware
             // - 404 status code
             // - No response body (or default 404 body)
             // - No controller/action was executed
+            // - Exclude root path "/" as it's valid to hit even without an explicit endpoint
             bool isNonExistentEndpoint = context.Response.StatusCode == StatusCodes.Status404NotFound &&
-                                         originalResponseLength == 0;
+                                         originalResponseLength == 0 &&
+                                         requestedPath != "/";
 
             // Only track if we believe this is a non-existent endpoint
             if (isNonExistentEndpoint)
