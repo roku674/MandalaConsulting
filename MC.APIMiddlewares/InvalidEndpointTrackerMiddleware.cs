@@ -5,6 +5,7 @@ using MandalaConsulting.APIMiddleware.Utility;
 using MandalaConsulting.Optimization.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace MandalaConsulting.APIMiddleware
@@ -47,10 +48,48 @@ namespace MandalaConsulting.APIMiddleware
                 return;
             }
 
-            await _next(context);
+            // In ASP.NET Core 2.x, we need to track the original response body
+            // to detect if the next middleware wrote anything
+            Stream originalBodyStream = context.Response.Body;
+            long originalResponseLength = 0;
+            
+            try
+            {
+                // Create a temporary stream to capture response
+                using (MemoryStream responseBody = new System.IO.MemoryStream())
+                {
+                    context.Response.Body = responseBody;
+                    
+                    await _next(context);
+                    
+                    // Check if any content was written
+                    originalResponseLength = responseBody.Length;
+                    
+                    // Copy the response back to the original stream
+                    responseBody.Seek(0, System.IO.SeekOrigin.Begin);
+                    await responseBody.CopyToAsync(originalBodyStream);
+                }
+            }
+            finally
+            {
+                context.Response.Body = originalBodyStream;
+            }
 
-            // Check if response is 404 Not Found
-            if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
+            // In ASP.NET Core 2.x, a truly non-existent endpoint typically results in:
+            // - 404 status code
+            // - No response body (or default 404 body)
+            // - No controller/action was executed
+            // - Exclude root path "/" as it's valid to hit even without an explicit endpoint
+            bool isNonExistentEndpoint = context.Response.StatusCode == StatusCodes.Status404NotFound &&
+                                         originalResponseLength == 0 &&
+                                         requestedPath != "/";
+
+            // Only track if we believe this is a non-existent endpoint
+            if (isNonExistentEndpoint)
+            {
+                RecordFailedAttempt(clientIP, requestedPath);
+            }
+            else if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
             {
                 IPBlacklistMiddleware.AddLog(
                     LogMessage.Informational(
