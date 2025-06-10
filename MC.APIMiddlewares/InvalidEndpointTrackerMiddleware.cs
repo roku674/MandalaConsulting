@@ -50,11 +50,7 @@ namespace MandalaConsulting.APIMiddleware
             await _next(context);
 
             // Check if response is 404 Not Found
-            if (context.Response.StatusCode == StatusCodes.Status404NotFound)
-            {
-                RecordFailedAttempt(clientIP, requestedPath);
-            }
-            else if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
+            if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
             {
                 IPBlacklistMiddleware.AddLog(
                     LogMessage.Informational(
