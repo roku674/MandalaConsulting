@@ -40,6 +40,7 @@ namespace MandalaConsulting.Objects.Account
             this.role = role;
             this.timeOnline = timeOnline;
             this.userId = userId;
+            this.username = username;
             this.token = token;
             this.tokenExpiration = tokenExpiration;
             //this.GoogleObjects = googleObjects;
@@ -99,5 +100,8 @@ namespace MandalaConsulting.Objects.Account
         [BsonId]
         [DataMember]
         public string userId { get; set; }
+
+        [DataMember]
+        public string username { get; set; }
     }
 }
