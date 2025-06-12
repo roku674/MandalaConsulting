@@ -25,6 +25,7 @@ namespace MandalaConsulting.Objects.API.Account
             string role,
             System.TimeSpan timeOnline,
             string userId,
+            string username,
             string token,
             System.DateTime tokenExpiration
         )
@@ -40,6 +41,7 @@ namespace MandalaConsulting.Objects.API.Account
             this.role = role;
             this.timeOnline = timeOnline;
             this.userId = userId;
+            this.username = username;
             this.token = token;
             this.tokenExpiration = tokenExpiration;
             //this.GoogleObjects = googleObjects;
@@ -99,5 +101,8 @@ namespace MandalaConsulting.Objects.API.Account
         [BsonId]
         [DataMember]
         public string userId { get; set; }
+
+        [DataMember]
+        public string username { get; set; }
     }
 }
