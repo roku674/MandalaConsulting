@@ -25,6 +25,7 @@ namespace MandalaConsulting.Objects.Account
             string role,
             System.TimeSpan timeOnline,
             string userId,
+            string username,
             string token,
             System.DateTime tokenExpiration
         )
