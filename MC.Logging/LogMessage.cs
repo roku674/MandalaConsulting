@@ -1,6 +1,7 @@
 //Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace MandalaConsulting.Optimization.Logging
 {
@@ -9,6 +10,70 @@ namespace MandalaConsulting.Optimization.Logging
     /// </summary>
     public class LogMessage
     {
+        /// <summary>
+        /// Extracts the actual method name from async state machine types
+        /// </summary>
+        /// <param name="stackTrace">The stack trace to analyze</param>
+        /// <returns>The formatted method name</returns>
+        private static string GetMethodNameFromStackTrace(StackTrace stackTrace)
+        {
+            // Walk up the stack to find the first non-framework method
+            for (int i = 1; i < stackTrace.FrameCount; i++)
+            {
+                StackFrame frame = stackTrace.GetFrame(i);
+                if (frame == null) continue;
+
+                System.Reflection.MethodBase method = frame.GetMethod();
+                if (method == null) continue;
+
+                string declaringTypeName = method.DeclaringType?.FullName ?? "Unknown";
+                string methodName = method.Name;
+
+                // Skip LogMessage constructors
+                if (method.DeclaringType?.Name == "LogMessage") continue;
+
+                // Check if this is an async state machine generated method
+                if (methodName == "MoveNext" && declaringTypeName.Contains("+<") && declaringTypeName.Contains(">d"))
+                {
+                    // Extract the actual method name from the compiler-generated type name
+                    // Format: Namespace.Class+<MethodName>d__XX
+                    int startIndex = declaringTypeName.IndexOf("+<") + 2;
+                    int endIndex = declaringTypeName.IndexOf(">d", startIndex);
+                    
+                    if (startIndex > 1 && endIndex > startIndex)
+                    {
+                        string actualMethodName = declaringTypeName.Substring(startIndex, endIndex - startIndex);
+                        // Get the actual class name (before the +)
+                        string actualClassName = declaringTypeName.Substring(0, declaringTypeName.IndexOf("+<"));
+                        return $"{actualClassName}.{actualMethodName}";
+                    }
+                }
+
+                // Check if this is a lambda or anonymous method  
+                if (methodName.Contains("<") && methodName.Contains(">"))
+                {
+                    // This is a lambda/anonymous method, keep looking up the stack
+                    continue;
+                }
+
+                // For regular methods, return the full name
+                return $"{declaringTypeName}.{methodName}";
+            }
+
+            // Fallback to the first frame method
+            StackFrame fallbackFrame = stackTrace.GetFrame(1);
+            if (fallbackFrame != null)
+            {
+                System.Reflection.MethodBase method = fallbackFrame.GetMethod();
+                if (method != null)
+                {
+                    return $"{method.DeclaringType?.FullName ?? "Unknown"}.{method.Name}";
+                }
+            }
+
+            return "Unknown";
+        }
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -28,20 +93,7 @@ namespace MandalaConsulting.Optimization.Logging
             messageSource = MessageSourceSetter;
 
             StackTrace stackTrace = new StackTrace();
-            StackFrame stackFrame = stackTrace.GetFrame(1);
-
-            if (stackFrame.GetMethod()?.DeclaringType?.Name == "LogMessage")
-            {
-                stackFrame = stackTrace.GetFrame(2);
-            }
-
-            if (stackFrame == null)
-            {
-                stackFrame = stackTrace.GetFrame(1);
-            }
-
-            System.Reflection.MethodBase method = stackFrame?.GetMethod();
-            localOperationName = $"{method.DeclaringType?.FullName}.{method.Name}";
+            localOperationName = GetMethodNameFromStackTrace(stackTrace);
 
             this.messageType = messageType;
             this.message = message;
@@ -63,20 +115,7 @@ namespace MandalaConsulting.Optimization.Logging
             messageSource = MessageSourceSetter;
 
             StackTrace stackTrace = new StackTrace();
-            StackFrame stackFrame = stackTrace.GetFrame(1);
-
-            if (stackFrame.GetMethod()?.DeclaringType?.Name == "LogMessage")
-            {
-                stackFrame = stackTrace.GetFrame(2);
-            }
-
-            if (stackFrame == null)
-            {
-                stackFrame = stackTrace.GetFrame(1);
-            }
-
-            System.Reflection.MethodBase method = stackFrame?.GetMethod();
-            localOperationName = $"{method.DeclaringType?.FullName}.{method.Name}";
+            localOperationName = GetMethodNameFromStackTrace(stackTrace);
 
             this.messageType = messageType;
             this.message = message;

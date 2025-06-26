@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Xunit;
 using MandalaConsulting.Optimization.Logging;
 
@@ -293,6 +294,48 @@ namespace MandalaConsulting.Logging.Tests
             
             // Assert
             Assert.Equal(newValue, logMessage.messageSource);
+        }
+
+        [Fact]
+        public async Task AsyncMethod_LogsCorrectOperationName()
+        {
+            // Act
+            LogMessage logMessage = null;
+            await TestAsyncMethodAsync(() => 
+            {
+                logMessage = new LogMessage(MessageType.Informational, "Test async logging");
+            });
+
+            // Assert
+            Assert.NotNull(logMessage);
+            // Log the actual operation name for debugging
+            Console.WriteLine($"Actual operation name: {logMessage.localOperationName}");
+            Assert.NotNull(logMessage.localOperationName);
+            Assert.DoesNotContain("MoveNext", logMessage.localOperationName);
+        }
+
+        private async Task TestAsyncMethodAsync(Action createLog)
+        {
+            await Task.Delay(1); // Simulate async work
+            createLog();
+        }
+
+        [Fact]
+        public void AsyncMethodDirectCall_LogsCorrectOperationName()
+        {
+            // Act
+            LogMessage logMessage = null;
+            Task.Run(async () =>
+            {
+                await Task.Delay(1);
+                logMessage = new LogMessage(MessageType.Informational, "Test from async context");
+            }).Wait();
+
+            // Assert
+            Assert.NotNull(logMessage);
+            // Since this is from an anonymous async lambda, it should still capture something meaningful
+            Assert.NotNull(logMessage.localOperationName);
+            Assert.DoesNotContain("MoveNext", logMessage.localOperationName);
         }
     }
 }
