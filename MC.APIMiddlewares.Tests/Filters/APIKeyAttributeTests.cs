@@ -1,3 +1,4 @@
+// Copyright Mandala Consulting, LLC., 2025. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2025-06-08 13:27:40
 using Xunit;
 using MandalaConsulting.APIMiddleware.Filters;
 using Microsoft.AspNetCore.Http;

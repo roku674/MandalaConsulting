@@ -1,3 +1,4 @@
+// Copyright Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-15 18:02:13
 ﻿using MandalaConsulting.Optimization.Memory;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -5,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
-//Copyright © 2024 Mandala Consulting, LLC All rights reserved.
 //Created by Alexander Fields
 
 namespace MandalaConsulting.APIMiddleware

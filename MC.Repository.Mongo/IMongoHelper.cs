@@ -1,4 +1,4 @@
-//Copyright © 2023 Mandala Consulting, LLC MIT License
+// Copyright Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-12 10:20:40
 //Created by Alexander Fields
 
 using MongoDB.Driver;

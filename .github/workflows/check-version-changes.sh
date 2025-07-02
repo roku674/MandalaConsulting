@@ -1,3 +1,4 @@
+# Copyright Mandala Consulting, LLC., 2025. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2025-06-08 15:20:26
 #!/bin/bash
 
 # Script to check if package version has changed compared to NuGet.org

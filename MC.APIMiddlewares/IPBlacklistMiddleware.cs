@@ -1,4 +1,5 @@
-//Copyright © 2024 Mandala Consulting, LLC All rights reserved.
+// Copyright Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-13 01:57:25
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-06-08 14:28:17
 //Created by Alexander Fields
 using MandalaConsulting.APIMiddleware.Objects;
 using MandalaConsulting.APIMiddleware.Utility;

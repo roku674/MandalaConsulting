@@ -1,6 +1,6 @@
+// Copyright Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-15 18:02:13
 ﻿using System;
 
-// Copyright © 2023 Mandala Consulting, LLC All rights reserved.
 // Created by Alexander Fields
 
 namespace MandalaConsulting.Optimization.Memory
