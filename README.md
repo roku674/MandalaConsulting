@@ -2,6 +2,8 @@
 
 Welcome to the Mandala Consulting repository! This repository contains our open-sourced .NET code, aimed at providing useful libraries and tools for the community.
 
+### [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE_DICTIONARY.md)
+
 ## Table of Contents
 
 - [About Mandala Consulting](#about-mandala-consulting)
