@@ -32,3 +32,10 @@ deploy_nugets.py
 /MC.APIMiddlewares/Properties
 
 **/.claude/settings.local.json
+
+# Never commit these files
+PROJECT_WORK.md
+PROJECT_CONFIDENTIAL.md
+
+# Files with colons (Windows alternate data streams)
+*:*
