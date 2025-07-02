@@ -1,4 +1,5 @@
-// Copyright Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-15 18:02:13
+// Copyright © Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-15 18:02:13
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 ﻿using MandalaConsulting.Optimization.Memory;
 using Microsoft.AspNetCore.Http;
 using System;

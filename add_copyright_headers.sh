@@ -1,3 +1,4 @@
+# Copyright © Mandala Consulting, LLC., 2025. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2025-07-02 11:48:25
 # Copyright © Alexander Fields, 2025. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2025-07-02 09:35:27
 # Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:15
 #!/bin/bash
