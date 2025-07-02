@@ -32,4 +32,3 @@ deploy_nugets.py
 /MC.APIMiddlewares/Properties
 
 **/.claude/settings.local.json
-CLAUDE.md
