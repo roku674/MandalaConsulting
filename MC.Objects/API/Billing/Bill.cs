@@ -6,12 +6,28 @@ using System.Runtime.Serialization;
 
 namespace MandalaConsulting.Objects.Billing
 {
+    /// <summary>
+    /// Represents a billing record containing payment information, purchase history, and subscriptions.
+    /// </summary>
     public class Bill
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bill"/> class.
+        /// </summary>
         public Bill()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bill"/> class with specified properties.
+        /// </summary>
+        /// <param name="userId">The user's unique identifier.</param>
+        /// <param name="addressBilling">The billing address.</param>
+        /// <param name="orders">List of order IDs.</param>
+        /// <param name="paymentTypes">Payment methods on file.</param>
+        /// <param name="purchases">List of purchases made.</param>
+        /// <param name="refunds">List of refunded purchases.</param>
+        /// <param name="subscriptions">List of active subscriptions.</param>
         public Bill(string userId, Address addressBilling, List<string> orders, PaymentCredentials paymentTypes, List<Purchase> purchases, List<Purchase> refunds, List<Subscription> subscriptions)
         {
             this._id = userId;
@@ -24,6 +40,9 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the unique identifier for the billing record (user ID).
+        /// </summary>
         public string _id { get; set; }
 
         /// <summary>
@@ -36,6 +55,9 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the list of order IDs associated with this billing record.
+        /// </summary>
         public List<string> Orders
         {
             get; set;
@@ -77,6 +99,10 @@ namespace MandalaConsulting.Objects.Billing
             get; set;
         }
 
+        /// <summary>
+        /// Gets the primary payment method on file (credit card or payee info).
+        /// </summary>
+        /// <returns>The primary payment method, or null if none exists.</returns>
         public dynamic GetPrimaryPayment()
         {
             if (PaymentTypesOnFile.CreditCard != null)

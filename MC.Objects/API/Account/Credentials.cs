@@ -4,12 +4,25 @@
 
 namespace MandalaConsulting.Objects.Account
 {
+    /// <summary>
+    /// Represents user authentication credentials.
+    /// </summary>
     public class Credentials
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Credentials"/> class.
+        /// </summary>
         public Credentials()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Credentials"/> class with specified properties.
+        /// </summary>
+        /// <param name="email">User's email address.</param>
+        /// <param name="password">User's password.</param>
+        /// <param name="token">Authentication token.</param>
+        /// <param name="googleToken">Google authentication token.</param>
         public Credentials(string email, string password, string token, string googleToken)
         {
             this.email = email ?? throw new System.ArgumentNullException(nameof(email));
@@ -18,9 +31,21 @@ namespace MandalaConsulting.Objects.Account
             this.googleToken = token;
         }
 
+        /// <summary>
+        /// Gets or sets the user's email address.
+        /// </summary>
         public string email { get; set; }
+        /// <summary>
+        /// Gets or sets the Google authentication token.
+        /// </summary>
         public string googleToken { get; set; }
+        /// <summary>
+        /// Gets or sets the user's password.
+        /// </summary>
         public string password { get; set; }
+        /// <summary>
+        /// Gets or sets the authentication token.
+        /// </summary>
         public string token { get; set; }
     }
 }

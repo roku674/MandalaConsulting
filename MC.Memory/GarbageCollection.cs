@@ -6,19 +6,33 @@
 
 namespace MandalaConsulting.Optimization.Memory
 {
+    /// <summary>
+    /// Provides functionality for managing garbage collection and memory optimization.
+    /// </summary>
     public class GarbageCollection
     {
         private bool _disposed;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GarbageCollection"/> class.
+        /// </summary>
         public GarbageCollection()
         {
         }
 
+        /// <summary>
+        /// Finalizer for the GarbageCollection class.
+        /// Suppresses finalization to prevent redundant cleanup.
+        /// </summary>
         ~GarbageCollection()
         {
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Performs garbage collection and attempts to optimize memory usage.
+        /// </summary>
+        /// <param name="state">An optional state object (unused).</param>
         public void PerformGarbageCollection(object state)
         {
             // Perform garbage collection
@@ -30,6 +44,9 @@ namespace MandalaConsulting.Optimization.Memory
             //Log the finish?
         }
 
+        /// <summary>
+        /// Attempts to return unused memory to the operating system by utilizing no GC regions.
+        /// </summary>
         private void ReturnUnusedMemoryToOS()
         {
             // Attempt to return unused memory to the OS

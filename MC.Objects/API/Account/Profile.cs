@@ -8,11 +8,26 @@ using Newtonsoft.Json.Linq;
 namespace MandalaConsulting.Objects.Account
 {
     [BsonIgnoreExtraElements]
+    /// <summary>
+    /// Represents a user profile with additional account settings, inheriting basic contact information.
+    /// </summary>
     public class Profile : Contact
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Profile"/> class.
+        /// </summary>
         public Profile()
         { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Profile"/> class with specified properties.
+        /// </summary>
+        /// <param name="accountSetting">JSON object containing user account settings.</param>
+        /// <param name="dob">Date of birth.</param>
+        /// <param name="firstName">First name.</param>
+        /// <param name="lastName">Last name.</param>
+        /// <param name="middleName">Middle name.</param>
+        /// <param name="number">Contact number.</param>
         public Profile(
             JObject accountSetting,
             System.DateTime dob,
@@ -27,6 +42,9 @@ namespace MandalaConsulting.Objects.Account
         }
 
         [BsonSerializer(typeof(JObjectSerializer))]
+        /// <summary>
+        /// Gets or sets the JSON object containing user account settings.
+        /// </summary>
         public JObject accountSettings { get; set; }
     }
 }

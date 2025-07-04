@@ -4,12 +4,30 @@
 
 namespace MandalaConsulting.Objects.Billing
 {
+    /// <summary>
+    /// Defines the supported payment methods.
+    /// </summary>
     public enum PaymentType : int
     {
+        /// <summary>
+        /// No payment type specified.
+        /// </summary>
         None = 0,
+        /// <summary>
+        /// PayPal payment token.
+        /// </summary>
         PayPalToken = 1,
+        /// <summary>
+        /// MasterCard credit card.
+        /// </summary>
         MasterCard = 2,
+        /// <summary>
+        /// Visa credit card.
+        /// </summary>
         Visa = 3,
+        /// <summary>
+        /// ACH (Automated Clearing House) bank transfer.
+        /// </summary>
         ACH = 4
     }
 }

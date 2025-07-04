@@ -7,8 +7,14 @@ using System.Runtime.Serialization;
 namespace MandalaConsulting.Objects.Billing
 {
     [System.Serializable]
+    /// <summary>
+    /// Represents contact information for a person including name and contact details.
+    /// </summary>
     public class Contact
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Contact"/> class.
+        /// </summary>
         public Contact()
         {
         }
@@ -20,6 +26,14 @@ namespace MandalaConsulting.Objects.Billing
         /// <param name="lastName">!nullable</param>
         /// <param name="middleName"></param>
         /// <param name="number"></param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Contact"/> class with specified properties.
+        /// </summary>
+        /// <param name="dob">Date of birth (defaults to 1900-01-01 if not specified).</param>
+        /// <param name="firstName">The person's first name (required).</param>
+        /// <param name="lastName">The person's last name (required).</param>
+        /// <param name="middleName">The person's middle name (optional).</param>
+        /// <param name="number">The person's phone number.</param>
         public Contact(System.DateTime dob, string firstName, string lastName, string middleName, ulong number)
         {
             this.dob = dob != default ? dob : new System.DateTime(1900, 1, 1);
@@ -30,24 +44,36 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the person's date of birth.
+        /// </summary>
         public System.DateTime dob
         {
             get; set;
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the person's first name.
+        /// </summary>
         public string firstName
         {
             get; set;
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the person's last name.
+        /// </summary>
         public string lastName
         {
             get; set;
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the person's middle name.
+        /// </summary>
         public string middleName
         {
             get; set;

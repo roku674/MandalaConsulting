@@ -6,12 +6,26 @@ using System.Runtime.Serialization;
 
 namespace MandalaConsulting.Objects.Account
 {
+    /// <summary>
+    /// Stores information about IP address login history and activity.
+    /// </summary>
     public class IPInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IPInfo"/> class.
+        /// </summary>
         public IPInfo()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IPInfo"/> class with specified properties.
+        /// </summary>
+        /// <param name="firstLogin">Date of first login from this IP.</param>
+        /// <param name="ipAddress">The IP address.</param>
+        /// <param name="lastLogin">Date of last login from this IP.</param>
+        /// <param name="loginCount">Number of times logged in from this IP.</param>
+        /// <param name="timeOnline">Total time spent online from this IP.</param>
         public IPInfo(System.DateTime firstLogin, string ipAddress, System.DateTime lastLogin, uint loginCount, System.TimeSpan timeOnline)
         {
             this.firstLogin = firstLogin;
@@ -22,18 +36,27 @@ namespace MandalaConsulting.Objects.Account
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the date of first login from this IP.
+        /// </summary>
         public System.DateTime firstLogin
         {
             get; set;
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the IP address.
+        /// </summary>
         public string ipAddress
         {
             get; set;
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the date of last login from this IP.
+        /// </summary>
         public System.DateTime lastLogin
         {
             get; set;
@@ -49,6 +72,9 @@ namespace MandalaConsulting.Objects.Account
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the total time spent online from this IP.
+        /// </summary>
         public System.TimeSpan timeOnline
         {
             get; set;

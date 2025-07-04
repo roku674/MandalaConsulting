@@ -13,26 +13,46 @@ using System.Threading.Tasks;
 
 namespace MandalaConsulting.APIMiddleware
 {
+    /// <summary>
+    /// Middleware for blocking blacklisted IP addresses from accessing the API.
+    /// </summary>
     public class IPBlacklistMiddleware
     {
         private static readonly ConcurrentQueue<LogMessage> middlewareLogs = new ConcurrentQueue<LogMessage>();
         private readonly RequestDelegate _next;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IPBlacklistMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The next middleware in the pipeline.</param>
         public IPBlacklistMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
+        /// <summary>
+        /// Event triggered when a log message is added.
+        /// </summary>
         public static event EventHandler<LogMessageEventArgs> LogAdded;
 
+        /// <summary>
+        /// Event triggered when logs are cleared.
+        /// </summary>
         public static event EventHandler LogCleared;
 
+        /// <summary>
+        /// Adds a log message to the middleware logs.
+        /// </summary>
+        /// <param name="logMessage">The log message to add.</param>
         public static void AddLog(LogMessage logMessage)
         {
             middlewareLogs.Enqueue(logMessage);
             LogAdded?.Invoke(null, new LogMessageEventArgs(logMessage));
         }
 
+        /// <summary>
+        /// Clears all middleware logs and event handlers.
+        /// </summary>
         public static void ClearLogs()
         {
             LogCleared?.Invoke(null, EventArgs.Empty);
@@ -42,11 +62,20 @@ namespace MandalaConsulting.APIMiddleware
             LogCleared = null;
         }
 
+        /// <summary>
+        /// Gets all middleware logs.
+        /// </summary>
+        /// <returns>A list of all log messages.</returns>
         public static IList<LogMessage> GetLogs()
         {
             return middlewareLogs.ToList();
         }
 
+        /// <summary>
+        /// Invokes the middleware to check if the client IP is blacklisted.
+        /// </summary>
+        /// <param name="context">The HTTP context.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task InvokeAsync(HttpContext context)
         {
             string clientIP = APIUtility.GetClientPublicIPAddress(context);

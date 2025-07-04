@@ -4,27 +4,46 @@
 
 namespace MandalaConsulting.Objects.Billing
 {
+    /// <summary>
+    /// Represents payment credentials with various payment methods.
+    /// </summary>
     public class PaymentCredentials
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentCredentials"/> class.
+        /// </summary>
         public PaymentCredentials()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentCredentials"/> class with a specified payment type.
+        /// </summary>
+        /// <param name="paymentType">The type of payment.</param>
         public PaymentCredentials(PaymentType paymentType)
         {
             PaymentType = paymentType;
         }
 
+        /// <summary>
+        /// Gets or sets the credit card payment information.
+        /// </summary>
         public CreditCard CreditCard
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the payee information for other payment methods.
+        /// </summary>
         public PayeeInfo PayeeInfo
         {
             get; set;
         }
 
+        /// <summary>
+        /// Gets or sets the type of payment method being used.
+        /// </summary>
         public PaymentType PaymentType
         {
             get; set;

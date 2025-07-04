@@ -6,21 +6,42 @@ using System.Runtime.Serialization;
 
 namespace MandalaConsulting.Objects.Billing
 {
+    /// <summary>
+    /// Represents payee information for payment processing.
+    /// </summary>
     public class PayeeInfo
     {
         [DataMember(Name = "client_id")]
+        /// <summary>
+        /// Gets or sets the client identifier.
+        /// </summary>
         public string ClientId;
 
         [DataMember(Name = "email_address")]
+        /// <summary>
+        /// Gets or sets the payee's email address.
+        /// </summary>
         public string Email;
 
         [DataMember(Name = "merchant_id")]
+        /// <summary>
+        /// Gets or sets the merchant identifier.
+        /// </summary>
         public string MerchantId;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PayeeInfo"/> class.
+        /// </summary>
         public PayeeInfo()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PayeeInfo"/> class with specified properties.
+        /// </summary>
+        /// <param name="clientId">The client identifier.</param>
+        /// <param name="email">The payee's email address.</param>
+        /// <param name="merchantId">The merchant identifier.</param>
         public PayeeInfo(string clientId, string email, string merchantId)
         {
             ClientId = clientId;

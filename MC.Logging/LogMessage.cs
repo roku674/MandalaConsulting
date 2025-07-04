@@ -88,6 +88,11 @@ namespace MandalaConsulting.Optimization.Logging
         /// <param name="localOperationName"></param>
         /// <param name="messageType"></param>
         /// <param name="message"></param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogMessage"/> class with a message type and content.
+        /// </summary>
+        /// <param name="messageType">The type of log message.</param>
+        /// <param name="message">The log message content.</param>
         public LogMessage(MessageType messageType, string message)
         {
             timeStamp = System.DateTime.Now;
@@ -109,6 +114,12 @@ namespace MandalaConsulting.Optimization.Logging
         /// <param name="localOperationName"></param>
         /// <param name="messageType"></param>
         /// <param name="message"></param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogMessage"/> class with an ID, message type, and content.
+        /// </summary>
+        /// <param name="id">The unique identifier for the log message.</param>
+        /// <param name="messageType">The type of log message.</param>
+        /// <param name="message">The log message content.</param>
         public LogMessage(int id, MessageType messageType, string message)
         {
             this.id = id;
@@ -124,20 +135,50 @@ namespace MandalaConsulting.Optimization.Logging
         }
 
         // Define the delegate and event
+        /// <summary>
+        /// Delegate for handling log message events.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The log message event arguments.</param>
         public delegate void LogAddedEventHandler(object sender, LogMessageEventArgs e);
 
+        /// <summary>
+        /// Event triggered when a new log message is added.
+        /// </summary>
         public static event LogAddedEventHandler LogAdded;
 
         /// <summary>
         /// This is the program that is running
         /// </summary>
+        /// <summary>
+        /// Gets or sets the default message source for all log messages.
+        /// Default value indicates that the program name hasn't been set.
+        /// </summary>
         public static string MessageSourceSetter { get; set; } = "You didn't set the name of your program!";
 
+        /// <summary>
+        /// Gets or sets the unique identifier for the log message.
+        /// </summary>
         public long id { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the operation or method that generated the log.
+        /// </summary>
         public string localOperationName { get; set; }
+        /// <summary>
+        /// Gets or sets the log message content.
+        /// </summary>
         public string message { get; set; }
+        /// <summary>
+        /// Gets or sets the source of the log message (typically the program name).
+        /// </summary>
         public string messageSource { get; set; }
+        /// <summary>
+        /// Gets or sets the type of the log message (e.g., Error, Warning, Info).
+        /// </summary>
         public MessageType messageType { get; set; }
+        /// <summary>
+        /// Gets or sets the timestamp when the log message was created.
+        /// </summary>
         public System.DateTime timeStamp { get; set; }
 
         /// <summary>
@@ -288,13 +329,23 @@ namespace MandalaConsulting.Optimization.Logging
         }
     }
 
+    /// <summary>
+    /// Event arguments for log message events.
+    /// </summary>
     public class LogMessageEventArgs : System.EventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogMessageEventArgs"/> class.
+        /// </summary>
+        /// <param name="logMessage">The log message associated with this event.</param>
         public LogMessageEventArgs(LogMessage logMessage)
         {
             log = logMessage;
         }
 
+        /// <summary>
+        /// Gets the log message associated with this event.
+        /// </summary>
         public LogMessage log { get; }
     }
 }

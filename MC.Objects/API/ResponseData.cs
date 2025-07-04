@@ -4,12 +4,24 @@
 
 namespace MandalaConsulting.Objects
 {
+    /// <summary>
+    /// Represents a standardized response format for API operations.
+    /// </summary>
     public class ResponseData
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResponseData"/> class.
+        /// </summary>
         public ResponseData()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResponseData"/> class with specified properties.
+        /// </summary>
+        /// <param name="message">The response message.</param>
+        /// <param name="data">The response data.</param>
+        /// <param name="error">Any error information.</param>
         public ResponseData(string message, object data, object error)
         {
             this.message = message;
@@ -17,8 +29,17 @@ namespace MandalaConsulting.Objects
             Error = error;
         }
 
+        /// <summary>
+        /// Gets or sets the response data payload.
+        /// </summary>
         public object Data { get; set; }
+        /// <summary>
+        /// Gets or sets any error information.
+        /// </summary>
         public object Error { get; set; }
+        /// <summary>
+        /// Gets or sets the response message.
+        /// </summary>
         public string message { get; set; }
     }
 }
