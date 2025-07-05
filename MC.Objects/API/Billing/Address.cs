@@ -1,4 +1,5 @@
-﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+// Copyright © Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-01-16 19:19:01
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 //Created by Alexander Fields
 
 using System.Runtime.Serialization;
@@ -6,8 +7,14 @@ using System.Runtime.Serialization;
 namespace MandalaConsulting.Objects.Billing
 {
     [System.Serializable]
+    /// <summary>
+    /// Represents a physical address with contact information.
+    /// </summary>
     public class Address
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Address"/> class.
+        /// </summary>
         public Address()
         {
         }
@@ -21,6 +28,17 @@ namespace MandalaConsulting.Objects.Billing
         /// <param name="state">!nullable</param>
         /// <param name="street">!nullable</param>
         /// <param name="zip"></param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Address"/> class with specified properties.
+        /// </summary>
+        /// <param name="city">The city name (required).</param>
+        /// <param name="country">The country name (required).</param>
+        /// <param name="name">Optional business or organization name.</param>
+        /// <param name="contact">Contact information (required).</param>
+        /// <param name="state">The state or province (required).</param>
+        /// <param name="street">The street address (required).</param>
+        /// <param name="zip">The postal code.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when required parameters are null.</exception>
         public Address(string city, string country, string name, Contact contact, string state, string street, int zip)
         {
             this.city = city ?? throw new System.ArgumentNullException(nameof(city));
@@ -42,6 +60,9 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the contact information associated with this address.
+        /// </summary>
         public Contact contact
         {
             get; set;

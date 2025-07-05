@@ -1,6 +1,7 @@
+// Copyright © Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-12 10:20:40
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 using MandalaConsulting.Optimization.Logging;
 
-//Copyright © 2023 Mandala Consulting, LLC MIT License
 //Created by Alexander Fields
 using MongoDB.Driver;
 using System.Collections.Concurrent;
@@ -12,6 +13,9 @@ namespace MandalaConsulting.Repository.Mongo
 {
     /// <summary>
     /// Make sure you set the MongoDB Instance before calling the classes in this
+    /// </summary>
+    /// <summary>
+    /// Helper class for MongoDB operations. Set the MongoDB Instance before using this class.
     /// </summary>
     public class MongoHelper : IMongoHelper
     {
@@ -35,19 +39,38 @@ namespace MandalaConsulting.Repository.Mongo
             database = db;
         }
 
+        /// <summary>
+        /// Finalizer for the MongoHelper class.
+        /// Cleans up any remaining logs.
+        /// </summary>
         ~MongoHelper()
         {
             ClearLogs();
         }
 
+        /// <summary>
+        /// Event triggered when a log message is added.
+        /// </summary>
         public static event System.EventHandler<LogMessageEventArgs> LogAdded;
 
+        /// <summary>
+        /// Event triggered when logs are cleared.
+        /// </summary>
         public static event System.EventHandler LogCleared;
 
+        /// <summary>
+        /// Gets or sets the MongoDB database instance.
+        /// </summary>
         public IMongoDatabase database { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the database.
+        /// </summary>
         public string dbName { get; set; }
 
+        /// <summary>
+        /// Clears all MongoDB operation logs and triggers the LogCleared event.
+        /// </summary>
         public static void ClearLogs()
         {
             mongoLogs?.Clear();
@@ -116,6 +139,10 @@ namespace MandalaConsulting.Repository.Mongo
             return null;
         }
 
+        /// <summary>
+        /// Gets all MongoDB operation logs.
+        /// </summary>
+        /// <returns>A list of all log messages.</returns>
         public static IList<LogMessage> GetLogs()
         {
             return mongoLogs.ToArray();
@@ -157,6 +184,13 @@ namespace MandalaConsulting.Repository.Mongo
             return mongoHelper;
         }
 
+        /// <summary>
+        /// Creates a new document in the specified collection.
+        /// </summary>
+        /// <typeparam name="T">The type of document to create.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <param name="document">The document to create.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task CreateDocumentAsync<T>(string collectionName, T document)
         {
             await GetCollection<T>(collectionName).InsertOneAsync(document);
@@ -175,17 +209,37 @@ namespace MandalaConsulting.Repository.Mongo
             return db;
         }
 
+        /// <summary>
+        /// Deletes a document from the specified collection that matches the filter.
+        /// </summary>
+        /// <typeparam name="T">The type of document to delete.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <param name="filter">The filter to match documents for deletion.</param>
+        /// <returns>The result of the delete operation.</returns>
         public async Task<DeleteResult> DeleteDocumentAsync<T>(string collectionName, FilterDefinition<T> filter)
         {
             return await GetCollection<T>(collectionName).DeleteOneAsync(filter);
         }
 
+        /// <summary>
+        /// Gets all documents from the specified collection.
+        /// </summary>
+        /// <typeparam name="T">The type of documents to retrieve.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <returns>A list of all documents in the collection.</returns>
         public async Task<List<T>> GetAllDocumentsAsync<T>(string collectionName)
         {
             IMongoCollection<T> collection = GetCollection<T>(collectionName);
             return await collection.Find(x => true).ToListAsync();
         }
 
+        /// <summary>
+        /// Gets documents from the specified collection that match the filter.
+        /// </summary>
+        /// <typeparam name="T">The type of documents to retrieve.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <param name="filter">The filter to match documents.</param>
+        /// <returns>A list of matching documents.</returns>
         public async Task<List<T>> GetFilteredDocumentsAsync<T>(
                     string collectionName,
                     FilterDefinition<T> filter
@@ -194,6 +248,14 @@ namespace MandalaConsulting.Repository.Mongo
             return await GetCollection<T>(collectionName).Find(filter).ToListAsync();
         }
 
+        /// <summary>
+        /// Replaces a document in the specified collection that matches the filter.
+        /// </summary>
+        /// <typeparam name="T">The type of document to replace.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <param name="filter">The filter to match the document to replace.</param>
+        /// <param name="document">The new document.</param>
+        /// <returns>The result of the replace operation.</returns>
         public async Task<ReplaceOneResult> ReplaceDocumentAsync<T>(
                     string collectionName,
                     FilterDefinition<T> filter,
@@ -225,6 +287,14 @@ namespace MandalaConsulting.Repository.Mongo
             }
         }
 
+        /// <summary>
+        /// Updates a document in the specified collection that matches the filter.
+        /// </summary>
+        /// <typeparam name="T">The type of document to update.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <param name="filter">The filter to match the document to update.</param>
+        /// <param name="document">The update definition.</param>
+        /// <returns>The result of the update operation.</returns>
         public async Task<UpdateResult> UpdateDocumentAsync<T>(
             string collectionName,
             FilterDefinition<T> filter,
@@ -234,12 +304,22 @@ namespace MandalaConsulting.Repository.Mongo
             return await GetCollection<T>(collectionName).UpdateOneAsync(filter, document);
         }
 
+        /// <summary>
+        /// Adds a log message to the MongoDB operation logs.
+        /// </summary>
+        /// <param name="logMessage">The log message to add.</param>
         protected static void AddLog(LogMessage logMessage)
         {
             mongoLogs.Enqueue(logMessage);
             LogAdded?.Invoke(null, new LogMessageEventArgs(logMessage));
         }
 
+        /// <summary>
+        /// Gets a typed collection from the database.
+        /// </summary>
+        /// <typeparam name="T">The type of documents in the collection.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <returns>The MongoDB collection.</returns>
         private IMongoCollection<T> GetCollection<T>(string collectionName)
         {
             return database.GetCollection<T>(collectionName);
