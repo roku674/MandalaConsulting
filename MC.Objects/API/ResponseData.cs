@@ -14,7 +14,7 @@ namespace MandalaConsulting.Objects
         /// </summary>
         public ResponseData()
         {
-            timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'");
+            timestamp = System.DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'");
             success = Error == null;
         }
 
@@ -29,7 +29,7 @@ namespace MandalaConsulting.Objects
             this.message = message;
             Data = data;
             Error = error;
-            timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'");
+            timestamp = System.DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'");
             success = error == null;
         }
 
