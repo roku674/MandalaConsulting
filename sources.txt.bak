@@ -4,7 +4,7 @@
 # Lines starting with # are comments
 
 # Company name for copyright
-COMPANY_NAME=Mandala Consulting, LLC.
+COMPANY_NAME=Perilous Games, Ltd.
 
 # Rights statement (leave empty for "All Rights Reserved")
 RIGHTS_STATEMENT=
@@ -73,9 +73,7 @@ FILE_EXT_25=nim
 FILE_EXT_26=cr
 FILE_EXT_27=ex
 FILE_EXT_28=exs
-FILE_EXT_29=yaml
-FILE_EXT_30=yml
-FILE_EXT_31=toml
+FILE_EXT_29=toml
 
 # XML/HTML style
 FILE_EXT_32=xml
