@@ -1,4 +1,5 @@
-﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+// Copyright © Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-13 01:57:25
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 //Created by Alexander Fields
 using MandalaConsulting.APIMiddleware.Objects;
 using MandalaConsulting.APIMiddleware.Utility;
@@ -10,12 +11,24 @@ using System.Threading.Tasks;
 
 namespace MandalaConsulting.APIMiddleware
 {
+    /// <summary>
+    /// Stores information about failed access attempts from an IP address.
+    /// </summary>
     public class AttemptInfo
     {
+        /// <summary>
+        /// Gets or sets the total number of failed attempts.
+        /// </summary>
         public int Count { get; set; }
+        /// <summary>
+        /// Gets or sets the unique paths that were attempted to be accessed.
+        /// </summary>
         public HashSet<string> Paths { get; set; } = new HashSet<string>();
     }
 
+    /// <summary>
+    /// Middleware for tracking and handling invalid endpoint access attempts.
+    /// </summary>
     public class InvalidEndpointTrackerMiddleware
     {
         private const int MaxAttempts = 10;
@@ -30,11 +43,20 @@ namespace MandalaConsulting.APIMiddleware
 
         private readonly RequestDelegate _next;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvalidEndpointTrackerMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The next middleware in the pipeline.</param>
         public InvalidEndpointTrackerMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
+        /// <summary>
+        /// Invokes the middleware to track and handle invalid endpoint access attempts.
+        /// </summary>
+        /// <param name="context">The HTTP context.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task InvokeAsync(HttpContext context)
         {
             CleanupFailedAttempts(); // Check and perform cleanup if needed
@@ -109,6 +131,9 @@ namespace MandalaConsulting.APIMiddleware
             }
         }
 
+        /// <summary>
+        /// Cleans up the failed attempts dictionary and logs after a specified interval.
+        /// </summary>
         private static void CleanupFailedAttempts()
         {
             if ((System.DateTime.UtcNow - _lastCleanup) > cleanupInterval)
@@ -120,6 +145,11 @@ namespace MandalaConsulting.APIMiddleware
             }
         }
 
+        /// <summary>
+        /// Records a failed attempt and potentially bans the IP if it exceeds the maximum attempts.
+        /// </summary>
+        /// <param name="ipAddress">The IP address making the attempt.</param>
+        /// <param name="requestedPath">The path that was attempted to be accessed.</param>
         private static void RecordFailedAttempt(string ipAddress, string requestedPath)
         {
             if (requestedPath.EndsWith(".env"))
@@ -158,6 +188,9 @@ namespace MandalaConsulting.APIMiddleware
         }
 
         // Method to clear failed attempts (for testing purposes)
+        /// <summary>
+        /// Clears all failed attempts (used for testing purposes).
+        /// </summary>
         public static void ClearFailedAttempts()
         {
             _failedAttempts.Clear();

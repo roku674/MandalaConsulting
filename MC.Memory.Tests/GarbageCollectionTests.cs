@@ -1,12 +1,20 @@
+// Copyright © Mandala Consulting, LLC., 2025. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2025-06-08 13:27:40
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 using System;
 using Xunit;
 using MandalaConsulting.Optimization.Memory;
 
 namespace MandalaConsulting.Memory.Tests
 {
+    /// <summary>
+    /// Tests for the GarbageCollection class.
+    /// </summary>
     public class GarbageCollectionTests
     {
         [Fact]
+        /// <summary>
+        /// Verifies that the GarbageCollection constructor creates a valid instance.
+        /// </summary>
         public void Constructor_CreatesInstance()
         {
             // Act
@@ -17,6 +25,9 @@ namespace MandalaConsulting.Memory.Tests
         }
 
         [Fact]
+        /// <summary>
+        /// Verifies that PerformGarbageCollection executes without throwing exceptions.
+        /// </summary>
         public void PerformGarbageCollection_DoesNotThrowException()
         {
             // Arrange
@@ -29,6 +40,9 @@ namespace MandalaConsulting.Memory.Tests
         }
 
         [Fact]
+        /// <summary>
+        /// Verifies that PerformGarbageCollection handles non-null state parameters correctly.
+        /// </summary>
         public void PerformGarbageCollection_WithNonNullState_DoesNotThrowException()
         {
             // Arrange
@@ -41,6 +55,9 @@ namespace MandalaConsulting.Memory.Tests
         }
 
         [Fact]
+        /// <summary>
+        /// Verifies that PerformGarbageCollection can be called multiple times without errors.
+        /// </summary>
         public void PerformGarbageCollection_CanBeCalledMultipleTimes()
         {
             // Arrange
@@ -58,6 +75,9 @@ namespace MandalaConsulting.Memory.Tests
         }
 
         [Fact]
+        /// <summary>
+        /// Tests that the garbage collection actually reduces memory usage.
+        /// </summary>
         public void GarbageCollection_MemoryTest()
         {
             // Arrange

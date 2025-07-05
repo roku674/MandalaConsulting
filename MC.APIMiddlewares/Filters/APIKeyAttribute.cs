@@ -1,4 +1,5 @@
-﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+// Copyright © Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-10-13 01:57:25
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 //Created by Alexander Fields
 using MandalaConsulting.APIMiddleware.Utility;
 using MandalaConsulting.Optimization.Logging;
@@ -9,8 +10,23 @@ using System.Threading.Tasks;
 namespace MandalaConsulting.APIMiddleware.Filters
 {
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Method)]
+    /// <summary>
+    /// Attribute that enforces API key authentication on controllers or actions.
+    /// The API key should be provided in the request headers with the name specified in the API_KEY_NAME environment variable.
+    /// The correct API key value should be stored in the API_KEY environment variable.
+    /// </summary>
     public class APIKeyAttribute : System.Attribute, IAsyncActionFilter
     {
+        /// <summary>
+        /// Validates the API key in the request headers before allowing the action to execute.
+        /// </summary>
+        /// <param name="context">The context for the executing action.</param>
+        /// <param name="next">The delegate for the next action in the pipeline.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        /// <remarks>
+        /// If the API key is missing or incorrect, returns an UnauthorizedResult and logs a warning.
+        /// The client's IP address is included in the warning logs for security tracking.
+        /// </remarks>
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             string apiKeyHeaderName = GetKeyName();
@@ -39,12 +55,20 @@ namespace MandalaConsulting.APIMiddleware.Filters
             await next();
         }
 
+        /// <summary>
+        /// Gets the correct API key from environment variables.
+        /// </summary>
+        /// <returns>The API key value from the API_KEY environment variable.</returns>
         internal string GetKey()
         {
             string apikey = System.Environment.GetEnvironmentVariable("API_KEY");
             return apikey;
         }
 
+        /// <summary>
+        /// Gets the name of the header that should contain the API key.
+        /// </summary>
+        /// <returns>The header name from the API_KEY_NAME environment variable.</returns>
         internal string GetKeyName()
         {
             string keyName = System.Environment.GetEnvironmentVariable("API_KEY_NAME");

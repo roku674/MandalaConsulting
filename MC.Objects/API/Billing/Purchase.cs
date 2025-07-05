@@ -1,4 +1,5 @@
-﻿//Copyright © 2023 Mandala Consulting, LLC All rights reserved.
+// Copyright © Mandala Consulting, LLC., 2024. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2024-01-16 19:19:01
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 //Created by Alexander Fields
 
 using System.Runtime.Serialization;
@@ -6,8 +7,15 @@ using System.Runtime.Serialization;
 namespace MandalaConsulting.Objects.Billing
 {
     [System.Serializable]
+    /// <summary>
+    /// Represents a purchase transaction with billing, shipping, and payment details.
+    /// </summary>
     public class Purchase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Purchase"/> class.
+        /// Automatically generates a new transaction ID.
+        /// </summary>
         public Purchase()
         {
             this.transactionId = System.Guid.NewGuid().ToString();
@@ -36,6 +44,24 @@ namespace MandalaConsulting.Objects.Billing
         /// <param name="time">if null will assign now</param>
         /// <param name="tip"></param>
         /// <param name="total"></param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Purchase"/> class with specified properties.
+        /// </summary>
+        /// <param name="billing">The billing address (required).</param>
+        /// <param name="shipping">The shipping address (defaults to billing address if null).</param>
+        /// <param name="company">The company the purchase is from (required).</param>
+        /// <param name="discount">The flat discount amount.</param>
+        /// <param name="discountPerc">The discount percentage.</param>
+        /// <param name="donation">The donation amount.</param>
+        /// <param name="isRefund">Whether this is a refund transaction.</param>
+        /// <param name="item">The purchased product (required).</param>
+        /// <param name="paymentType">The type of payment used.</param>
+        /// <param name="purchaser">The person making the purchase (required).</param>
+        /// <param name="taxLocation">The tax jurisdiction.</param>
+        /// <param name="taxPercentage">The tax rate percentage.</param>
+        /// <param name="time">The time of purchase (defaults to current time).</param>
+        /// <param name="tip">The tip amount.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when required parameters are null.</exception>
         public Purchase(Address billing, Address shipping, string company, decimal discount, decimal discountPerc, decimal donation, bool isRefund, Product item,
             PaymentType paymentType, Contact purchaser, string taxLocation, decimal taxPercentage, System.DateTime time, decimal tip)
         {
@@ -75,6 +101,9 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the company from which the purchase was made.
+        /// </summary>
         public string company
         {
             get; set;
@@ -105,12 +134,18 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets a value indicating whether this purchase is a gift.
+        /// </summary>
         public bool isGift
         {
             get; set;
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets a value indicating whether this purchase is a refund.
+        /// </summary>
         public bool isRefund
         {
             get; set;
@@ -126,12 +161,18 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the type of payment used for the purchase.
+        /// </summary>
         public PaymentType paymentType
         {
             get; set;
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the contact information of the purchaser.
+        /// </summary>
         public Contact Purchaser
         {
             get; set;
@@ -189,6 +230,9 @@ namespace MandalaConsulting.Objects.Billing
         }
 
         [DataMember]
+        /// <summary>
+        /// Gets or sets the unique identifier for this transaction.
+        /// </summary>
         public string transactionId
         {
             get; set;

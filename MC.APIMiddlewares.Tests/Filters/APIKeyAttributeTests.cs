@@ -1,3 +1,5 @@
+// Copyright © Mandala Consulting, LLC., 2025. All Rights Reserved. Created by Alexander Fields https://www.alexanderfields.me on 2025-06-08 13:27:40
+// Edited by Alexander Fields https://www.alexanderfields.me 2025-07-02 11:48:25
 using Xunit;
 using MandalaConsulting.APIMiddleware.Filters;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +15,9 @@ using Moq;
 
 namespace MandalaConsulting.APIMiddlewares.Tests.Filters
 {
+    /// <summary>
+    /// Tests for the APIKeyAttribute filter.
+    /// </summary>
     public class APIKeyAttributeTests : IDisposable
     {
         private readonly string originalApiKey;
@@ -20,6 +25,10 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Filters
         private const string TestApiKey = "test-api-key-12345";
         private const string TestApiKeyName = "X-API-Key-Test";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="APIKeyAttributeTests"/> class.
+        /// Sets up test environment variables for API key authentication.
+        /// </summary>
         public APIKeyAttributeTests()
         {
             // Store original environment variable values
@@ -31,6 +40,9 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Filters
             Environment.SetEnvironmentVariable("API_KEY_NAME", TestApiKeyName);
         }
 
+        /// <summary>
+        /// Restores original environment variables after tests.
+        /// </summary>
         public void Dispose()
         {
             // Restore original environment variable values
@@ -74,6 +86,10 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Filters
         // }
 
         [Fact]
+        /// <summary>
+        /// Verifies that OnActionExecutionAsync allows the request to proceed when a valid API key is provided.
+        /// </summary>
+        /// <returns>A task representing the asynchronous test operation.</returns>
         public async Task OnActionExecutionAsync_WithValidKey_CallsNext()
         {
             // Arrange
@@ -116,6 +132,10 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Filters
         }
 
         [Fact]
+        /// <summary>
+        /// Verifies that OnActionExecutionAsync returns Unauthorized when no API key is provided.
+        /// </summary>
+        /// <returns>A task representing the asynchronous test operation.</returns>
         public async Task OnActionExecutionAsync_WithMissingKey_ReturnsUnauthorized()
         {
             // Arrange
@@ -158,6 +178,10 @@ namespace MandalaConsulting.APIMiddlewares.Tests.Filters
         }
 
         [Fact]
+        /// <summary>
+        /// Verifies that OnActionExecutionAsync returns Unauthorized when an invalid API key is provided.
+        /// </summary>
+        /// <returns>A task representing the asynchronous test operation.</returns>
         public async Task OnActionExecutionAsync_WithInvalidKey_ReturnsUnauthorized()
         {
             // Arrange
