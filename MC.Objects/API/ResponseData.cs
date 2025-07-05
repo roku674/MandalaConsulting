@@ -14,6 +14,8 @@ namespace MandalaConsulting.Objects
         /// </summary>
         public ResponseData()
         {
+            Timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'");
+            Success = Error == null;
         }
 
         /// <summary>
@@ -27,6 +29,8 @@ namespace MandalaConsulting.Objects
             this.message = message;
             Data = data;
             Error = error;
+            Timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'");
+            Success = error == null;
         }
 
         /// <summary>
@@ -41,5 +45,13 @@ namespace MandalaConsulting.Objects
         /// Gets or sets the response message.
         /// </summary>
         public string message { get; set; }
+        /// <summary>
+        /// Gets or sets whether the response represents a successful operation.
+        /// </summary>
+        public bool Success { get; set; }
+        /// <summary>
+        /// Gets or sets the timestamp when the response was created in ISO 8601 format.
+        /// </summary>
+        public string Timestamp { get; set; }
     }
 }
