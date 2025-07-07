@@ -6,12 +6,7 @@ name: Copyright Header Check
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-<<<<<<< HEAD
-    branches: [develop, development, master, main]
-=======
     branches: [develop, development, dev, master, main, default]
->>>>>>> e4e08d3c3e5996d38b332ffe47626e2dbdba2d7e
-
 jobs:
   copyright-check:
     runs-on: ubuntu-latest
@@ -100,7 +95,7 @@ jobs:
       
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v40
+        uses: tj-actions/changed-files@v46
         with:
           files: |
             **/*.{java,js,ts,jsx,tsx,cpp,cc,c,h,cs,py,go,rs,rb,php,sh,xml,html,sql}
