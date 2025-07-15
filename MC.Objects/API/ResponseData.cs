@@ -28,9 +28,9 @@ namespace MandalaConsulting.Objects
         {
             this.message = message;
             Data = data;
-            Error = error;
+            Error = error ?? (message?.ToLower().Contains("error") == true ? "error" : null);
             timestamp = System.DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'");
-            success = error == null;
+            success = Error == null;
         }
 
         /// <summary>
