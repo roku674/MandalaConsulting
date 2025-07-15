@@ -249,6 +249,26 @@ namespace MandalaConsulting.Optimization.Logging
         /// </summary>
         /// <param name="message">The informational message</param>
         /// <returns>A LogMessage instance with MessageType.Informational</returns>
+        public static LogMessage Info(string message)
+        {
+            return new LogMessage(MessageType.Informational, message);
+        }
+
+        /// <summary>
+        /// Static method to create an informational log message
+        /// </summary>
+        /// <param name="id">ID of the log message</param>
+        /// <param name="message">The informational message</param>
+        /// <returns>A LogMessage instance with MessageType.Informational</returns>
+        public static LogMessage Info(int id, string message)
+        {
+            return new LogMessage(id, MessageType.Informational, message);
+        }
+        /// <summary>
+        /// Static method to create an informational log message
+        /// </summary>
+        /// <param name="message">The informational message</param>
+        /// <returns>A LogMessage instance with MessageType.Informational</returns>
         public static LogMessage Informational(string message)
         {
             return new LogMessage(MessageType.Informational, message);
