@@ -11,7 +11,7 @@
 		<Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
 		<Description>Standardization for API Objects - MandalaConsulting.Objects.API</Description>
 		<RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-		<Version>0.0.6</Version>
+		<Version>0.0.7</Version>
 		<PackageTags>objects</PackageTags>
 		<PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Objects.API</PackageReleaseNotes>
 		<Authors>Mandala Consulting LLC, Alexander Fields</Authors>
@@ -30,7 +30,7 @@
 		<PackageReference Include="MongoDB.Bson" Version="3.4.0" />
 		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.30.0" />
 		<PackageReference Include="MongoDB.Libmongocrypt" Version="1.12.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.17" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.18" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
