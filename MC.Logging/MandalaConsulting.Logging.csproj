@@ -11,7 +11,7 @@
     <Copyright>Copyright © 2023 Mandala Consulting, LLC All rights reserved.</Copyright>
     <Description>Basic Structure for logging - MandalaConsulting.Logging </Description>
     <RepositoryUrl>https://github.com/roku674/MandalaConsulting</RepositoryUrl>
-    <Version>0.0.7</Version>
+    <Version>0.0.8</Version>
     <PackageTags>logging</PackageTags>
     <PackageReleaseNotes>https://github.com/roku674/MandalaConsulting/pkgs/nuget/MandalaConsulting.Logging</PackageReleaseNotes>
 	  <Authors>Mandala Consulting LLC, Alexander Fields</Authors>
