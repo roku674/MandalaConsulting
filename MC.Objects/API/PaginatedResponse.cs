@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MandalaConsulting.Objects.API
+namespace MandalaConsulting.Objects
 {
     /// <summary>
     /// Represents a paginated response from an API
