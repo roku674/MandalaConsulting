@@ -60,6 +60,21 @@ namespace MandalaConsulting.Repository.Mongo
         Task<List<T>> GetAllDocumentsAsync<T>(string collectionName);
 
         /// <summary>
+        /// Gets a paginated list of documents from the specified collection.
+        /// </summary>
+        /// <typeparam name="T">The type of documents to retrieve.</typeparam>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <param name="page">The page number (1-based).</param>
+        /// <param name="pageSize">The number of items per page.</param>
+        /// <param name="filter">Optional filter to match documents.</param>
+        /// <returns>A paginated response containing the documents and metadata.</returns>
+        Task<MandalaConsulting.Objects.API.PaginatedResponse<T>> GetPaginatedDocumentsAsync<T>(
+            string collectionName,
+            int page = 1,
+            int pageSize = 100,
+            FilterDefinition<T> filter = null);
+
+        /// <summary>
         /// Gets documents from the specified collection that match the filter.
         /// </summary>
         /// <typeparam name="T">The type of documents to retrieve.</typeparam>
